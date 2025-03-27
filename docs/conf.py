@@ -117,8 +117,8 @@ copybutton_prompt_is_regexp = True
 # a list of builtin themes.
 html_theme = "furo"
 html_title = "ASTR 480"
-html_logo = "static/UW_logo.png"
-html_favicon = "./static/favicon.ico"
+html_logo = "_static/UW_logo.png"
+html_favicon = "./_static/favicon.ico"
 html_theme_options = {
     "source_repository": "https://github.com/astr-480/astr-480-sp-25/",
     "source_branch": "main",
