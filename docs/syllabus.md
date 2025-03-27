@@ -19,7 +19,7 @@ More details about the course contents can be found in the [course schedule](sch
 
 ## Things to know
 
-- **Webpage**: Most of the lecture and materials will be provided in the [course website](https://uw-astro-480.github.io). We will generally only use Canvas for announcements.
+- **Webpage**: Most of the lectures and materials will be provided in the [course website](https://uw-astro-480.github.io). We will generally only use Canvas for announcements.
 - **Textbook**: There is no required textbook for this course. All the materials will be provided online. Each lesson will have a list of references and further reading.
 - **Late assignments**: Late assignments delivered within 24 hours of the due date will be penalised 20% of the total grade. Assignments delivered after 24 hours will not be accepted.
 - **Computing**: A computer will be needed for this course. We will provide a cloud-based computing environment that you can use, but you are welcome to use your own computer. Tablet and mobile devices are unlikely to be sufficient to complete the assignments. If you need to borrow a computer for this course check the [UW Student Technology Loan Program](https://stlp.uw.edu) or reach out to the instructor.
