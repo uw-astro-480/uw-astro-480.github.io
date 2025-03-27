@@ -41,3 +41,13 @@ lectures/lectures
 assignments/assignments
 codedev/codedev
 ```
+
+```{toctree}
+:hidden:
+:caption: Links
+
+GitHub <https://github.com/uw-astro-480>
+JupyterHub <https://jupyter.rttl.uw.edu/2025-spring-astr-480-a>
+Canvas <https://canvas.uw.edu/courses/1799617>
+ARCSAT <https://www.apo.nmsu.edu/Telescopes/ARCSAT/>
+```
