@@ -21,18 +21,20 @@ The following is a tentative schedule for the course. It may be subject to signi
 | April&nbsp;28 | Lesson 9: ARCSAT and preparing observing proposals (1)                                 | Assignment 2 due: CCD reductions               |              |
 | April&nbsp;30 | Lesson 10: ARCSAT and preparing observing proposals (2)                                |                                                |              |
 | May&nbsp;2    | Lab                                                                                    |                                                |              |
-| May&nbsp;5    | Lesson 11: catalogue data, formats, best practices                                     | Observing proposals due                        | Possible     |
-| May&nbsp;7    | Lesson 12: databases and SQL                                                           |                                                | Possible     |
-| May&nbsp;9    | Lab                                                                                    |                                                | Possible     |
-| May&nbsp;12   | Lesson 13: plotting and data visualisation                                             |                                                | Week 1       |
-| May&nbsp;14   | Lesson 14: parallelisation, supercomputing, and distributed computing                  |                                                | Week 1       |
-| May&nbsp;16   | Lab                                                                                    |                                                | Week 1       |
-| May&nbsp;19   | Lesson 15: spectrographs                                                               | Assignment 3 due: catalogue data               | Week 2       |
-| May&nbsp;21   | Lesson 16: reduction and calibration of spectroscopic data                             |                                                | Week 2       |
-| May&nbsp;23   | Lab                                                                                    |                                                | Week 2       |
-| May&nbsp;26   | Memorial Day: no class                                                                 |                                                | Week 3       |
+| May&nbsp;5    | Lesson 11: catalogue data, formats, best practices                                     | Observing proposals due                        | Week 1       |
+| May&nbsp;7    | Lesson 12: databases and SQL                                                           |                                                | Week 1       |
+| May&nbsp;9    | Lab                                                                                    |                                                | Week 1       |
+| May&nbsp;12   | Lesson 13: plotting and data visualisation                                             |                                                | Week 2       |
+| May&nbsp;14   | Lesson 14: parallelisation, supercomputing, and distributed computing                  |                                                | Week 2       |
+| May&nbsp;16   | Lab                                                                                    |                                                |              |
+| May&nbsp;19   | Lesson 15: spectrographs                                                               | Assignment 3 due: catalogue data               |              |
+| May&nbsp;21   | Lesson 16: reduction and calibration of spectroscopic data                             |                                                |              |
+| May&nbsp;23   | Lab                                                                                    |                                                |              |
+| May&nbsp;26   | Memorial Day: no class                                                                 |                                                |              |
 | May&nbsp;28   | Lesson 17: big data and the future of data analysis in astronomy                       |                                                | Week 3       |
 | May&nbsp;30   | Lab                                                                                    |                                                | Week 3       |
-| June&nbsp;2   | Lecture or lab                                                                         | Assignment 4 due: long slit spectroscopy       | Possible     |
-| June&nbsp;4   | Lecture or lab                                                                         |                                                | Possible     |
+| June&nbsp;2   | Lecture or lab                                                                         | Assignment 4 due: long slit spectroscopy       | Week 4       |
+| June&nbsp;4   | Lecture or lab                                                                         |                                                | Week 4       |
 | June&nbsp;12  |                                                                                        | Assignment 5 due: final project (ARCSAT paper) |              |
+
+ARCSAT observations will happen between May 5 to 15, and May 26 to June 5. We may not use all nights depending on weather and progress towards obtaining the necessary data.
