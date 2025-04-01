@@ -37,7 +37,7 @@ schedule
 :hidden:
 :caption: Contents
 
-lectures/lectures
+lecture_notes/lecture_notes
 assignments/assignments
 codedev/codedev
 ```

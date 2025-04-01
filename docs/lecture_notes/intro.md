@@ -1,4 +1,4 @@
-# Lecture 1: data analysis in astronomy
+# Introduction: data analysis in astronomy
 
 <br>
 

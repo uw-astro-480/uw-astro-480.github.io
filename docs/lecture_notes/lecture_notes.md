@@ -1,0 +1,5 @@
+# Lecture notes
+
+```{toctree}
+intro
+```
