@@ -1,5 +1,5 @@
 [project]
-name = "astr-480-sp-25"
+name = "uw-astro-480-website"
 version = "0.1.0"
 description = "Lessons and class materials for ASTR 480"
 readme = "README.md"

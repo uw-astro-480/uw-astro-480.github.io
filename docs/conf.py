@@ -23,8 +23,8 @@ extensions = [
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 
-pygments_style = "lovelace"
-pygments_dark_style = "one-dark"
+pygments_style = "gruvbox-light"
+pygments_dark_style = "nord-darker"
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
@@ -110,6 +110,8 @@ typehints_use_signature_return = True
 copybutton_prompt_text = r">>> |\$ "
 copybutton_prompt_is_regexp = True
 
+myst_heading_anchors = 3
+myst_enable_extensions = ["attrs_block"]
 
 # -- Options for HTML output ----------------------------------------------
 
