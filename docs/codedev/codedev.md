@@ -4,4 +4,6 @@
 :maxdepth: 2
 
 setup
+visualisation_tools
+plotting
 ```
