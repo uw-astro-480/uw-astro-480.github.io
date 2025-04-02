@@ -30,7 +30,7 @@ The following is a tentative schedule for the course. It may be subject to signi
 | May&nbsp;19   | [Spectrographs](./lecture_notes/spectrographs/spectrographs.md)                                                               | Assignment 3 due: catalogue data               |              |
 | May&nbsp;21   | [Reduction and calibration of spectroscopic data](./lecture_notes/spec_data_reduction/spec_data_reduction.md)                 |                                                |              |
 | May&nbsp;23   | Lab                                                                                                                           |                                                |              |
-| May&nbsp;26   | Memorial Day: no class                                                                                                        |                                                |              |
+| May&nbsp;26   | Memorial Day: no class                                                                                                        |                                                | Week 3       |
 | May&nbsp;28   | [Big data and the future of data analysis in astronomy](./lecture_notes/big_data/big_data.md)                                 |                                                | Week 3       |
 | May&nbsp;30   | Lab                                                                                                                           |                                                | Week 3       |
 | June&nbsp;2   | Lecture or lab                                                                                                                | Assignment 4 due: long slit spectroscopy       | Week 4       |
