@@ -18,6 +18,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "myst_parser",
     "sphinx_copybutton",
+    "sphinx_new_tab_link",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -112,6 +113,8 @@ copybutton_prompt_is_regexp = True
 
 myst_heading_anchors = 3
 myst_enable_extensions = ["attrs_block"]
+
+new_tab_link_show_external_link_icon = False
 
 # -- Options for HTML output ----------------------------------------------
 
