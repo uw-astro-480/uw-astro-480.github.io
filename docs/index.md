@@ -6,7 +6,7 @@
 
 ## Instructor
 
-José Sánchez-Gallego (see [faculty page](https://astro.washington.edu/people/jose-sanchez-gallego) for contact information).
+Prof. José Sánchez-Gallego (see [faculty page](https://astro.washington.edu/people/jose-sanchez-gallego) for contact information).
 
 ## Course description
 
