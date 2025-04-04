@@ -112,7 +112,7 @@ copybutton_prompt_text = r">>> |\$ "
 copybutton_prompt_is_regexp = True
 
 myst_heading_anchors = 3
-myst_enable_extensions = ["attrs_block"]
+myst_enable_extensions = ["attrs_block", "colon_fence", "attrs_inline"]
 
 new_tab_link_show_external_link_icon = False
 

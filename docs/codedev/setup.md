@@ -87,7 +87,7 @@ Note that while the user for everybody in the class is `jovyan` each student's e
 
 ### Restarting the environment
 
-It is possible that we need to recreate the environment during the course. This may happen if we find that a tool that is not currently installed needs to be added. In that case a new Docker image will be create and JupyterHub pull it and recreate your environment. To force the restart you can go to `File — Hub Control Panel` and click on `Stop My Server`. After this you can click on `Start My Server` to recreate the environment with the new image.
+It is possible that we need to recreate the environment during the course. This may happen if we find that a tool that is not currently installed needs to be added. In that case a new [Docker image](https://github.com/uw-astro-480/jupyterhub-image) will be created and JupyterHub pull it and recreate your environment. To force the restart you can go to `File — Hub Control Panel` and click on `Stop My Server`. After this you can click on `Start My Server` to recreate the environment with the new image.
 
 Your files will be preserved between restarts, however it is a good practice to back up your work before a restart. See the [section below](#backing-up-your-work) on how to do this.
 

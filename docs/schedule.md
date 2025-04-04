@@ -1,8 +1,8 @@
 # Schedule
 
-```{caution}
+:::{caution}
 The following is a tentative schedule for the course. It may be subject to significant changes as the course progresses. Assignment due dates are also tentative; the actual dates will be announced in class or via Canvas.
-```
+:::
 
 | Date          | Topics                                                                                                                       | Assignments                                | Observations |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ------------ |
