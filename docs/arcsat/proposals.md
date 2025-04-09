@@ -24,6 +24,8 @@ A few things that your pre-proposal should touch on, but very briefly:
 - Can you reach the target magnitude and obtain the necessary S/N?
 - What analysis do you plan to do on the data and what is the final goal of your study?
 
+You are welcome to think of more than one project. You can also consider a primary project and a backup or secondary project that you are not so sure that will work. In that case the secondary project should be not take too much time to complete or be done once you are confident that you have enough data for the primary project.
+
 As soon as you have formed your team, please edit [this spreadsheet](https://docs.google.com/spreadsheets/d/17P4cy8S05K8lP4w2lT4szxyHeMYlc1kBuU4sWxj8Cdc/edit?usp=sharing) with the names of your team members (and optionally a team name!) Team should be limited to 3-4 students.
 
 When you are ready to submit your pre-proposal, please use [this form](https://docs.google.com/forms/d/e/1FAIpQLSfOSuVRKy1lKyV5XAR5803X98K68tNaPIfsRTFeeZbAWbW0Jg/viewform?usp=sharing).
