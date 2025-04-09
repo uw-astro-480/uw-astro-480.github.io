@@ -10,10 +10,10 @@ The following is a tentative schedule for the course. It may be subject to signi
 | April&nbsp;2  | [Coordinate systems, magnitudes, optics, telescopes](./lecture_notes/intro_concepts/intro_concepts.md) (1)                   |                                            |              |
 | April&nbsp;4  | Lab: Python environment setup                                                                                                |                                            |              |
 | April&nbsp;7  | [Coordinate systems, magnitudes, optics, telescopes](./lecture_notes/intro_concepts/intro_concepts.md) (2)                   |                                            |              |
-| April&nbsp;9  | [Statistics](./lecture_notes/statistics/statistics.md)                                                                       |                                            |              |
+| April&nbsp;9  | [Coordinate systems, magnitudes, optics, telescopes](./lecture_notes/intro_concepts/intro_concepts.md) (3)                   |                                            |              |
 | April&nbsp;11 | Lab                                                                                                                          |                                            |              |
-| April&nbsp;14 | [CCDs (1) — Electronics and readout. FITS files](./lecture_notes/ccds/ccds.md)                                               | Assignment 1: introductory exercise        |              |
-| April&nbsp;16 | [CCDs (2) — Characterisation and PTC](./lecture_notes/ccds/ccds.md)                                                          |                                            |              |
+| April&nbsp;14 | [CCDs (1) — Electronics and readout. FITS files](./lecture_notes/ccds/ccds.md)                                               |                                            |              |
+| April&nbsp;16 | [CCDs (2) — Characterisation and PTC](./lecture_notes/ccds/ccds.md)                                                          | Assignment 1: coordinate transformations   |              |
 | April&nbsp;18 | Lab                                                                                                                          |                                            |              |
 | April&nbsp;21 | [Basic CCD reductions](./lecture_notes/ccd_reductions/ccd_reductions.md)                                                     |                                            |              |
 | April&nbsp;23 | [Calibration of CCD data](./lecture_notes/ccd_calibration/ccd_calibration.md)                                                |                                            |              |

@@ -4,7 +4,6 @@
 :maxdepth: 2
 
 ./intro_concepts/intro_concepts.md
-./statistics/statistics.md
 ./ccds/ccds.md
 ./ccd_reductions/ccd_reductions.md
 ./ccd_calibration/ccd_calibration.md
