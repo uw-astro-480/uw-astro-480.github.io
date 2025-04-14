@@ -28,7 +28,7 @@ Here is the rubric for the assignment:
 
 ## Deadline
 
-The assignment is due on Wednesday, April 16 at 11:59 PM. Late submissions by up to 24 hours will be penalized by 20% of the total points.
+The assignment is due on ~~Wednesday, April 16~~ Thursday, April 17 at 11:59 PM. Late submissions by up to 24 hours will be penalized by 20% of the total points.
 
 ## Hints and resources
 
