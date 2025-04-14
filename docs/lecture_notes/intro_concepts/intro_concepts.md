@@ -430,13 +430,13 @@ The quantities defined in the previous section express the amount of light emitt
 The modern magnitude system takes into account that the human eye responds to stimuli in an approximately [logarithmic way](https://en.wikipedia.org/wiki/Weber–Fechner_law). From that, the difference in _apparent magnitude_ between two sources is defined as proportional to the logarithm of the ratio of their fluxes:
 
 $$
-m_1 - m_2 \propto \log\left( \dfrac{F_1}{F_2} \right)
+m_1 - m_2 \propto \log_{10}\left( \dfrac{F_1}{F_2} \right)
 $$
 
 In the 19th century the English astronomer Pogson further refined this definition by requiring a start of magnitude 6 to be 100 times fainter than one of magnitude 1. This is equivalent to
 
 $$
-m_1 - m_2 = -2.5 \log\left( \dfrac{F_1}{F_2} \right)
+m_1 - m_2 = -2.5 \log_{10}\left( \dfrac{F_1}{F_2} \right)
 $$
 
 and also equivalent to saying that a star of magnitude 2 is $100^{1/5}\approx2.512$ times fainter than a star of magnitude 1. Note the minus sign that is encodes the fact that larger magnitudes mean fainter sources. Apparent magnitudes defined this way are called _Pogson magnitudes_.
@@ -456,13 +456,13 @@ In practice bolometric magnitudes are very difficult to measure and the bolometr
 The _absolute magnitude_ $M$ is defined as the apparent magnitude of a source at a distance of 10 parsecs. It is related to the apparent magnitude $m$ and the distance $d$ (in parsecs) to the source by
 
 $$
-m - M = 5 \log d - 5
+m - M = 5 \log_{10} d - 5
 $$
 
 Finally, the _absolute bolometric magnitude_ is directly related to the luminosity of a source using the solar luminosity as a reference:
 
 $$
-M_{\rm bol} = -2.5 \log \left( \dfrac{L}{L_\odot} \right) + 4.74
+M_{\rm bol} = -2.5 \log_{10} \left( \dfrac{L}{L_\odot} \right) + 4.74
 $$
 
 where $L_\odot$ is the luminosity of the Sun. The absolute bolometric magnitude is a measure of the total energy emitted by a source and is independent of distance.
@@ -472,8 +472,8 @@ where $L_\odot$ is the luminosity of the Sun. The absolute bolometric magnitude 
 So far all the the apparent magnitudes we have defined have been in reference to another magnitude, that is to the ratio of their fluxes. We can do
 
 $$
-m - m_0 = -2.5 \log\left( \dfrac{F}{F_0} \right)
-m = -2.5 \log F + C(\lambda)
+m - m_0 = -2.5 \log_{10}\left( \dfrac{F}{F_0} \right)
+m = -2.5 \log_{10} F + C(\lambda)
 $$
 
 where $C(\lambda)$ is called a _zero-point_ and refers to the flux that corresponds to a magnitude of 0 for a given wavelength. The choice and characterisation of $C(\lambda)$ is what define a _photometric system_.
@@ -483,7 +483,7 @@ Historically most photometric systems where defined so that the zero-point corre
 One of the most common photometric systems, the UBVRI system or Johnson can be defined for each bandpass as
 
 $$
-m_{UBVRI} = -2.5 \log\dfrac{\int_{UBVRI}F_{UBVRI}\lambda d\lambda}{\int_{UBVRI}F_{UBVRI}({\rm Vega})\lambda d\lambda}
+m_{UBVRI} = -2.5 \log_{10}\dfrac{\int_{UBVRI}F_{UBVRI}\lambda d\lambda}{\int_{UBVRI}F_{UBVRI}({\rm Vega})\lambda d\lambda}
 $$
 
 where the integrals are over the bandpass of the filter and the $\lambda$ factor is included to convert from flux to photon flux.
@@ -491,13 +491,13 @@ where the integrals are over the bandpass of the filter and the $\lambda$ factor
 A conceptually different photometric system is the AB magnitude system. Here we assume a constant zero-point flux $F_{0,\nu}=3631\, {\rm Jy}$ which is the flux density of Vega at $5500\,\unicode{x212B}$ in [Jankys](https://en.wikipedia.org/wiki/Jansky). With this
 
 $$
-m_{AB}=-2.5\log F_\nu-48.6
+m_{AB}=-2.5\log_{10} F_\nu-48.6
 $$
 
 when $F_\nu$ is in Jy. Normally we defined an AB magnitude for a certain filter bandpass so that
 
 $$
-m_{AB}=-2.5\log\left(\dfrac{\int (F_\nu / \nu) d\nu}{\int (F_{0,\nu}/\nu) d\nu}\right)
+m_{AB}=-2.5\log_{10}\dfrac{\int (F_\nu / \nu) d\nu}{\int (F_{0,\nu}/\nu) d\nu}
 $$
 
 where again the $1/\nu$ factor is included to convert from flux to photon flux.
@@ -515,7 +515,7 @@ The _colour index_ or just colour is the difference between two magnitudes in di
 So far we have implicitly discussed the brightness of unresolved point sources. For a resolved sources like a galaxy or a nebula we can define an equivalent concept, the _surface brightness_, $S_X$ (for a bandpass $X$) can be defined as the magnitude equivalent to the average flux per square arcsecond. If the object in question subtends an area $A$ an $\rm arcsec^2$ then
 
 $$
-S_X=-2.5\log\left(\dfrac{F_X}{A}\right)= -2.5\log F_X + 2.5\log A = m_X+2.5\log A
+S_X=-2.5\log_{10}\left(\dfrac{F_X}{A}\right)= -2.5\log_{10} F_X + 2.5\log_{10} A = m_X+2.5\log_{10} A
 $$
 
 ### Filters
