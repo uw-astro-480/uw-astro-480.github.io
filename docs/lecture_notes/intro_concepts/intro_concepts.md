@@ -483,7 +483,7 @@ Historically most photometric systems where defined so that the zero-point corre
 One of the most common photometric systems, the UBVRI system or Johnson can be defined for each bandpass as
 
 $$
-m_{UBVRI} = -2.5 \dfrac{\int_{UBVRI}F_{UBVRI}\lambda d\lambda}{\int_{UBVRI}F_{UBVRI}({\rm Vega})\lambda d\lambda}
+m_{UBVRI} = -2.5 \log\dfrac{\int_{UBVRI}F_{UBVRI}\lambda d\lambda}{\int_{UBVRI}F_{UBVRI}({\rm Vega})\lambda d\lambda}
 $$
 
 where the integrals are over the bandpass of the filter and the $\lambda$ factor is included to convert from flux to photon flux.
