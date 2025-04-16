@@ -41,6 +41,7 @@ lecture_notes/lecture_notes
 arcsat/arcsat
 assignments/assignments
 codedev/codedev
+faq
 ```
 
 ```{toctree}
