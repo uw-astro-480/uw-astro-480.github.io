@@ -117,6 +117,7 @@ myst_enable_extensions = [
     "attrs_inline",
     "dollarmath",
     "amsmath",
+    "strikethrough",
 ]
 myst_heading_anchors = 3
 myst_dmath_allow_labels = True
