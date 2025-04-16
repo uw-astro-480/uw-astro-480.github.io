@@ -14,7 +14,7 @@ DS9 can be downloaded for a range of platforms from its [website](https://sites.
 :align: center
 ```
 
-You can now open a FITS image (for example, try downloading [this one](https://faculty.washington.edu/gallegoj/673nmos.fits)) and you should get something like this
+You can now open a FITS image (for example, try downloading [this one](https://faculty.washington.edu/gallegoj/astr480/673nmos.fits)) and you should get something like this
 
 ```{figure} images/ds9-eagle.png
 :alt: DS9 Eagle nebula
