@@ -3,10 +3,6 @@ import os
 # Are we building in RTD?
 on_rtd = os.environ.get("READTHEDOCS") == "True"
 
-
-# matplotlib.use('agg')
-
-
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
@@ -32,9 +28,7 @@ pygments_dark_style = "nord-darker"
 # source_suffix = ['.rst', '.md']
 source_suffix = ".rst"
 
-source_parsers = {
-    # '.md': 'recommonmark.parser.CommonMarkParser',
-}
+source_parsers = {}
 
 # The master toctree document.
 master_doc = "index"
