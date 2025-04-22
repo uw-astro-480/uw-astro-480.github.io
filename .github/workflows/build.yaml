@@ -22,11 +22,11 @@ jobs:
         run: |
           uv sync --no-dev --frozen
 
-      - name: Restore cached data
+      - name: Cache data
         id: cache-data
         uses: actions/cache@v4
         with:
-          path: docs/_static/data
+          path: docs/data
           key: ${{ runner.os }}-data
 
       - name: Sphinx build

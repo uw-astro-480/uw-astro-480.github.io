@@ -177,7 +177,7 @@ def download_data():
 
     HERE = pathlib.Path(__file__).parent.resolve()
 
-    DATA = HERE / "_static" / "data"
+    DATA = HERE / "data"
     DATA.mkdir(parents=True, exist_ok=True)
 
     # example-cryo-LFC
