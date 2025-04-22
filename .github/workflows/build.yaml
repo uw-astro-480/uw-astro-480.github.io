@@ -11,16 +11,28 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
+
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
+
       - name: Install dependencies
         run: |
           uv sync --no-dev --frozen
+
+      - name: Restore cached data
+        id: cache-data
+        uses: actions/cache@v4
+        with:
+          path: docs/_static/data
+          key: ${{ runner.os }}-data
+
       - name: Sphinx build
         run: |
           uv run sphinx-build docs _build
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}

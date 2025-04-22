@@ -1,4 +1,5 @@
 import os
+import tarfile
 
 # Are we building in RTD?
 on_rtd = os.environ.get("READTHEDOCS") == "True"
@@ -12,9 +13,9 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.mathjax",
     "sphinx.ext.intersphinx",
-    "myst_parser",
     "sphinx_copybutton",
     "sphinx_new_tab_link",
+    "myst_nb",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -23,12 +24,11 @@ templates_path = ["_templates"]
 pygments_style = "gruvbox-light"
 pygments_dark_style = "nord-darker"
 
-# The suffix(es) of source filenames.
-# You can specify multiple suffix as a list of string:
-# source_suffix = ['.rst', '.md']
-source_suffix = ".rst"
-
-source_parsers = {}
+source_suffix = {
+    ".rst": "restructuredtext",
+    ".ipynb": "myst-nb",
+    ".myst": "myst-nb",
+}
 
 # The master toctree document.
 master_doc = "index"
@@ -112,9 +112,16 @@ myst_enable_extensions = [
     "dollarmath",
     "amsmath",
     "strikethrough",
+    "deflist",
+    "html_image",
 ]
 myst_heading_anchors = 3
 myst_dmath_allow_labels = True
+
+nb_custom_formats = {".Rmd": ["jupytext.reads", {"fmt": "Rmd"}]}
+nb_execution_mode = "cache"
+nb_execution_show_tb = "READTHEDOCS" in os.environ
+# nb_execution_timeout = 60
 
 new_tab_link_show_external_link_icon = False
 
@@ -158,3 +165,36 @@ else:
 html_css_files = [
     "styles.css",
 ]
+
+
+def download_data():
+    """Download the data files."""
+
+    import pathlib
+    from urllib.request import urlretrieve
+
+    DATA_URL = "https://faculty.washington.edu/gallegoj/astr480/"
+
+    HERE = pathlib.Path(__file__).parent.resolve()
+
+    DATA = HERE / "_static" / "data"
+    DATA.mkdir(parents=True, exist_ok=True)
+
+    # example-cryo-LFC
+    if not (DATA / "example-cryo-LFC").exists():
+        print("Downloading example-cryo-LFC ...")
+        (lfc_tarball, _) = urlretrieve(f"{DATA_URL}/example-cryo-LFC.tar.bz2")
+
+        with tarfile.open(lfc_tarball, "r:bz2") as tar:
+            tar.extractall(path=DATA)
+
+    # ccd_reductions_data
+    if not (DATA / "ccd_reductions_data").exists():
+        print("Downloading ccd_reductions_data ...")
+        (lfc_tarball, _) = urlretrieve(f"{DATA_URL}/ccd_reductions_data.tar.bz2")
+
+        with tarfile.open(lfc_tarball, "r:bz2") as tar:
+            tar.extractall(path=DATA)
+
+
+download_data()
