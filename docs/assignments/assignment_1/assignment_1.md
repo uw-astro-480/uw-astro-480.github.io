@@ -23,7 +23,7 @@ Here is the rubric for the assignment:
 | ---------------------------------------------------------- | :--------------------------------------------------------: | :---------------------------------------------------------: | :-------------------------------------: | ------ |
 | The code runs and passes the basic tests (green checkmark) |                _2 points_<br>The code runs                 |            _No points_<br>The code does not run             |                                         | 2      |
 | The function `get_altitude()` is implemented correctly     |          _3 points_<br>Returns the correct value           |           _1 point_<br>Returns an incorrect value           | _No points_<br>Not implemented or fails | 3      |
-| The function `plot_altitude()` is implemented correctly    |           _3 points_<br>Produces a correct plot            |           _1 point_<br>Produces an incorrect plot           | _No points_<br>Not implemented or fails | 5      |
+| The function `plot_altitude()` is implemented correctly    |           _5 points_<br>Produces a correct plot            |           _3 point_<br>Produces an incorrect plot           | _No points_<br>Not implemented or fails | 5      |
 | Extra credit                                               | _2 points_<br>Plot shows sunset and twilight times and LST | _1 point_<br>Plot shows either sunset/twilight times or LST |                                         | 2      |
 
 ## Deadline
