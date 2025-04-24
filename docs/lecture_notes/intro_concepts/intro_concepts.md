@@ -540,11 +540,321 @@ These filters are usually called "broadband" because they have non-zero transmis
 
 ## Optics and telescopes
 
-Coming soon.
+While for millennia we relied only on our eyes to observe the sky, the development of optics, and in particular of telescopes, soon revolutionised astronomy. Telescopes allow us to collect more light and to resolve finer details than the human eye alone. Here we will very briefly discuss some of the basic concepts surrounding optics and telescopes.
+
+### Basic principles
+
+The basic principle of classic optics is Snell's law, which relates the angles of incidence and refraction of light passing through the boundary between two different media.
+
+```{figure} ./images/snell.png
+:width: 50%
+:align: center
+:class: white-background
+_Source:_ Wikipedia
+```
+
+Snell's law can be expressed as
+
+$$
+n\sin i = n^\prime \sin i^\prime
+$$
+
+where $n$ and $n^\prime$ are the indices of refraction of the two media, $i$ is the angle of incidence, and $i^\prime$ is the angle of refraction. The index of refraction is defined as the ratio between the speed of light in vacuum and the speed of light in the medium. The angles are measured with respect to the normal to the surface.
+
+Snell's law can also be used to describe the reflection of light. In this case $n=n^\prime$ and $i=-i^\prime$ (the angle of incidence is equal to the angle of reflection).
+
+Snell's law is a special case of Fermat's principle, which states that light travelling between two points will follow the path that can be travelled in the least time.
+
+### Paraxial approximation and thin lenses
+
+The _paraxial approximation_ in optics assumes that the angles of incidence and refraction on a surface as small, so that $i\ll1$ and $\sin i\approx i$. In this regime many of the equations of optics can be simplified and the behaviour of light can be described using simple geometric optics. We can also disregard most [aberrations](#aberrations) while we are close to the optical axis. The paraxial approximation is usually combined with the _thin lens approximation_, which assumes that the thickness of the lens is small compared to its focal length (which we'll describe in a second). In this case we can treat the lens as a single surface. For now we will also ignore the effects of diffraction, which is usually ok when the aperture of the lens is very large compared to the wavelength of the light.
+
+Let's consider two cases of thin lenses: one with a convex surface (top) and one with a concave surface (bottom).
+
+```{figure} ./images/ray-tracing.png
+:width: 100%
+:align: center
+:target: https://www.jobilize.com/physics3/course/2-4-thin-lenses-geometric-optics-and-image-formation-by-openstax?page=1
+```
+
+First we'll define a few concepts:
+
+- A `meridional ray` is one that is limited to the plane formed by the optical axis of the system and the point on which the ray originated. All rays of interest in this section are meridional rays.
+- The `chief ray` or `principal ray` is one that starts at the edge of the `object` that emits the ray and passes through the centre of the optical element (in reality it's the ray that passes through the centre of the aperture stop, but as we'll see that usually means the same thing). If the lens is symmetric ---both surfaces have the same but opposite curvature--- the chief ray passes through the centre of the lens without deflection (really the light "bends" twice, once at each surface, but the net effect is no deflection).
+- The distance between the lens to the object ($d_o$) and to the image ($d_i$) are called the `conjugate distances`. Note that in case a) the $d_i>0$ but $d_o<0$ while in case b) both distances are negative.
+- The point where a ray that is parallel to the optical axis intersects the optical axis is called the `focal point` ($F$) and the distance between the lens and the focal point is called the `focal length` ($f$). The focal length is positive for a converging lens and negative for a diverging lens. For an object at an infinite distance (as is the case, in excellent approximation, for astronomical sources) the focal point defines the point where all the rays coming from the object converge.
+- The `image` is the point where the optical rays converge after passing through the lens. The image is real if the rays actually converge at a point and virtual if they only appear to converge at a point (i.e., the rays diverge after passing through the lens). In a converging lens the image is real (the rays actually converge) while in a diverging lens the image is virtual (the rays diverge after passing through the lens) and located in the place where the back-propagation of the rays converge. However, whether an image is real or virtual depends on the position of the object with respect to the lens. For example, if we place an object at a distance $d_o$ from a converging lens, the image will be real if $d_o>f$ and virtual if $d_o<f$. The opposite is true for diverging lenses.
+
+```{figure} ./images/virtual-image.png
+:width: 80%
+:align: center
+:class: white-background
+A converging lens with a virtual image. Note that the object is located at a distance of the lens that is smaller than the focal length. Source: Wikipedia
+```
+
+From simple geometric relationships (see, for example Schroeder, Astronomical Optics, Ch. 2) we can derive the following expression for a single refracting surface:
+
+$$
+\dfrac{n^\prime}{d_i}-\dfrac{n}{d_o}=\dfrac{n^\prime-n}{R}
+$$
+
+where $R$ is the radius of curvature of the surface, $n$ is the index of refraction of the medium where the object is located, and $n^\prime$ is the index of refraction of the lens. The right side of this equation is called the _power_ of the lens and is independent of the positions of the object and image. The power defines the ability of the lens to converge or diverge light. The power of the lens is related to the focal length by
+
+$$
+P \equiv \dfrac{(n^\prime-n)}{R}=\dfrac{n}{f}=\dfrac{n^\prime}{f^\prime}
+$$
+
+However, lenses are formed by two surfaces. In this case we can write the power as
+
+$$
+P=\dfrac{1}{f^\prime}=(n^\prime-1)\left(\dfrac{1}{R_1}-\dfrac{1}{R_2}\right)
+$$
+
+where $1/f^\prime=1/f_1+1/f_2$ is the equivalent focal length of the system and $R_1$ and $R_2$ are the radii of curvature of the two surfaces. Here we assume that the lens is thin and that the medium in which it is located has $n^\prime\approx1$ (as is the case for air). $n^\prime$ is the index of refraction of the lens material.
+
+For the case of reflection we have a single surface. In this situation we can write that
+
+$$
+\dfrac{1}{d_i}+\dfrac{1}{d_o}=\dfrac{2}{R}
+$$
+
+and the focal length of a mirror is given by $f=R/2$.
+
+Additionally, we can define the _focal ratio_ or _f-number_ of a lens or mirror as the focal length divided by the diameter of the aperture. In astronomy, for a fixed aperture, the f-number is a measure of how fast the beam of light is converging. Because of this, optical systems with a small f-number are called _fast_ and those with a large f-number are called _slow_.
+
+Another important concept is that of the _magnification_ of an optical system. The magnification is defined as the ratio between the size of the image and the size of the object.
+
+```{figure} ./images/magnification.png
+:width: 80%
+:align: center
+:class: white-background
+_Source:_ Schroeder, Astronomical Optics
+```
+
+For a lens, the magnification is given by
+
+$$
+M=\dfrac{h^\prime}{h}=\dfrac{s^\prime-R}{s-R}=\dfrac{ns^\prime}{ns}
+$$
+
+(note that if the magnification is negative the image is inverted).
+
+However, for the most usual case in astronomy, the object is at an infinite distance, $s=\infty$, and the magnification is zero (this does not mean that a telescope cannot magnify an object at an infinite distance, it just means that the image is formed at the focal plane of the lens, but other optical elements placed before or after the focus can magnify the image). Instead, a more relevant concept is that of the _scale_, which is the smallest separation between two points that can be resolved by the optical system. The scale is defined as
+
+$$
+S=\dfrac{1}{f}=\dfrac{206265}{f\,[\rm mm]}\,[\rm arcsec/mm]
+$$
+
+Finally, let's consider the case of two plane-parallel plates of glass with thickness $d$ and index of refraction $n$. This optical element does not change the magnification of a system, but it introduces a shift in the image position. The shift is given by
+
+$$
+\Delta = d\left[1-\left(\dfrac{1}{n}\right)\right]
+$$
+
+```{figure} ./images/plane-parallel.png
+:width: 80%
+:align: center
+:class: white-background
+_Source:_ Schroeder, Astronomical Optics
+```
+
+### Apertures and pupils
+
+We will quickly introduce the concept of _pupil_ and _aperture_. These are important concepts that play a significant role in the design of optical systems.
+
+```{figure} ./images/pupils.png
+:width: 80%
+:align: center
+:class: white-background
+_Source_: Schroeder, Astronomical Optics
+```
+
+- _Pupil_: location where rays from all field angles fill the same aperture.
+- _Aperture stop_: determines the amount of light reaching an image. This is usually the primary mirror or objective lens but in some cases, such as infrared telescopes, it can be a secondary mirror or a filter.
+- _Field stop_: determines the angular size of the field. This is usually the detector but, for a large enough detector, it could be the secondary.
+- _Entrance pupil_: the image of aperture stop as seen through any optical elements that precede it. Usually the entrance pupil is the same as the aperture stop. The entrance pupil is important to determine the field of view of the system and is the best location to place baffles to block stray light.
+- _Exit pupil_: image of the aperture stop formed by all subsequent optical elements. The exit pupil is important to determine the system aberration and to measure the light wavefront.
+
+### Telescopes
+
+A telescope is an optical system designed to collect light from a distant source (i.e., one that we can consider at infinite distance for optical purposes). The simplest telescopes, first built in the early 17th century, consisted of just an objective lens and an eyepiece. The objective lens is usually a converging element and determines the amount of light from the source that we can collect, while the eyepiece can be either converging (if located after the focal point of the objective) or diverging (if located before).
+
+While simple, refracting telescopes have a number of problems, such as chromatic aberration (which we'll discuss shortly). Constructing large refracting telescopes is also difficult, an in practice the largest refracting telescope, the Yerkes Observatory telescope, is only slightly over 1 metre in diameter.
+
+The solution to these problem was found in 1666 by Isaac Newton (although the concept of magnifying images using curved mirrors goes back at least to the 11th century). The objective lens can be replaced by a concave mirror (usually parabolic) which focuses the light on the eyepiece. The following image shows simplified designs for the most common types of telescopes.
+
+```{figure} ./images/telescopes.png
+:width: 80%
+:align: center
+_Source:_ Observational Astronomy, Birney et al.
+```
+
+Most reflecting telescopes consist of two mirrors: a large primary mirror that collects the light, and a smaller secondary mirror that reflects it to a focus. The Newtonian telescope uses a flat secondary that just moves the focus to the side of the telescope, where an eyepiece or camera can be placed. The Cassegrain telescope uses a parabolic primary and a convex hyperbolic secondary placed before the focus of the primary. Another common design is the Gregorian telescope, which replaces the secondary with a concave ellipsoid.
+
+```{figure} ./images/cassegrain-gregorian.png
+:width: 80%
+:align: center
+:class: white-background
+Cassegrain (top) and Gregorian (bottom) telescope designs. Source: Schroeder, Astronomical Optics
+```
+
+In some cases, such as the Schmidt-Cassegrain or the Maksutov telescopes, an spherical mirror is used for ease of manufacturing. These telescopes suffer from significant spherical aberration which is compensated by using a special corrector plate in front of the primary mirror. Amateur telescopes often use this design because of its compactness and relatively lower price, but constructing corrector plates for large apertures soon becomes prohibitively expensive.
+
+Most modern telescopes use a Ritchey–Chrétien design, with hyperbolic primary and secondary mirrors. This design removes most low-order aberrations at the cost of being more difficult to manufacture. Additional optical defects are usually corrected by using a set of _corrector lenses_ near the focal plane. Placing the corrector near the focus allows for it to be smaller and lighter, but since the beam of light is converging, the corrector is usually harder to design and manufacture.
+
+```{figure} ./images/apo35m.png
+:width: 100%
+:align: center
+The 3.5-metre telescope at the Apache Point Observatory. The telescope uses a Ritchey–Chrétien design. The secondary mirror can be seen at the top of the telescope, supported by the truss structure. The _Cassegrain focus_ is located behind the primary mirror (which has a hole to allow the light to pass). Alternative foci can be created by placing a third, flat mirror, just behind the primary. This mirror moves the focus to one or more _Nasmyth foci_ located at the sides of the telescope. The advantage of the Nasmyth foci or "port" is that the instruments do not need to move with the telescope, which simplifies engineering and improves instrument stability. Source: Apache Point Observatory
+```
+
+#### Mounts
+
+Telescopes need to be mounted on a structure that allows to point them to a desired location on the sky and, most importantly, to track that position as the Earth rotates. There are two main types of mounts: _alt-azimuthal_ and _equatorial_.
+
+The alt-azimuthal (or alt-az) mount has two axes of rotation, one that moves the telescope up and down (altitude) and another that moves it coplanar with the horizon (azimuth). Note that this are the same axes as the alt-az coordinates.
+
+```{figure} ./images/altaz-telescope.png
+:width: 50%
+:align: center
+:class: white-background
+```
+
+The advantage of the alt-az design is that is simple and that the centre of mass of the telescope is just above the mount, which makes it more stable. The disadvantage is that the telescope needs to be moved in two dimensions to track a source. Additionally, the even if we track a source on the sky by appropriately moving both axes, the field of view of the telescope will rotate. This is called _field rotation_ and is caused by the fact that the field of view is not a single point. As the sky rotates, only the centre of the field of view is stationary, the rest of the field rotates around it. To compensate for this, the field needs to be rotated (or "de-rotated") during the observation. This is done by a mechanism called the _rotator_, which depending on the telescope may move just the an optical element in the instrument, or rotate the entire back of the telescope.
+
+```{figure} ./images/rotator-gtc.png
+:width: 100%
+:align: center
+:class: white-background
+A rotator mechanism for the Gran Telescopio de Canarias (GTC). The rotator is located in one of the Nasmyth ports of the telescope and rotate any instrument attached to it. Note the corrector lenses at the centre of the corrector. Source: IDOM.
+```
+
+A solution to these problems is the use of an _equatorial mount_. In this case one of the axes of rotation (right ascension) is aligned with the Earth's axis of rotation (i.e., points to the celestial pole). This means that we only need to move one axis to track a source on the sky. The other axis (declination) is used to point the telescope to a desired location on the sky.
+
+The main disadvantage of the equatorial mount is that the weight of the telescope is often misaligned with the mount, which requires it to be over-engineered to avoid vibrations. In practice, an unless the polar alignment is perfect, the telescope will still need to be moved in two axes to track a source, although the contribution of the declination axis is usually small. Similarly, equatorial mounts are usually affected by a small amount of field rotation, which may or may not need to be corrected depending on the length of the observation, instrumentation, scale, etc.
+
+```{figure} ./images/equatorial-telescope.png
+:width: 50%
+:align: center
+:class: white-background
+```
+
+Nowadays most large telescopes are build with alt-az mounts, and the problems of two-axis tracking and field rotation are solved by the use of guiding cameras and a closed-loop control system that continuously monitors the location of the telescope and adjust the position of all the axes.
+
+### Aberrations
+
+So far we have limited ourselves to the paraxial and thing lens approximations. In reality, however, lenses and mirrors are not perfect. _Aberrations_ arise when the image formed by an optical system is not a perfect representation of the object. There are many types of aberrations: chromatic, coma, spherical, ... We will briefly discuss the most common ones below.
+
+Aberrations can be avoided or compensated by taking into account Fermat's principle: light travels between two points along the path that takes the least time. However, it is often not possible to derive a closed-form solution for the path of light rays in an optical system, and the behaviour of these systems needs to be studied using ray tracing and numerical methods.
+
+#### Chromatic aberration
+
+The simplest type of aberration is the chromatic aberration. This is caused by the fact that the index of refraction of a medium depends on the wavelength of the light passing through it. In practice this causes light of different wavelengths (colours) to be focused at different distances from the lens.
+
+```{figure} ./images/aberration-chromatic.png
+:width: 50%
+:align: center
+:class: white-background
+```
+
+Chromatic aberration is much less prevalent in mirrors, although it is still present in some cases. In lenses this aberration can be reduced by using a combination of lenses made of different materials (called _achromatic doublets_ or _triplets_). The complexity of these designs is one of the reasons why large refracting telescopes are so expensive to build. However, chromatic aberration and achromatic elements are important in other optical systems, such as cameras and spectrographs, which use lenses as part of their design.
+
+#### Spherical aberration
+
+Spherical aberration is caused by perfectly spherical lenses or mirrors. As we move aways from the optical axis and the paraxial regime, the rays of light are not focused at the same point. This results in a series of concentric rings of light, which is called a _circle of confusion_.
+
+```{figure} ./images/aberration-spherical-1.png
+:width: 80%
+:align: center
+:class: white-background
+```
+
+```{figure} ./images/aberration-spherical-2.png
+:width: 80%
+:align: center
+Top: diagram showing the effect of spherical aberration in an spherical mirror. Bottom: a set of images showing different levels of spherical aberration (left to right) at different focal positions (top to bottom).
+```
+
+#### Coma
+
+Coma is caused by different levels of magnification over the entrance pupil. The result is that off-axis point sources display a small tail or "comet-like" (coma) shape.
+
+```{figure} ./images/aberration-coma-1.png
+:width: 80%
+:align: center
+```
+
+```{figure} ./images/aberration-coma-2.png
+:width: 80%
+:align: center
+```
+
+```{figure} ./images/aberration-coma-3.png
+:width: 80%
+:align: center
+Top: diagram showing the effect of coma in a lens. Middle: a set of images showing the effect of comma in a point source image at different focal plane positions. Bottom: an example of coma being corrected using a corrector lens.
+```
+
+#### Astigmatism
+
+Astigmatism is caused by the fact that the lens or mirror has different focal lengths for different orientations of the optical element. This means that a point source will be focused into an ellipse instead of a point. The effect is similar to coma, but the direction of the elongation of the ellipse depends on the orientation of the lens.
+
+```{figure} ./images/aberration-astigmatism-1.png
+:width: 80%
+:align: center
+```
+
+```{figure} ./images/aberration-astigmatism-2.png
+:width: 80%
+:align: center
+Top: diagram showing the effect of astigmatism in a lens. Bottom: a set of images showing the effect of astigmatism in a point source image at different focal plane positions. Note that while the direction of the coma does not change as we pass through focus, the astigmatism ellipse changes its orientation.
+```
+
+#### Diffraction
+
+Although not technically an aberration, we will briefly discuss the effect of diffraction here. Diffraction is the bending of light, without changes to its energy, when the light passes through and aperture or obstacle. In optical systems the edges of mirrors or lenses can act as sources of diffraction. So far we have assumed that the wavelength of the light is much smaller than the aperture of the mirror, but in practice diffraction establishes the maximum resolution of the optical system, i.e., the smallest separation between two point sources that can be resolved.
+
+It can be shown (see Schroeder, Astronomical Optics) that the diffraction limit of a circular aperture is given by
+
+$$
+R[\rm rad] = \dfrac{\lambda}{D}
+$$
+
+where $R$ is the resolution in radians, $\lambda$ is the wavelength of the light, and $D$ is the diameter of the aperture. For a one-metre telescope observing at $5000\,\unicode{x212B}$, the resolution is about $0.1$ arcseconds, which is less than what we be observed by ground-based telescopes due to atmospheric turbulence. In space, however, diffraction is often the limiting factor in the resolution of an optical telescope.
+
+As we move to longer wavelengths the effect of diffraction becomes more important. The same telescope observing in the J band (1.25 $\mu \rm m$) has a resolution of about 0.25 arcseconds, while in the radio band (1 cm) the resolution is about 0.5 **degrees**. This means that radio telescopes need to be much larger than optical telescopes to achieve the same resolution.
+
+#### Seeing
+
+Another not-quite-an-aberration effect that affects ground-based telescopes is the _seeing_. Astronomical seeing is the perturbation of the light by the turbulence of air cells in the atmosphere and it's usually the main factor limiting the resolution of ground-based telescopes. Seeing changes in relatively short timescales as the turbulence in the atmosphere changes. To first order, seeing has the effect of blurring the image of a point source into a Gaussian-like shape (sometimes a Lorentzian profile is more accurate). Because of this we often measure the seeing as the [Full-Width at Half Maximum](https://en.wikipedia.org/wiki/Full_width_at_half_maximum) (FWHM) of the [point spread function](https://en.wikipedia.org/wiki/Point_spread_function) (PSF) of a star.
+
+Astronomical observatories are located at high altitudes and in dry locations to reduce the effect of seeing. The best ground-based observatories often reach seeings of 0.2-0.3 arcseconds but often the seeing is worse than that and a seeing of 1 arcsec or more is common for many professional telescopes.
+
+Seeing is a function of the altitude of the object on the sky, with the lowest seeing occurring when the object is at the zenith (and the light of the object has to pass through the least amount of atmosphere). The seeing can be related to the _airmass_, which is normally defined as the secant of the zenith angle of the object, $X=\sec z=\sec (90-h)=\csc h$. With that definition, we can often approximate the seeing $s\sim s_0 X^{3/5}$, where $s_0$ is the seeing at the zenith.
+
+#### Adaptive optics
+
+The effect of seeing can sometimes be reduced by using _adaptive optics_. This technique uses a set of small mirrors that can be deformed to "undo" the effect of the seeing in the light wavefront. The mirrors are controlled by a computer that continuously monitors the image of a star and adjusts the shape of the mirrors to compensate for the distortion caused by the atmosphere. A wavefront sensor, usually located near the exit pupil, measured distortions in the wavefront and sends the information to a computer. This process is repeated many times per second.
+
+```{figure} ./images/wavefront-sensor.gif
+:width: 100%
+:align: center
+An example of a distorted image. By knowing the distortion (the wavefront in the case of adaptive optics) we can deconvolve the original image. Credit: Wikipedia
+```
+
+```{figure} ./images/ao-diagram.png
+:width: 60%
+```
+
+```{figure} ./images/ao-mirror.png
+:width: 60%
+A diagram of an adaptive optics system (top) and a deformable mirror used to correct the wavefront (bottom).
+```
 
 ## Further reading
 
 - Birney, D. S., Gonzalez, R. A., and Oesper, D. (2006). Observational Astronomy (2nd ed.)
 - Smart, W. M. (1977). Textbook on Spherical Astronomy (6th ed.)
 - Ryden, B., and Peterson, B. M. (2010). Foundations of Astronomy (3rd ed.)
+- Schroeder, D., (2000) Astronomical Optics (2nd ed.)
 - [International Celestial Reference System](https://aa.usno.navy.mil/faq/ICRS_doc)
