@@ -32,4 +32,20 @@ When you are ready to submit your pre-proposal, please use [this form](https://d
 
 ## Full proposals
 
-Details about the content of the full proposal will be provided soon. The full proposals are due on **Monday, May 5**.
+Based on the feedback from your pre-proposal you will be asked to submit a full proposal. The proposal is due on **May 5th at 5pm PDT**. Only one proposal needs to be submitted per team. A space in Canvas will be created for each team to submit their proposal.
+
+The proposal must be a document in PDF format, no longer than 3 pages including figures and references. Style is not taken into account but the proposal must be written in a clear and concise manner, and formatted correctly. It must include the following sections/contents:
+
+- **Title**: the title of your proposal in a descriptive and concise manner.
+- **PIs**: the names of all team members.
+- **Abstract**: a short summary of your proposal (no more than 200 words).
+- **Introduction**: a brief introduction to the science case and the motivation for your project. Why is it important? What is the expected impact of your project?
+- **Proposed observations**: this is the main section of the proposal. Describe what observations that you want to carry out, the targets that you wil observe, exposure times, expected signal-to-noise, etc. Make sure to include details about your targets (coordinates, magnitudes, etc.) and a single plot with the staralt for all targets (you can use an average night in the middle of May).
+- **Time requested**: how much time do you need to complete your project? Discuss what half-nights would be best for your project, giving as many options as possible. ARCSAT observations can happen between May 7 to 15, and May 26 to June 5 (including weekends). Does any of your targets need follow-up observations outside your allocate time?
+- **Alternative targets**: if your main targets are not observable, what are your alternatives?
+- **Additional observations**: here you can optionally include other secondary observations that you'd want to carry out if time allows. This is not mandatory and you can skip this section if you do not have any additional observations.
+- **Filters needed**: which filters do you need for your observations? Refer to [the list of available filters](http://filters.apo.nmsu.edu). Provide a short justification for your choice of filters.
+- **Calibrations needed**: describe what calibrations you will need for your project. This includes bias, darks, flats, and spectrophotometric standards, if needed.
+- **Analysis**: describe how you plan to analyze the data. What results do you expect to obtain and how will you present them? You don't need to go into too much detail here, but you should have at least a rough idea of what you want to do with the data.
+
+You can add additional sections if you feel that you need them, but make sure that you do not exceed the page limit.
