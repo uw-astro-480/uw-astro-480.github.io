@@ -39,8 +39,6 @@ You can download this lecture as {nb-download}`ccd_reductions.ipynb` or {downloa
 :::
 
 ```{code-cell} ipython3
-:tags: [remove-cell]
-
 %matplotlib inline
 
 import os
@@ -49,9 +47,11 @@ from matplotlib import pyplot as plt
 
 plt.ion()
 
+# Change these paths to point to the location of your data
 LFC_DIR = '../../data/example-cryo-LFC/'
 ANDOR_DIR = '../../data/ccd_reductions_data/'
 
+# This moves the current working directory to the location of the LFC data
 os.chdir(LFC_DIR)
 ```
 
