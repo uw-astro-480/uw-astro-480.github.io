@@ -43,6 +43,7 @@ You can download this lecture as {nb-download}`ccd_reductions.ipynb` or {downloa
 
 %matplotlib inline
 
+import os
 from astropy.io import fits
 from matplotlib import pyplot as plt
 
@@ -50,6 +51,8 @@ plt.ion()
 
 LFC_DIR = '../../data/example-cryo-LFC/'
 ANDOR_DIR = '../../data/ccd_reductions_data/'
+
+os.chdir(LFC_DIR)
 ```
 
 ## Bias and overscan
@@ -65,7 +68,7 @@ Bias frames are images that are taken with zero exposure time and the shutter cl
 In the LFC dataset the bias frames are images 1 to 6. Let's open one of them:
 
 ```{code-cell} ipython3
-bias = fits.open(LFC_DIR + 'ccd.001.0.fits')
+bias = fits.open('ccd.001.0.fits')
 bias.info()
 ```
 
@@ -191,7 +194,7 @@ Let's now combine several real bias frames and look at the resulting image. The 
 bias_images = []
 
 for i in range(1, 7):
-    bias_data = fits.getdata(LFC_DIR + f'ccd.00{i}.0.fits')
+    bias_data = fits.getdata(f'ccd.00{i}.0.fits')
     bias_images.append(bias_data.astype('f4'))
 
 # Convert the list into a 3D array
@@ -272,7 +275,7 @@ With these pros and cons in mind, let's look at the overscan region of one of ou
 ```{code-cell} ipython3
 from astropy.visualization import ZScaleInterval
 
-flat = fits.open(LFC_DIR + 'ccd.014.0.fits')
+flat = fits.open('ccd.014.0.fits')
 flat_data = flat[0].data.astype('f4')
 
 # Plot around the overscan region.
@@ -316,3 +319,178 @@ _ = plt.plot(overscan_profile_y)
 ```
 
 This looks better but note the sawtooth pattern, which is caused by the small number of pixels that contribute to the value in each column. Overall, if we wanted to use the overscan region from this image we probably would want to use the regions between 2058 and 2068 pixels approximately.
+
+### Removing the bias level
+
+Now that we have had a good look at the bias images and overscan, we can proceed to remove the contribution of the bias level from our images. We will use `ccd.014.0.fits` as an example. First, let's create a median or "master" bias image from the 6 bias frames using sigma-clipping, and save it to disk
+
+```{code-cell} ipython3
+bias_images = []
+for i in range(1, 7):
+    bias_data = fits.getdata(f'ccd.00{i}.0.fits')
+    bias_images.append(bias_data.astype('f4'))
+
+bias_images_masked = sigma_clip(bias_images, cenfunc='median', sigma=2.5, axis=0)
+bias_mean_2d = numpy.ma.mean(bias_images_masked, axis=0)
+
+# Create a new HDU list with the bias image. Note that we need
+# to use the data attribute of the masked array to get the actual data.
+bias_hdu = fits.PrimaryHDU(data=bias_mean_2d.data)
+hdul = fits.HDUList([bias_hdu])
+
+# Save the bias image to disk
+hdul.writeto('bias.fits', overwrite=True)
+```
+
+Although we haven't done it here, it's a good idea to include a header with information about your median bias. Often you can take one of the original bias headers and add new information to it.
+
+Now let's subtract this bias image from the flat. But before we'll trim the image a bit. This is usually a good idea since electronic defects are usually found near the edges of the image. That is also the region that is usually farther from the optical axis and where aberrations are more pronounced.
+
+```{code-cell} ipython3
+# Get the flat data
+flat = fits.open('ccd.014.0.fits')
+
+# Trim the image, removing 100 pixels from each side. You can play
+# with this value and choose one that makes visual sense for your images.
+flat_trim = flat[0].data[100:-100, 100:-100].astype('f4')
+
+# We also need to trim the bias image.
+bias_trim = bias_mean_2d[100:-100, 100:-100]
+
+# Now we simply subtract the bias image from the flat image
+flat_trim_no_bias = flat_trim - bias_trim.data
+
+# Let's compare the median value before and after the bias subtraction
+print(f'Median before: {numpy.ma.median(flat_trim[2000:2100, 1000:1100])}')
+print(f'Median after: {numpy.ma.median(flat_trim_no_bias[2000:2100, 1000:1100])}')
+```
+
+The level is about 1100 counts lower after removing the bias, which is what we expected. Now we can save the flat image to disk. We will use the original header and add a comment keyword.
+
+```{code-cell} ipython3
+# Create a new HDU list with the flat image.
+flat_hdu = fits.PrimaryHDU(data=flat_trim_no_bias, header=flat[0].header)
+
+# Add a comment to the header
+flat_hdu.header['COMMENT'] = 'Flat-field image with bias subtracted'
+
+# And say what bias image we used
+flat_hdu.header['BIASFILE'] = ('bias.fits', 'Bias image used to subtract bias level')
+
+# Save the flat image to disk. Note that if we want a FITS file with
+# only one extension we can just save the PrimaryHDU object directly.
+flat_hdu.writeto('ccd.014.0_bias.fits', overwrite=True)
+
+# Let's check the header
+flat_hdu.header
+```
+
+What if we had decided to use the overscan region instead of the bias frames? We simply need to generate an average overscan level per row and then subtract it from that row in the image.
+
+```{code-cell} ipython3
+# Get the overscan region. Note that we use the flat image
+# before trimming because the trimming may have removed the
+# overscan region. We use only the range 2058-2068 that we
+# decided that looked good from our visual analysis.
+flat_data = flat[0].data.astype('f4')
+overscan = flat_data[:, 2058:2069]
+
+# Now calculate the median along the x axis.
+overscan_median = numpy.median(overscan, axis=1)
+print(f'Median overscan shape: {overscan_median.shape}')
+
+# Subtract the overscan from the flat image row by row. We need
+# to transpose the overscan array to match the shape of the flat image.
+flat_no_bias_overscan = flat_data - overscan_median[:, numpy.newaxis]
+
+# Let's trim the final image.
+flat_no_bias_overscan_trim = flat_no_bias_overscan[100:-100, 100:-100]
+
+# And get the same statistics as before. Note that we compensate for the
+# fact that we have trimmed the overscan-subtracted image.
+print(f'Median before: {numpy.median(flat_data[2100:2200, 1100:1200])}')
+print(f'Median after: {numpy.median(flat_no_bias_overscan_trim[2000:2100, 1000:1100])}')
+
+# And save the image to disk
+flat_hdu = fits.PrimaryHDU(data=flat_no_bias_overscan_trim, header=flat[0].header)
+flat_hdu.header['COMMENT'] = 'Flat-field image with overscan subtracted'
+flat_hdu.writeto('ccd.014.0_overscan.fits', overwrite=True)
+```
+
+:::{important}
+In general you should subtract an average bias image OR subtract the overscan, but not both (you would end up with a mostly negative image). There are cases in which one may want to use both, for example if the bias level changes significantly during the night but there is also an important spatial dependence in the bias level. In this case a solution is to subtract the overscan for each image but then apply a correction from a normalised bias image, similar to what we will do later for the flat-field correction.
+:::
+
+## Measuring the gain and readout noise
+
+As we saw in the previous lecture we can determine the gain and readout noise of a CCD camera by taking a series of images with uniform illumination and different exposure times (and thus different signal levels) and plotting the average signal level against the standard deviation for each pair of images. Alternatively we can use just a couple images with varying signal levels, in which case
+
+$$
+\sigma_\Delta^2=2\left(\dfrac{S}{G}+\frac{\sigma_{\rm RN}^22}{G^2}\right)
+$$
+
+where $\sigma_\Delta$ is the standard deviation of the difference between the two images, $S$ is the signal level in ADU from one of the images, $G$ is the gain in electrons per ADU, and $\sigma_{\rm RN}$ is the readout noise in ADUs. Remember that we want to use two images to remove the contribution of the fixed pattern noise.
+
+For a quick calculation we can make things even simpler. If we take two images with high signal (but well below saturation) then we can ignore the readout noise and the equation becomes
+
+$$
+G = 2\dfrac{S}{\sigma_\Delta^2}
+$$
+
+and if we take two images with very low signal we can ignore the signal and write
+
+$$
+\sigma_{\rm RN} = \sqrt{\dfrac{\sigma_\Delta^2G^2}{2}}
+$$
+
+We actually have the perfect images for this quick calculation. Our flats are good, uniform images with a high signal level, and our biases are, by definition, images without any signal in them. Let's then start by calculating the gain. We will use two flat images for this, `ccd.014.0.fits` and `ccd.015.0.fits`. For this, you should check that the signal levels between both images are very similar.
+
+```{code-cell} ipython3
+flat1 = fits.getdata('ccd.014.0.fits').astype('f4')
+flat2 = fits.getdata('ccd.015.0.fits').astype('f4')
+
+# Since the images don't have a totally uniform level, we will
+# use a range of pixels that we have visually decided looks flat.
+# We want these regions to be reasonably large to get good statistics.
+flat1_trim = flat1[1600:2000, 1300:1700]
+flat2_trim = flat2[1600:2000, 1300:1700]
+
+# Calculate the variance of the difference between the two images
+flat_diff = flat1_trim - flat2_trim
+flat_diff_var = numpy.var(flat_diff)
+
+# Get the signal as the average of the two images
+mean_signal = 0.5 * numpy.mean(flat1_trim + flat2_trim)
+
+# Calculate the gain
+gain = 2 * mean_signal / flat_diff_var
+
+print(f'Gain: {gain:.2f} e-/ADU')
+```
+
+If you check the keyword `GAIN` in the header of the images you'll see it says 1.1, which would make us think that we got this wrong. But if you go to the LFC website and check the [specifications of the camera](https://sites.astro.caltech.edu/palomar/observer/200inchResources/lfcspecs.html#ccd) you can see that the gain actually varies from 1.8 to 2.1. The LFC camera has multiple detectors and our image corresponds to the first one of them, which has a reported gain of 2.0 (always be a bit sceptic about the information that you read in the headers!). It seems we are in the ballpark but this is not a completely accurate measurement, which is not surprising.
+
+Let's now calculate the readout noise from two bias images.
+
+```{code-cell} ipython3
+bias1 = fits.getdata('ccd.001.0.fits').astype('f4')
+bias2 = fits.getdata('ccd.002.0.fits').astype('f4')
+
+# Here we can use a very large region since the bias level is very flat.
+# So we just trim the images to remove the contribution from the edge pixels.
+bias1_trim = bias1[1000:-1000, 1000:-1000]
+bias2_trim = bias2[1000:-1000, 1000:-1000]
+
+# Calculate the variance of the difference between the two images
+bias_diff = bias1_trim - bias2_trim
+bias_diff_var = numpy.var(bias_diff)
+
+# Calculate the readout noise
+readout_noise_adu = numpy.sqrt(bias_diff_var / 2)
+readout_noise_e = readout_noise_adu * gain
+
+print(f'Readout noise (ADU): {readout_noise_adu:.2f} ADU')
+print(f'Readout noise (e-): {readout_noise_e:.2f} e-')
+```
+
+Looking at the CCD specifications we would expect a readout noise of about 11 e-, but we seem to be overestimating it by a bit. Part of this is due to the fact that cosmic rays and other defects may be affecting our estimations, which we could improve on by using more images. But the main contributor seems to be the gain. If we use our measured readout noise in ADU (5.47) and multiply it by the gain provided in the LFC website (2.0) we get a readout noise of 10.94 e- which is very close to the expected value. This shows that it's usually easier to get a good, quick estimate of the readout noise than the gain, for which a proper PTC is needed.
