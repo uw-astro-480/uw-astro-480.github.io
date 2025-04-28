@@ -664,6 +664,10 @@ print(f'Mode: {flat_mode:.0f}')
 # Normalise the flat image
 flat_g_norm = flat_g_combined / flat_mode
 
+# Mask out pixels with zero value since those will fail when we divide
+# by the flat later. We replace them with 1s that will not affect the result.
+flat_g_norm[flat_g_combined == 0] = 1
+
 # Save the normalised flat image to disk
 flat_g_hdu = fits.PrimaryHDU(data=flat_g_norm, header=flat[0].header)
 flat_g_hdu.header['COMMENT'] = 'Normalised flat-field image'
