@@ -545,10 +545,10 @@ for file in files:
     dark_hdu.writeto(dark_no_bias_filename, overwrite=True)
 ```
 
-Now let's combine the dark frames. There are different ways to do this. We could combine each set of dark frames for an exposure time and create median darks for each of those exposures times. Instead we'll take each dark frame, scale it by its exposure time and then combine them all.
+Now let's combine the dark frames. There are different ways to do this. We could combine each set of dark frames for an exposure time and create median darks for each of those exposures times. Instead we'll use the three darks with the longest exposure time and normalise them.
 
 ```{code-cell} ipython3
-dark_bias_files = sorted(glob.glob('./darks/ccd.*_bias.fits'))
+dark_bias_files = ['./darks/ccd.013.0_bias.fits', './darks/ccd.014.0_bias.fits', './darks/ccd.015.0_bias.fits']
 dark_bias_data = []
 
 for file in dark_bias_files:
@@ -638,7 +638,7 @@ for ii in range(14, 20):
 
 
 # Mask using sigma-clipping
-flats_g_masked = sigma_clip(flats_g, cenfunc='median', sigma=3, axis=0)
+flats_g_masked = sigma_clip(flats_g, cenfunc='median', sigma=2, axis=0)
 
 # Combine the flats
 flat_g_combined = numpy.ma.median(flats_g_masked, axis=0).data
@@ -712,3 +712,60 @@ _ = plt.imshow(flat_g_model, origin='lower', norm=norm, cmap='YlOrBr_r')
 ```
 
 We can see that we are missing a lot of the high-frequency structure, but we have correctly captured the main shape of the illumination patter, including the direction of the gradients.
+
+## Science images
+
+Now that we have processed and combined all our calibration images, we can proceed to apply those corrections to our science images. The process is relatively straightforward and consists of the following steps:
+
+- Subtract the bias level from the science image.
+- Subtract the dark current from the science image.
+- Divide the science image by the normalized flat-field image. This corrects the pixel-to-pixel variations in the CCD response.
+- Trim the image to remove the edges and overscan regions.
+
+In our dataset, image 37 is a science image taken with the `g'` filter. Let's start by looking at it.
+
+```{code-cell} ipython3
+science = fits.open('ccd.037.0.fits')
+science_data = science[0].data.astype('f4')
+
+# Plot the science image. Scale by a trimmed region to avoid the edges but plot the full image.
+norm = ImageNormalize(science_data[100:-100, 100:-100], interval=ZScaleInterval(), stretch=LinearStretch())
+_ = plt.imshow(science_data, origin='lower', norm=norm, cmap='YlOrBr_r')
+```
+
+The image shows an open cluster along with some other field stars and galaxies. Note that we can see some of the features that we pointed out earlier when talking about the flat. Let's go ahead and correct it.
+
+```{code-cell} ipython3
+# Subtract the bias level
+bias_data = fits.getdata('bias.fits').astype('f4')
+science_data_proc = science_data - bias_data
+
+# Get the exposure time from the header
+exptime = science[0].header['EXPTIME']
+
+# Subtract the dark current, scaled to the exposure time
+dark_data = fits.getdata('dark.fits').astype('f4')
+dark_data_scaled = dark_data * exptime
+science_data_proc -= dark_data_scaled
+
+# Divide by the normalised flat-field image
+flat_data = fits.getdata('flat_g.fits').astype('f4')
+science_data_proc /= flat_data
+
+# Trim the image to remove the edges and overscan regions
+science_data_proc = science_data_proc[100:-100, 100:-100]
+
+# Plot the final image
+norm = ImageNormalize(science_data_proc, interval=ZScaleInterval(), stretch=LinearStretch())
+_ = plt.imshow(science_data_proc, origin='lower', norm=norm, cmap='YlOrBr_r')
+
+# Save the final image to disk
+science_hdu = fits.PrimaryHDU(data=science_data_proc, header=science[0].header)
+science_hdu.header['COMMENT'] = 'Final science image'
+science_hdu.header['BIASFILE'] = ('bias.fits', 'Bias image used to subtract bias level')
+science_hdu.header['DARKFILE'] = ('dark.fits', 'Dark image used to subtract dark current')
+science_hdu.header['FLATFILE'] = ('flat_g.fits', 'Flat-field image used to correct flat-fielding')
+science_hdu.writeto('ccd.037.0_proc.fits', overwrite=True)
+```
+
+Note how the image has improved. The flat features have disppeared and the image looks much "flatter". The gradient on the lower left corner, which is caused mainly by thermal noise has also disappeared thanks to removing the dark contribution.
