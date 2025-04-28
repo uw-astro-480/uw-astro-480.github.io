@@ -16,24 +16,24 @@ The following is a tentative schedule for the course. It may be subject to signi
 | April&nbsp;16 | [CCDs (2) — Noise and CCD characterisation](./lecture_notes/ccds/ccds.md)                                                    | Assignment 1: coordinate transformations   |              |
 | April&nbsp;18 | Lab                                                                                                                          |                                            |              |
 | April&nbsp;21 | [Basic CCD reductions](./lecture_notes/ccd_reductions/ccd_reductions.md)                                                     |                                            |              |
-| April&nbsp;23 | [Calibration of CCD data](./lecture_notes/ccd_calibration/ccd_calibration.md)                                                |                                            |              |
+| April&nbsp;23 | [Basic CCD reductions](./lecture_notes/ccd_reductions/ccd_reductions.md)                                                     |                                            |              |
 | April&nbsp;25 | Lab                                                                                                                          |                                            |              |
-| April&nbsp;28 | [ARCSAT and preparing observing proposals](./lecture_notes/arcsat_proposals/arcsat_proposals.md) (1)                         |                                            |              |
-| April&nbsp;30 | [ARCSAT and preparing observing proposals](./lecture_notes/arcsat_proposals/arcsat_proposals.md) (2)                         |                                            |              |
+| April&nbsp;28 | [Basic CCD reductions](./lecture_notes/ccd_reductions/ccd_reductions.md)                                                     |                                            |              |
+| April&nbsp;30 | [ARCSAT and preparing observing proposals](./lecture_notes/arcsat_proposals/arcsat_proposals.md)                             |                                            |              |
 | May&nbsp;2    | Lab                                                                                                                          |                                            |              |
-| May&nbsp;5    | [Catalogue data, formats, best practices](./lecture_notes/catalogue_data/catalogue_data.md)                                  | Observing proposals                        | Week 1       |
-| May&nbsp;7    | [Databases and SQL](./lecture_notes/databases/databases.md)                                                                  |                                            | Week 1       |
+| May&nbsp;5    | [Calibration of CCD data](./lecture_notes/ccd_calibration/ccd_calibration.md)                                                | Observing proposals                        | Week 1       |
+| May&nbsp;7    | [Catalogue data, formats, best practices](./lecture_notes/catalogue_data/catalogue_data.md)                                  |                                            | Week 1       |
 | May&nbsp;9    | Lab                                                                                                                          | Assignment 2: CCD reductions               | Week 1       |
-| May&nbsp;12   | [Plotting and data visualisation](./lecture_notes/data_visualisation/data_visualisation.md)                                  |                                            | Week 2       |
-| May&nbsp;14   | [Parallelisation, supercomputing, and distributed computing](./lecture_notes/distributed_computing/distributed_computing.md) |                                            | Week 2       |
+| May&nbsp;12   | [Databases and SQL](./lecture_notes/databases/databases.md)                                                                  |                                            | Week 2       |
+| May&nbsp;14   | [Plotting and data visualisation](./lecture_notes/data_visualisation/data_visualisation.md)                                  |                                            | Week 2       |
 | May&nbsp;16   | Lab                                                                                                                          |                                            |              |
 | May&nbsp;19   | [Spectrographs](./lecture_notes/spectrographs/spectrographs.md)                                                              |                                            |              |
 | May&nbsp;21   | [Reduction and calibration of spectroscopic data](./lecture_notes/spec_data_reduction/spec_data_reduction.md)                |                                            |              |
 | May&nbsp;23   | Lab                                                                                                                          | Assignment 3: catalogue data               |              |
 | May&nbsp;26   | Memorial Day: no class                                                                                                       |                                            | Week 3       |
-| May&nbsp;28   | [Big data and the future of data analysis in astronomy](./lecture_notes/big_data/big_data.md)                                |                                            | Week 3       |
+| May&nbsp;28   | [Parallelisation, supercomputing, and distributed computing](./lecture_notes/distributed_computing/distributed_computing.md) |                                            | Week 3       |
 | May&nbsp;30   | Lab                                                                                                                          |                                            | Week 3       |
-| June&nbsp;2   | Lecture or lab                                                                                                               |                                            | Week 4       |
+| June&nbsp;2   | [Big data and the future of data analysis in astronomy](./lecture_notes/big_data/big_data.md)                                |                                            | Week 4       |
 | June&nbsp;4   | Lecture or lab                                                                                                               | Assignment 4: long slit spectroscopy       | Week 4       |
 | June&nbsp;12  |                                                                                                                              | Assignment 5: final project (ARCSAT paper) |              |
 
