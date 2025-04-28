@@ -4,6 +4,7 @@ kernelspec:
   name: python3
 mystnb:
   merge_streams: true
+  execution_timeout: 300
 ---
 
 # Basic CCD reductions
@@ -282,7 +283,7 @@ flat_data = flat[0].data.astype('f4')
 overscan_zoom = flat_data[:, 2000:]
 
 norm = ImageNormalize(overscan_zoom, interval=ZScaleInterval(), stretch=LinearStretch())
-_ = plt.imshow(overscan_zoom, origin='lower', norm=norm, cmap='YlOrBr')
+_ = plt.imshow(overscan_zoom, origin='lower', norm=norm, cmap='YlOrBr_r')
 _ = plt.ylim(0, 4128)
 ```
 
@@ -572,3 +573,142 @@ dark_hdu.header['BIASFILE'] = ('bias.fits', 'Bias image used to subtract bias le
 # Save the dark image to disk
 dark_hdu.writeto('dark.fits', overwrite=True)
 ```
+
+## Flats
+
+Flat-fielding is a process that is closely related to the fixed pattern noise that we saw in the previous lecture. Pixels in a detector don't all respond the same way to incident light. That is, the quantum efficiency of each pixel, which ideally would be 100% in the visible range, is not the same for all pixels. Usually the differences are small, in the few percent range, but that is enough for fixed pattern noise to quickly become the dominant source of noise when images have significant signal levels.
+
+Fortunately, fixed pattern noise (FPN) is highly systematic (the same pixel will have the same response every time) and we can correct for it. Note that while quantum efficiency is the dominant cause of FPN in an otherwise perfect detector, factors such as dust, scratches, and other defects can also contribute to FPN. The contribution of those factors can sometimes change from night to night which requires measuring the FPN before each observation.
+
+FPN is usually measured using a series of _flat-field images_ or _flats_. Flats are images with significant, _uniform_ illumination of the CCD which allow us to determine the relative response of each pixel. There are three main types of flats:
+
+- Dome flats: these are taken with a uniform illumination of the dome of the telescope. Usually a flat-field screen is placed somewhere and illuminated with a halogen lamp. The telescope is then pointed to that screen and, since the screen is not at infinity, the resulting image is likely to produce a good, uniform flat-field image.
+- Twilight flats: these are taken at twilight, when the sky is still bright but the Sun is below the horizon. During twilight the sky provides a very uniform illumination. Twilight flats may be difficult to take as the background of the sky changes rapidly and provides different illumination at different wavelengths, which requires quickly adjusting exposure times. The resulting S/N levels are usually lower than with dome flats. To avoid stars affecting the twilight flats the telescope can be left stationary, without tracking. When multiple images are combined the stars will fall on different pixels on the CCD and they can be sigma-clipped out. Alternatively one can introduce small offsets on the position of the telescope between images.
+- Sky flats: these are taken during the night or even generated from a series of science images. By combining a large number of science frames from different fields we can remove the contribution of stars (or write an algorithm that ignore them when generating a modelled flat) and create a flat-field image. This image provides, in principle, the closest approximation to the actual sky illumination and to what the science images see, but is usually affected by very low S/N.
+
+For most observations we use a combination of dome and twilight flats. In the evening (or morning) we point the telescope towards the West horizon (East in the morning) at an altitude of about 40 degrees, which provides the most uniform illumination across the FoV of the telescope. We then take exposures on each filter with the goal of getting about 50% the saturation level (25-30,000 counts for most cameras). This is often not possible for all filters during twilight flats, and some trade-offs need to be decided between the number of filters to observe and how much signal we can get on each one. We start with the narrow-band filters while the solar illumination is still high and then move to the broad-band filters from blue to red. Between exposures, you can move the telescope in a diagonal (30 arcsec in RA, 30 arcsec in Dec) to avoid stars falling on the same pixels.
+
+After the twilight flats, we will usually take a set of dome flats, following the procedure specified by the observatory. This usually entails pointing the telescope to a specific position on the dome, turning on the lamp used for flats, and taking exposures in all filters while making sure we get as high a signal as possible without going over 60% of the saturation level.
+
+Either the twilight flats or the dome flats can be used (after correcting them from bias and potentially dark current) to create a master flat image, which is then normalised by the median value of the image to create a normalised flat. If we have both twilight and dome flats, we can try to combine them to create a better flat-field image. The idea is to use the twilight flats to correct for the low-order illumination effects and the dome flats, with higher S/N, to account for the higher-order, pixel-to-pixel variations. For that we combine and normalise the twilight flats and use them to correct the dome flats. We then combine and normalise the dome flats and fit a low-order, two-dimensional polynomial to the resulting image. This model contains information about the the non-uniformities in the dome flat-field screen. Finally we divide the normalised dome flat by the model to remove the screen contributions.
+
+### Combining and normalising flats
+
+Our dataset only includes dome flats, so we will only use those, but later we will see how we could create a low-order modelled flat.
+
+Images 14 to 19 in our dataset are dome flats. Let's start by looking at their exposure times, average levels, and filters.
+
+```{code-cell} ipython3
+for ii in range(14, 20):
+    fname = f'ccd.0{ii}.0.fits'
+    flat = fits.open(fname)
+    flat_data = flat[0].data.astype('f4')[500:-500, 500:-500]
+    print(f'{fname} - {flat[0].header["IMAGETYP"]} - {flat[0].header["EXPTIME"]} - '
+          f'{flat[0].header["FILTER"]} - {numpy.median(flat_data):.2f}')
+```
+
+We have flats for two different filters, `g'` and `'`, taken with different exposure times. The signal levels for all the images look reasonable. Let's look at one of the `g'` flats.
+
+```{code-cell} ipython3
+flat = fits.open('ccd.014.0.fits')
+flat_data = flat[0].data.astype('f4')[100:-100, 100:-100]
+
+# Plot the flat image
+norm = ImageNormalize(flat_data, interval=ZScaleInterval(), stretch=LinearStretch())
+_ = plt.imshow(flat_data, origin='lower', norm=norm, cmap='YlOrBr_r')
+```
+
+Unlike for bias and dark frames there is a lot of structure here. First, we notice some stars on the image. We will need to be careful to make sure that those stars disappear after we combine the flats. Most importantly, we see a non-uniform field with two main features: the lower and upper parts of the image have higher signal levels and there is a gradient towards the centre; and there is a cross-like "shadow" and square features on the edges of the image which are part of the CCD electronics. We also see a series of darker spots, which are places where the CCD substrate was not properly thinned.
+
+Let's combine the images for the `g'` filter (we'll leave the `i'` ones as an exercise).
+
+:::{hint}
+Although we will not use it in this course, the [ccdproc](https://ccdproc.readthedocs.io/en/latest/) package (based on the classic IRAF `ccdproc`) automatically allows to handle and combine flats from multiple filters, provided that the headers are set up correctly.
+:::
+
+```{code-cell} ipython3
+# Get the list of flats for the g' filter and subtract the bias level.
+# We'll consider that the dark current is negligible for the flats.
+flats_g = []
+for ii in range(14, 20):
+    fname = f'ccd.0{ii}.0.fits'
+    flat = fits.open(fname)
+    if flat[0].header['FILTER'] == "g'":
+        flats_g.append(flat[0].data.astype('f4') - bias_mean_2d)
+
+
+# Mask using sigma-clipping
+flats_g_masked = sigma_clip(flats_g, cenfunc='median', sigma=3, axis=0)
+
+# Combine the flats
+flat_g_combined = numpy.ma.median(flats_g_masked, axis=0).data
+flat_g_combined_trim = flat_g_combined[100:-100, 100:-100]
+
+# Plot the combined flat
+norm = ImageNormalize(flat_g_combined_trim, interval=ZScaleInterval(), stretch=LinearStretch())
+_ = plt.imshow(flat_g_combined_trim, origin='lower', norm=norm, cmap='YlOrBr_r')
+```
+
+Now we need to normalise the flat by its median or mode level (you can try both, although it often comes down to personal preference). For this we will avoid using the edges of the image which are more affected by noise and include the overscan regions. Later, for the science images, we will trim the images to the same size.
+
+```{code-cell} ipython3
+from scipy.stats import mode
+
+# Calculate the median of the flat image.
+# We want to calculate the mode so need to use scipy.stats for
+# which we first need to flatten the image. You can replace this
+# with how we usually calculate the median. We also trim 100 pixels on each side.
+(flat_mode, _) = mode(flat_g_combined[100:-100, 100:-100].flatten(), nan_policy='omit')
+print(f'Mode: {flat_mode:.0f}')
+
+# Normalise the flat image
+flat_g_norm = flat_g_combined / flat_mode
+
+# Save the normalised flat image to disk
+flat_g_hdu = fits.PrimaryHDU(data=flat_g_norm, header=flat[0].header)
+flat_g_hdu.header['COMMENT'] = 'Normalised flat-field image'
+flat_g_hdu.header['BIASFILE'] = ('bias.fits', 'Bias image used to subtract bias level')
+flat_g_hdu.writeto('flat_g.fits', overwrite=True)
+```
+
+We do not plot the normalised flat since it will look identical to the non-normalised one except for a scale factor.
+
+### Modelling flat images
+
+Finally, let's imagine that this was a twilight flat and we want to fit a low-order polynomial to it to get the low-frequency structure. We can use `astopy.modeling` to do this.
+
+```{code-cell} ipython3
+:tags: [remove-cell]
+# Ignore this cell, which is only used to prevent some harmless warnings in the
+# next cell.
+import warnings
+from astropy.utils.exceptions import AstropyUserWarning
+
+warnings.filterwarnings('ignore', category=AstropyUserWarning)
+```
+
+```{code-cell} ipython3
+from astropy.modeling import models, fitting
+
+# Remove the edges which may affect the fitting.
+flat_g_norm_trim = flat_g_norm[100:-100, 100:-100]
+
+# Create a grid of x and y coordinates from the image shape.
+x, y = numpy.mgrid[0:flat_g_norm_trim.shape[0], 0:flat_g_norm_trim.shape[1]]
+
+# Initialise a polynomial model of degree 3 and the fitter (essentially a least-squares).
+p_init = models.Polynomial2D(degree=3)
+fit_p = fitting.LMLSQFitter()
+
+# Fit the model to the flat image.
+model = fit_p(p_init, x, y, flat_g_norm_trim)
+
+# Create a new image from the original grid but using the model.
+flat_g_model = model(x, y)
+
+# Plot the model
+norm = ImageNormalize(flat_g_model, interval=ZScaleInterval(), stretch=LinearStretch())
+_ = plt.imshow(flat_g_model, origin='lower', norm=norm, cmap='YlOrBr_r')
+```
+
+We can see that we are missing a lot of the high-frequency structure, but we have correctly captured the main shape of the illumination patter, including the direction of the gradients.
