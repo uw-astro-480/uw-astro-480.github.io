@@ -55,6 +55,7 @@ The assignment is due on Friday, May 9th at 11:59 PM. Late submissions by up to 
 
 ## Hints and resources
 
+- It is likely that if you try to process the images in the JupyterHub environment you'll run out of memory. To prevent that, you can start by trimming your images and only keeping a small part of them (for example `[0:1024, 0:1024]`). Make sure that the resulting area is large enough to perform photometry of the stars that you're interested in, and that you include the overscan region if you are planning to use it.
 - Remember to set up a virtual environment for your project using `uv sync` and activate it using `source .venv/bin/activate`.
 - You should be able to complete the assignment using just `astropy`, `numpy`, `matplotlib`, and `photutils`. You are welcome to use any other libraries but you should not use `ccdproc` or other tools that directly perform the data reduction for you. Make sure that you use `uv add` to include any additional libraries that you need in your project.
 - Make sure to check the expected inputs and outputs of each function in the docstring. Do not change the function names or the argument that they accept or the automated tests will not work.
