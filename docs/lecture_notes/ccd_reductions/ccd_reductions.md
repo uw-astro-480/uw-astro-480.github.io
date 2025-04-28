@@ -733,8 +733,8 @@ science = fits.open('ccd.037.0.fits')
 science_data = science[0].data.astype('f4')
 
 # Plot the science image. Scale by a trimmed region to avoid the edges but plot the full image.
-norm = ImageNormalize(science_data[100:-100, 100:-100], interval=ZScaleInterval(), stretch=LinearStretch())
-_ = plt.imshow(science_data, origin='lower', norm=norm, cmap='YlOrBr_r')
+norm_orig = ImageNormalize(science_data[100:-100, 100:-100], interval=ZScaleInterval(), stretch=LinearStretch())
+_ = plt.imshow(science_data, origin='lower', norm=norm_orig, cmap='YlOrBr_r')
 ```
 
 The image shows an open cluster along with some other field stars and galaxies. Note that we can see some of the features that we pointed out earlier when talking about the flat. Let's go ahead and correct it.
@@ -759,9 +759,12 @@ science_data_proc /= flat_data
 # Trim the image to remove the edges and overscan regions
 science_data_proc = science_data_proc[100:-100, 100:-100]
 
-# Plot the final image
+# Plot the final image along the original one to compare.
 norm = ImageNormalize(science_data_proc, interval=ZScaleInterval(), stretch=LinearStretch())
-_ = plt.imshow(science_data_proc, origin='lower', norm=norm, cmap='YlOrBr_r')
+
+fig, axes = plt.subplots(1, 2, figsize=(8, 12))
+_ = axes[0].imshow(science_data[100:-100, 100:-100], origin='lower', norm=norm_orig, cmap='YlOrBr_r')
+_ = axes[1].imshow(science_data_proc, origin='lower', norm=norm, cmap='YlOrBr_r')
 
 # Save the final image to disk
 science_hdu = fits.PrimaryHDU(data=science_data_proc, header=science[0].header)
