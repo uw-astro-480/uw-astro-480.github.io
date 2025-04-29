@@ -43,9 +43,11 @@ You can download this lecture as {nb-download}`ccd_reductions.ipynb` or {downloa
 %matplotlib inline
 
 import os
+import seaborn
 from astropy.io import fits
 from matplotlib import pyplot as plt
 
+seaborn.set_palette('deep', color_codes=True)
 plt.ion()
 
 # Change these paths to point to the location of your data
@@ -776,3 +778,49 @@ science_hdu.writeto('ccd.037.0_proc.fits', overwrite=True)
 ```
 
 Note how the image has improved. The flat features have disppeared and the image looks much "flatter". The gradient on the lower left corner, which is caused mainly by thermal noise has also disappeared thanks to removing the dark contribution.
+
+We can do one more check to see how much the image has improved. Let's make a profile of both the raw and processed images along the y-axis. We'll use sigma-clipping to try to remove some of the contributions from the stars and other sources.
+
+```{code-cell} ipython3
+# Trim the original image so that it has the same size as the processed one.
+science_data_trim = science_data[100:-100, 100:-100]
+
+# Calculate the median along the y-axis. Reject pixels using sigma-clipping.
+science_data_trim_masked = sigma_clip(science_data_trim, cenfunc='median', sigma=3, axis=1)
+science_data_trim_profile = numpy.ma.median(science_data_trim_masked, axis=1)
+
+# Do the same for the processed image
+science_data_proc_masked = sigma_clip(science_data_proc, cenfunc='median', sigma=3, axis=1)
+science_data_proc_profile = numpy.ma.median(science_data_proc_masked, axis=1)
+
+# Plot the profiles
+l1, = plt.plot(science_data_trim_profile, 'r-')
+_ = plt.twinx()  # New y-axis because the raw and process images have different base levels
+l2, = plt.plot(science_data_proc_profile, 'b-')
+
+_ = plt.legend([l1, l2], ['Raw image', 'Processed image'])
+```
+
+The processed image has a flatter profile, which is expected as we have removed many of the sources of non-uniformity, such as the flat-field. The peak between 2500 and 3000 pixels corresponds to the open cluster, which occupies many pixels on the image and has not been fully removed by the sigma-clipping.
+
+## Cosmic ray removal
+
+So far we have been able to remove most of the cosmic rays affecting our images by sigma-clipping. We can do the same for science images if we are taking multiple of them for each target, with approximately the same exposure time. But even if that is possible we may want to avoid sigma-clipping science images because we risk removing good science data, which would reduce or final S/N. Instead we can use special algorithms to mask out cosmic rays.
+
+The most widely used algorithm for cosmic ray removal is the [van Dokkum (2001)](https://iopscience.iop.org/article/10.1086/323894/pdf) method, which looks at the variation of Laplacian edge detection. Cosmic rays have edges that are "shaper" than the type of Gaussian profile that we expect from stars and other sources. This algorithm is very robust for all kinds of cosmic rays, regardles of their shape and intensity.
+
+A good implementation of this algorithm is [astroscrappy](https://astroscrappy.readthedocs.io/en/latest/index.html). We'll use it to generate a mask for the cosmic rays in our final science image.
+
+```{code-cell} ipython3
+from astroscrappy import detect_cosmics
+
+# Generate the cosmic ray mask and a cleaned image
+mask, cleaned = detect_cosmics(science_data_proc)
+
+# Plot the mask and the cleaned image
+fig, axes = plt.subplots(1, 2, figsize=(8, 12))
+_ = axes[0].imshow(mask, origin='lower', cmap='gray')
+_ = axes[1].imshow(cleaned, origin='lower', norm=norm, cmap='YlOrBr_r')
+```
+
+On the left we can see the mask of cosmic rays, with locations on the image that are flagged as cosmics in white (value `True` or `1`). On the right we see a cleaned image that is constructed by trying to replace the masked cosmics rays with an average of the surrounding pixels. Note that not all the cosmic rays and defects are removed. In particular the vertical columns are wider than the size the cleaning algorithm is able to handle (they are likely to be electronic defects or scratches). We are also detecting some features that have sharp edges but are not cosmic rays, such as the bad columns that we just mentioned and the centres of some of the stars, which are saturated and thus have a very sharp profile.
