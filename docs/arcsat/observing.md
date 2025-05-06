@@ -26,28 +26,28 @@ These are the ARCSAT teams and their associated team names, numbers, and Slack c
 
 The following is the **official schedule** for the ARCSAT observations. Requests for changes to the schedule should be made in the `#astr480-sp25-arcsat` Slack channel. The changes are not official until they are reflected here.
 
-| Date | 1st half team | 2nd half team |
-| ---- | :-----------: | :-----------: |
-| 5/7  |     Intro     |       4       |
-| 5/8  |      12       |      10       |
-| 5/9  |       2       |       5       |
-| 5/10 |               |       3       |
-| 5/11 |       8       |      10       |
-| 5/12 |       2       |      11       |
-| 5/13 |       8       |       1       |
-| 5/14 |       7       |       3       |
-| 5/15 |      12       |      11       |
-| 5/26 |      13       |       5       |
-| 5/27 |       9       |       6       |
-| 5/28 |       9       |      13       |
-| 5/29 |       1       |       4       |
-| 5/30 |       7       |               |
-| 5/31 |               |               |
-| 6/1  |       6       |               |
-| 6/2  |               |               |
-| 6/3  |               |               |
-| 6/4  |               |               |
-| 6/5  |               |               |
+| Date     | 1st half team | 2nd half team |
+| -------- | :-----------: | :-----------: |
+| Wed 5/7  |     Intro     |       4       |
+| Thu 5/8  |      12       |      10       |
+| Fri 5/9  |       2       |       5       |
+| Sat 5/10 |               |       3       |
+| Sun 5/11 |       8       |      10       |
+| Mon 5/12 |       2       |      11       |
+| Tue 5/13 |       8       |       1       |
+| Wed 5/14 |       7       |       3       |
+| Thu 5/15 |      12       |      11       |
+| Mon 5/26 |      13       |       5       |
+| Tue 5/27 |       9       |       6       |
+| Wed 5/28 |       9       |      13       |
+| Thu 5/29 |       1       |       4       |
+| Fri 5/30 |       7       |               |
+| Sat 5/31 |               |               |
+| Sun 6/1  |       6       |               |
+| Mon 6/2  |               |               |
+| Tue 6/3  |               |               |
+| Wed 6/4  |               |               |
+| Thu 6/5  |               |               |
 
 The first half of the night will run from evening twilight until 1:00 AM PDT. The second half of the night will run from 1:00 AM PDT until morning twilight. Small changes to accommodate specific targets can be made as long as they are communicated to the instructors and both teams agree.
 
