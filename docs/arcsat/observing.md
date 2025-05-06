@@ -104,6 +104,12 @@ Use your name or team name as `User Name` and the program and password provided 
 
 Before you start any observations you should check the weather and communicate with the 3.5m observing specialist. they will give you additional information about the weather and, if the conditions allow to observe, they will enable ARCSAT for you.
 
+Additionally your should install DS9 in your computer to be able to visualise and do quick analysis on the data your are taking.
+
+```{note}
+Not everybody in each team needs to install all the software. You and your team members are responsible for distributing tasks and observing time across the team.
+```
+
 ### Calibrations
 
 You are responsible for taking your own calibrations, _even if you are not the first team to observe_. Calibrations must include:
