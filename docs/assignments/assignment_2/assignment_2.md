@@ -51,7 +51,7 @@ The grading rubric is as follows:
 
 ## Deadline
 
-The assignment is due on Friday, May 9th at 11:59 PM. Late submissions by up to 24 hours will be penalized by 20% of the total points.
+The assignment is due on Friday, May 16th at 11:59 PM. Late submissions by up to 24 hours will be penalized by 20% of the total points.
 
 ## Hints and resources
 
