@@ -41,8 +41,8 @@ The following is the **official schedule** for the ARCSAT observations. Requests
 | Tue 5/27 |       9       |       6       |
 | Wed 5/28 |       9       |      13       |
 | Thu 5/29 |       1       |       4       |
-| Fri 5/30 |       7       |               |
-| Sat 5/31 |               |               |
+| Fri 5/30 |               |               |
+| Sat 5/31 |       7       |               |
 | Sun 6/1  |       6       |               |
 | Mon 6/2  |               |               |
 | Tue 6/3  |               |               |
