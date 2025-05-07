@@ -24,7 +24,7 @@ These are the ARCSAT teams and their associated team names, numbers, and Slack c
 
 ### Schedule
 
-The following is the **official schedule** for the ARCSAT observations. Requests for changes to the schedule should be made in the `#astr480-sp25-arcsat` Slack channel. The changes are not official until they are reflected here.
+The following is the official schedule for the ARCSAT observations. Requests for changes to the schedule should be made in the `#astr480-sp25-arcsat` Slack channel. **The changes are not official until they are reflected here.**
 
 | Date     | 1st half team | 2nd half team |
 | -------- | :-----------: | :-----------: |
@@ -49,7 +49,7 @@ The following is the **official schedule** for the ARCSAT observations. Requests
 | Wed 6/4  |               |               |
 | Thu 6/5  |               |               |
 
-The first half of the night will run from evening twilight until 1:00 AM PDT. The second half of the night will run from 1:00 AM PDT until morning twilight. Small changes to accommodate specific targets can be made as long as they are communicated to the instructors and both teams agree.
+The first half of the night will run from evening twilight until 0:00 AM PDT. The second half of the night will run from 0:00 AM PDT until morning twilight. Small changes in the handover time to accommodate specific targets can be made as long as they are communicated to the instructors and both teams agree.
 
 ### Slack channels
 
@@ -122,4 +122,8 @@ Additionally you can choose to take twilight flats. This is not required but wil
 
 ### Communication with the 3.5m observers
 
-You must _always_ keep an eye on the TUI chat window. The 3.5m observing specialist will communicate with you through TUI and may require that you close the dome or stop observing at any time if the weather conditions change. **If you are requested to stop observing you must do so immediately**. At the end of the night, once you have parked the telescope and closed the dome, let the 3.5m observers know and wait until they confirm that everything is OK, at which point you disconnect.
+You must _always_ keep an eye on the TUI chat window. The 3.5m observing specialist will communicate with you through TUI and may require that you close the dome or stop observing at any time if the weather conditions change. **If you are requested to stop observing you must do so immediately**.
+
+### End of the night
+
+At the end of the night, once you have parked the telescope and closed the dome (see the section in the user manual and follow all the steps), let the 3.5m observers know and wait until they confirm that everything is OK, at which point you disconnect.
