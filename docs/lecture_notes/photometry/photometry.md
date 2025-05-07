@@ -1,4 +1,4 @@
-# ARCSAT and observing proposals
+# Photometry and CCD calibrations
 
 <br>
 
