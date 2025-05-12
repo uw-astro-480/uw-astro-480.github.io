@@ -5,7 +5,7 @@ The following is a tentative schedule for the course. It may be subject to signi
 :::
 
 | Date          | Topics                                                                                                        | Assignments                                | Observations |
-| ------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ------------ | --- | --- | ------ |
+| ------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ------------ |
 | March&nbsp;31 | Introduction. Syllabus. <br>Introduction: data analysis in astronomy                                          |
 | April&nbsp;2  | [Coordinate systems, magnitudes, optics, telescopes](./lecture_notes/intro_concepts/intro_concepts.md) (1)    |                                            |              |
 | April&nbsp;4  | Lab: Python environment setup                                                                                 |                                            |              |
@@ -22,7 +22,7 @@ The following is a tentative schedule for the course. It may be subject to signi
 | April&nbsp;30 | [ARCSAT and preparing observing proposals](./arcsat/proposals.md)                                             |                                            |              |
 | May&nbsp;2    | Lab                                                                                                           |                                            |              |
 | May&nbsp;5    | [Basic CCD reductions](./lecture_notes/ccd_reductions/ccd_reductions.md)                                      | Observing proposals                        | Week 1       |
-| May&nbsp;7    | [Aperture photometry and calibration](./lecture_notes/photometry/photometry.md)                               |                                            |              |     |     | Week 1 |
+| May&nbsp;7    | [Aperture photometry and calibration](./lecture_notes/photometry/photometry.md)                               |                                            | Week 1       |
 | May&nbsp;9    | Lab                                                                                                           |                                            | Week 1       |
 | May&nbsp;12   | [Catalogue data, formats, best practices](./lecture_notes/catalogue_data/catalogue_data.md)                   |                                            | Week 2       |
 | May&nbsp;14   | [Databases and SQL](./lecture_notes/databases/databases.md)                                                   |                                            | Week 2       |
