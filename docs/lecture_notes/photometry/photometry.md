@@ -8,6 +8,8 @@ mystnb:
 ---
 
 ```{code-cell} ipython3
+:tags: [remove-cell]
+
 %matplotlib inline
 
 import os
@@ -25,6 +27,7 @@ ANDOR_DIR = '../../data/ccd_reductions_data/'
 
 # This moves the current working directory to the location of the LFC data
 os.chdir(LFC_DIR)
+
 ```
 
 # Photometry and CCD calibrations
