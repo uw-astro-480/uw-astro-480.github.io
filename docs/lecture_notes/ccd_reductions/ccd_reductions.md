@@ -7,6 +7,8 @@ mystnb:
   execution_timeout: 300
 ---
 
+(basic-ccd-reductions)=
+
 # Basic CCD reductions
 
 :::{important}
@@ -718,6 +720,8 @@ _ = plt.imshow(flat_g_model, origin='lower', norm=norm, cmap='YlOrBr_r')
 ```
 
 We can see that we are missing a lot of the high-frequency structure, but we have correctly captured the main shape of the illumination patter, including the direction of the gradients.
+
+(basic-ccd-reductions-science)=
 
 ## Science images
 
