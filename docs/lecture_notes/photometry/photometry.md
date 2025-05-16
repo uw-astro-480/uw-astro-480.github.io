@@ -233,6 +233,7 @@ from photutils.aperture import ApertureStats
 
 annulus_stats = ApertureStats(ccd37_proc_data, annulus)
 back = annulus_stats.median
+std = annulus_stats.std
 print(f'Background per pixel: {back:.3f}')
 ```
 
@@ -284,8 +285,68 @@ That's significantly better! This also tells us that probably all the flux in ou
 
 ### Radial profile
 
-Coming soon.
+A radial profile is a measurement or plot of the flux per unit of area as a function of the distance from the centre of the source. It's directly related to the growth curve we saw before. [photurils.profiles](https://photutils.readthedocs.io/en/latest/user_guide/profiles.html) provides a way to calculate the radial profile of a source along with a Gaussian fit to the data. We'll calculate the radial profile of the source we have been using so far.
+
+```{code-cell} ipython3
+from photutils.profiles import RadialProfile
+
+# Define the radii
+radii = range(0, 31, 1)
+
+# Create the radial profile
+rp = RadialProfile(ccd37_proc_data, (xc, yc), radii)
+
+# Print the radii and profile values
+print(rp.radius)
+print(rp.profile)
+```
+
+Note that there is a difference between the radii that we provide (which are the "edge" radii) and the values in the `radius` attribute, which are the average radii of each annular region around the source. The `profile` is the average flux including all the pixels in the annular region for that radial distance. As we get to larger radii the values settle around 700, which is the background level we measured before. We have not removed the background from the profile, so let's do that now and plot the resul.
+
+```{code-cell} ipython3
+rp = RadialProfile(ccd37_proc_data - back, (xc, yc), radii)
+
+# Plot the radial profile
+_ = plt.plot(rp.radius, rp.profile)
+```
+
+`RadialProfile` also provides a fit to the data using a Gaussian profile.
+
+```{code-cell} ipython3
+print(rp.gaussian_fit)
+```
+
+This is simply a [Gaussian1D](https://docs.astropy.org/en/stable/api/astropy.modeling.functional_models.Gaussian1D.html) object representing a 1D Gaussian function
+
+$$
+f(x) = A \cdot e^{-\frac{(x - x_0)^2}{2 \sigma^2}}
+$$
+
+where $A$ is the amplitude, $x_0$ is the position of the peak, and $\sigma$ is the standard deviation. Let's evaluate that function and overplot it on top of the radial profile.
+
+```{code-cell} ipython3
+# Create a grid of r values
+rr = numpy.linspace(0, 30, 100)
+
+# Evaluate the Gaussian function
+gaussian = rp.gaussian_fit(rr)
+
+# Plot the radial profile
+_ = plt.plot(rp.radius, rp.profile, label='Radial profile')
+_ = plt.plot(rr, gaussian, label='Gaussian fit')
+_ = plt.xlabel('Radius (pixels)')
+_ = plt.ylabel('Flux (ADU)')
+_ = plt.legend()
+```
+
+As you can see our Gaussian fit is a very good approximation to the data except towards large radius where the wings of the PSF ar not totally Gaussian. You can try fitting other functions (for example a Moffat or Laurentzian profile) to see if they do better. T
 
 ## Astrometric registration
 
 Coming soon.
+
+## Further reading
+
+- [The CCD Photometric Calibration Cookbook](https://starlink.eao.hawaii.edu/devdocs/sc6.pdf)
+- [Photomety using IRAF](https://www.astrosen.unam.mx/~favilac/IRAF/docs/photom.pdf)
+- [Aperture photoemtry overview](https://coolwiki.ipac.caltech.edu/index.php/Aperture_Photometry_Overview)
