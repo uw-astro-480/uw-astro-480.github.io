@@ -339,7 +339,7 @@ _ = plt.ylabel('Flux (ADU)')
 _ = plt.legend()
 ```
 
-As you can see our Gaussian fit is a very good approximation to the data except towards large radius where the wings of the PSF ar not totally Gaussian. You can try fitting other functions (for example a Moffat or Laurentzian profile) to see if they do better. T
+As you can see our Gaussian fit is a very good approximation to the data except towards large radius where the wings of the PSF ar not totally Gaussian. You can try fitting other functions (for example a Moffat or Laurentzian profile) to see if they do better.
 
 ## Astrometric registration
 
