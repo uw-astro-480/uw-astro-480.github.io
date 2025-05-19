@@ -343,7 +343,165 @@ As you can see our Gaussian fit is a very good approximation to the data except 
 
 ## Astrometric registration
 
-Coming soon.
+Although telescope tracking is usually very good, it is not perfect over long periods of time. This can be compensated by the use of active guiding in which a different camera or system is used to measure the pointing of the telescope and adjust it every few seconds. Even in this case, multiple images of the same object may not be perfectly aligned, for example if the telescope has been moved between images or if we are using different filters. Often we will want to align different images of the same object, for example if we are going to combine them to increase the signal to noise ratio, or to be able to use the same centroids and apertures to perform photometry on all the images.
+
+There are different ways in which images can be aligned. On first order, the alignment is just an [affine transformation](https://en.wikipedia.org/wiki/Affine_transformation) between the pixels of both images (that is, a translation, rotation, and maybe scale change). In practice there may be higher order effects, especially if the images cover a large field of view where the distortion of the optics may be significant. Here we will discuss a different approach in which we first generate a [World Coordinate System](https://fits.gsfc.nasa.gov/fits_wcs.html) (WCS) transformation for each image and then use that information to "reproject" the images to a common grid. A WCS is a set of FITS header keywords and values that provides a transformation between pixel coordinates and sky coordinates (usually RA/Dec but sometimes others). The WCS standard is complex and additional keywords can be added to make the transformation more precise, but usally you'll see the following keywords:
+
+```text
+WCSAXES =                    2 / no comment
+CTYPE1  = 'RA---TAN-SIP' / TAN (gnomic) projection + SIP distortions
+CTYPE2  = 'DEC--TAN-SIP' / TAN (gnomic) projection + SIP distortions
+EQUINOX =               2000.0 / Equatorial coordinates definition (yr)
+LONPOLE =                180.0 / no comment
+LATPOLE =                  0.0 / no comment
+CRVAL1  =         138.98112419 / RA  of reference point
+CRVAL2  =        52.8164738445 / DEC of reference point
+CRPIX1  =        746.863628387 / X reference pixel
+CRPIX2  =        2601.61639404 / Y reference pixel
+CUNIT1  = 'deg     ' / X pixel scale units
+CUNIT2  = 'deg     ' / Y pixel scale units
+CD1_1   =   -4.89565776626E-05 / Transformation matrix
+CD1_2   =   -4.59718481848E-07 / no comment
+CD2_1   =   -2.13323012117E-07 / no comment
+CD2_2   =     4.8924167814E-05 / no comment
+```
+
+[astropy.wcs](https://docs.astropy.org/en/stable/wcs/index.html) provides a series of tools to use and generate WCS information. We will see two approaches to generating WCS information for an image without it: using astrometry.net and creating it from known stars on the image.
+
+### Using astrometry.net
+
+[astrometry.net](http://astrometry.net/) is a widely used algorithm to perform "blind" astrometric registration of images. "Blind" here means that the algorithm doesn't need to know anything about where the telescope was pointing when we took the image or the characteristics of the system (field of view, image scale). That said, astrometry.net often works better if some of that information is provided. The algorithm works by identifying groups of four stars (called quads), creating a normalised structure representing the quads, and comparing them with a large, precomputed database of such quad structures. When enough matches are found, the algorithm determines that the it knows where the image is pointing and generates a WCS transformation for it. astrometry.net also provides a web service where you can upload and "solve" your images. For that go to [https://nova.astrometry.net](https://nova.astrometry.net) and click on Upload. Now you can select an image and upload it.
+
+![astrometry.net upload](images/astrometrynet-upload.png)
+
+After a few seconds you should see a progress page and, if the image can be astrometrycally solved, you will get a "Success" message. You can then click on "Go to results page".
+
+![astrometry.net log](images/astrometrynet-log.png)
+
+On the right side of the result page you can click on the `new-image.fits` to download a copy of your image with the WCS information added to the header, or `wcs.fits` which contains only a FITS header with the WCS information (no image data).
+
+### Manually creating a WCS
+
+If you image has too few stars astrometry.net is likely to fail (in average astrometry.net needs at least 8-10 stars to solve the image). In this case you can try to create a WCS manually. This requires you to figure out the coordinates of at least some of the stars on your image (the more the better). You can do this in multiple ways, by querying a known catalogue like Gaia or SDSS around the known centre of your image, or using a tool like [Aladin](https://aladin.u-strasbg.fr/) to manually match the stars you are seeing to known stars. Once you have the coordinates of the stars and their associated pixel coordinates (it helps if you use a centroiding method like the one we saw earlier rathern than visually deciding what is the central pixel), we can use [astropy.wcs.utils.fit_wcs_from_points](https://docs.astropy.org/en/stable/api/astropy.wcs.utils.fit_wcs_from_points.html#astropy.wcs.utils.fit_wcs_from_points) to create the WCS transformation.
+
+```{code-cell} ipython3
+# Let's assume these are the x and y coordinates of the stars we found
+x = [1331.3568115234375,
+     1996.116943359375,
+     2008.965087890625,
+     215.91859436035156,
+     162.48562622070312,
+     194.13113403320312,
+     623.3280029296875,
+     1002.7437133789062,
+     1383.0045166015625,
+     533.0752563476562]
+
+y = [2535.110107421875,
+     1694.0184326171875,
+     3549.899658203125,
+     851.3917236328125,
+     3353.468994140625,
+     726.9962158203125,
+     3613.446533203125,
+     525.7298583984375,
+     2291.5869140625,
+     1997.260009765625]
+
+# And the associated RA and Dec coordinates
+ra = [138.94786322276144,
+      138.90368975221398,
+      138.96405273693716,
+      138.9513195308238,
+      138.9499430926342,
+      138.90056898449305,
+      138.88681671835002,
+      139.0222296563415,
+      138.96284185068438,
+      138.93741717327015]
+
+dec = [52.80312251879186,
+       52.84730345919048,
+       52.769005157018285,
+       52.89335543183549,
+       52.7833381349152,
+       52.83300372603977,
+       52.86023955756058,
+       52.78176122196098,
+       52.81655280388421,
+       52.87733744902463]
+
+# Create SkyCoord objects
+from astropy.coordinates import SkyCoord
+coords = SkyCoord(ra, dec, unit='deg', frame='icrs')
+
+# Create the WCS object. Note that the xy coordinates should use (1, 1) indexing
+# for the lower left corner of the image (FITS standard).
+from astropy.wcs.utils import fit_wcs_from_points
+
+wcs = fit_wcs_from_points((numpy.array(x), numpy.array(y)), coords, projection='TAN')
+
+# Print the WCS information as a header
+wcs.to_header()
+
+# Let's add this to the image header
+ccd37_proc = fits.open('ccd.037.0_proc.fits')
+ccd37_proc[0].header.update(wcs.to_header())
+ccd37_proc.writeto('ccd.037.0_proc_wcs.fits', overwrite=True)
+```
+
+## Image reprojection
+
+Let's imagine that we have to images of the same field on which the sources do not align. That is the case of images `ccd.037.0_wcs.fits` and `ccd.043.0_wcs.fits` which correspond to two different filters for the same area on the sky and for which we have already added the WCS information.
+
+```{code-cell} ipython3
+ccd_37 = fits.open('ccd.037.0_wcs.fits')
+ccd_43 = fits.open('ccd.043.0_wcs.fits')
+
+# Plot the two images
+norm_37 = ImageNormalize(ccd_37[0].data, interval=ZScaleInterval(), stretch=LinearStretch())
+norm_43 = ImageNormalize(ccd_43[0].data, interval=ZScaleInterval(), stretch=LinearStretch())
+
+fig, ax = plt.subplots(1, 2, figsize=(12, 12))
+_ = ax[0].imshow(ccd_37[0].data, origin='lower', norm=norm_37, cmap='YlOrBr_r')
+_ = ax[1].imshow(ccd_43[0].data, origin='lower', norm=norm_43, cmap='YlOrBr_r')
+```
+
+To project the images to a common grid we can use the [reproject](https://reproject.readthedocs.io/en/stable/) package. This package provides a number of algorithms to reproject images using WCS information. We will use the `reproject_interp` function which provides a good compromise between speed and accuracy.
+
+```{code-cell} ipython3
+from astropy.wcs import WCS
+from reproject import reproject_interp
+
+# Reproject the first image to the second one. We need to provide the complete
+# HDU of the first image and the header of the second one (with the WCS information).
+# The result is a new data array with the same shape.
+reprojected, footprint = reproject_interp(ccd_37[0], ccd_43[0].header)
+
+# Now we save the new image with the WCS information of the second image.
+wcs_43 = WCS(ccd_43[0].header)
+header = ccd_37[0].header.copy()
+header.update(wcs_43.to_header())
+hdu = fits.PrimaryHDU(reprojected, header=header)
+hdu.writeto('ccd.037.0_reprojected.fits', overwrite=True)
+```
+
+Now let's plot the two images side by side.
+
+```{code-cell} ipython3
+ccd_37_reproj = fits.open('ccd.037.0_reprojected.fits')
+ccd_43 = fits.open('ccd.043.0_wcs.fits')
+
+# Plot the two images
+norm_37 = ImageNormalize(ccd_37_reproj[0].data, interval=ZScaleInterval(), stretch=LinearStretch())
+norm_43 = ImageNormalize(ccd_43[0].data, interval=ZScaleInterval(), stretch=LinearStretch())
+
+fig, ax = plt.subplots(1, 2, figsize=(12, 12))
+_ = ax[0].imshow(ccd_37_reproj[0].data, origin='lower', norm=norm_37, cmap='YlOrBr_r')
+_ = ax[1].imshow(ccd_43[0].data, origin='lower', norm=norm_43, cmap='YlOrBr_r')
+```
+
+Note that, since the footprint on the sky of the first image is not the same as the second one, the reprojected image now have an area for which there is no information. That area is filled with NaN values.
 
 ## Further reading
 

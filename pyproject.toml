@@ -17,6 +17,7 @@ dependencies = [
     "numpy>=2.2.5",
     "photutils>=2.2.0",
     "polars>=1.27.1",
+    "reproject>=0.14.1",
     "scipy>=1.15.2",
     "seaborn>=0.13.2",
     "sphinx>=8.1.3",
