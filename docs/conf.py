@@ -189,12 +189,12 @@ def download_data():
             tar.extractall(path=DATA)
 
     # ccd_reductions_data
-    if not (DATA / "ccd_reductions_data").exists():
-        print("Downloading ccd_reductions_data ...")
-        (lfc_tarball, _) = urlretrieve(f"{DATA_URL}/ccd_reductions_data.tar.bz2")
+    # if not (DATA / "ccd_reductions_data").exists():
+    #     print("Downloading ccd_reductions_data ...")
+    #     (lfc_tarball, _) = urlretrieve(f"{DATA_URL}/ccd_reductions_data.tar.bz2")
 
-        with tarfile.open(lfc_tarball, "r:bz2") as tar:
-            tar.extractall(path=DATA)
+    #     with tarfile.open(lfc_tarball, "r:bz2") as tar:
+    #         tar.extractall(path=DATA)
 
 
 download_data()
