@@ -12,6 +12,7 @@ mystnb:
 
 %matplotlib inline
 
+import numpy
 import os
 import seaborn
 from astropy.io import fits
