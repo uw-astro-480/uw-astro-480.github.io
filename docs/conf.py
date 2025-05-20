@@ -15,6 +15,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx_copybutton",
     "sphinx_new_tab_link",
+    "sphinx_design",
     "myst_nb",
 ]
 
@@ -195,6 +196,14 @@ def download_data():
 
     #     with tarfile.open(lfc_tarball, "r:bz2") as tar:
     #         tar.extractall(path=DATA)
+
+    # tables
+    if not (DATA / "tables").exists():
+        print("Downloading tables ...")
+        (lfc_tarball, _) = urlretrieve(f"{DATA_URL}/tables.tar.bz2")
+
+        with tarfile.open(lfc_tarball, "r:bz2") as tar:
+            tar.extractall(path=DATA)
 
 
 download_data()

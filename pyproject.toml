@@ -24,5 +24,6 @@ dependencies = [
     "sphinx-autobuild>=2024.10.3",
     "sphinx-autodoc-typehints>=3.0.1",
     "sphinx-copybutton>=0.5.2",
+    "sphinx-design>=0.6.1",
     "sphinx-new-tab-link>=0.8.0",
 ]
