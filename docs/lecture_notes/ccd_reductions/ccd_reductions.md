@@ -11,10 +11,6 @@ mystnb:
 
 # Basic CCD reductions
 
-:::{important}
-This sections is a work in progress. New content will be added shortly.
-:::
-
 "Reduction" is the term used to describe the general process of taking raw data from a CCD camera and performing a series of operations to produce a final image in which we have removed as many of the systematic trends and defects that affect the original image. Very generally, the steps in the reduction process are:
 
 - Bias subtraction
