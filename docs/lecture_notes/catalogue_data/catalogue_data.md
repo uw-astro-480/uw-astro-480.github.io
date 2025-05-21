@@ -27,13 +27,17 @@ os.chdir(TABLES_DIR)
 
 # Catalogue data and SQL
 
+:::{important}
+This sections is a work in progress. New content will be added shortly.
+:::
+
+:::note
+You can download this lecture as {nb-download}`catalogue_data.ipynb` or {download}`catalogue_data.md` and follow along. The datasets for these examples can be found [here](https://faculty.washington.edu/gallegoj/astr480/tables.tar.bz2).
+:::
+
 Tabular data (or catalogues, we'll use these terms interchangeably in this section) is everywhere in observational astronomy and it has become even more relevant with the advent of large, all-sky survey and large datasets. After we have reduced and processed CCD data, it is often the case that we extract information from the different sources on the image (e.g., coordinates, magnitudes, or other derived properties like spectral line ratios) and organise them as a table of values. In modern astronomy those tables can sometimes be very large (millions or even billions or rows and tens of columns), which makes handling them efficiently even more critical.
 
 In this section we'll discuss what tables are, how to organise your data correctly, and how to perform basic operation on tabular data. We will also introduce SQL and see how to query some of the most popular astronomical databases.
-
-:::{note}
-You can download the data used in this section [here](https://faculty.washington.edu/gallegoj/astr480/tables.tar.bz2).
-:::
 
 :::{warning}
 This section is not meant to be a comprehensive guide to all the features that you may need from tools like `astropy.table`, `polars`, or `pandas`. It is means to give you a basic understanding of how to work with tabular data and how to use SQL to query databases. For more information you should refer to the documentation of the libraries you are using and the further reading at the end of this section.
