@@ -26,30 +26,32 @@ These are the ARCSAT teams and their associated team names, numbers, and Slack c
 
 The following is the official schedule for the ARCSAT observations. Requests for changes to the schedule should be made in the `#astr480-sp25-arcsat` Slack channel. **The changes are not official until they are reflected here.**
 
-| Date     | 1st half team | 2nd half team |
-| -------- | :-----------: | :-----------: |
-| Wed 5/7  |     Intro     |       4       |
-| Thu 5/8  |      12       |      10       |
-| Fri 5/9  |               |       5       |
-| Sat 5/10 |               |       3       |
-| Sun 5/11 |       8       |      10       |
-| Mon 5/12 |       2       |      11       |
-| Tue 5/13 |       8       |       1       |
-| Wed 5/14 |       7       |       3       |
-| Thu 5/15 |      12       |      11       |
-| Mon 5/26 |      13       |       5       |
-| Tue 5/27 |       9       |       6       |
-| Wed 5/28 |       9       |      13       |
-| Thu 5/29 |       1       |       4       |
-| Fri 5/30 |               |               |
-| Sat 5/31 |       7       |               |
-| Sun 6/1  |       6       |               |
-| Mon 6/2  |               |               |
-| Tue 6/3  |               |               |
-| Wed 6/4  |               |               |
-| Thu 6/5  |               |               |
+| Date     |            1st half team             |          2nd half team          |
+| -------- | :----------------------------------: | :-----------------------------: |
+| Wed 5/7  |                Intro                 |                4                |
+| Thu 5/8  |                  12                  |               10                |
+| Fri 5/9  |                                      |                5                |
+| Sat 5/10 |                                      |                3                |
+| Sun 5/11 |                  8                   |               10                |
+| Mon 5/12 |                  2                   |               11                |
+| Tue 5/13 |                  8                   |                1                |
+| Wed 5/14 |                  7                   |                3                |
+| Thu 5/15 |                  12                  |               11                |
+| Mon 5/26 |                  13                  |                5                |
+| Tue 5/27 |                  9                   |                6                |
+| Wed 5/28 |                  9                   |               13                |
+| Thu 5/29 |                  1                   |                4                |
+| Fri 5/30 |    <font color="darkred">2</font>    | <font color="darkred">1</font>  |
+| Sat 5/31 |                  7                   | <font color="darkred">11</font> |
+| Sun 6/1  |                  6                   | <font color="darkred">3</font>  |
+| Mon 6/2  | <font color="darkred">10 & 12</font> | <font color="darkred">4</font>  |
+| Tue 6/3  |    <font color="darkred">6</font>    | <font color="darkred">5</font>  |
+| Wed 6/4  |    <font color="darkred">7</font>    | <font color="darkred">9</font>  |
+| Thu 6/5  |    <font color="darkred">8</font>    | <font color="darkred">11</font> |
 
 The first half of the night will run from evening twilight until 0:00 AM PDT. The second half of the night will run from 0:00 AM PDT until morning twilight. Small changes in the handover time to accommodate specific targets can be made as long as they are communicated to the instructors and both teams agree.
+
+Groups marked in red correspond to the third observing night. Dates for these nights can be changed if you agree with a different team (or fully dropped if you think that you have enough data).
 
 ### Slack channels
 
