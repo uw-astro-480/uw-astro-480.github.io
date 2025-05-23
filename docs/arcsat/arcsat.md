@@ -6,4 +6,5 @@
 ./proposals
 ./observing
 ARCSAT documentation <https://www.apo.nmsu.edu/Telescopes/ARCSAT/>
+./paper
 ```
