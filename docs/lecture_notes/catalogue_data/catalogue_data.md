@@ -353,3 +353,4 @@ Coming soon.
 ## Further reading
 
 - [Tidy data](https://vita.had.co.nz/papers/tidy-data.pdf) by Hadley Wickham
+- [Introduction to SQL](https://ntrs.nasa.gov/api/citations/20080040136/downloads/20080040136.pdf)
