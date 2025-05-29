@@ -44,10 +44,10 @@ The grading rubric is as follows:
 - `plot_flat()`: up to 1 point if the implementation is correct.
 - `reduce_science_frame()`: up to 3 points if the implementation is correct. 2 extra points if cosmic ray removal is implemented.
 - `do_aperture_photometry()`: up to 4 points if the implementation is correct.
-- `plot_radial_profile()`: up to 2 point if the implementation is correct.
-- `calculate_gain()`: up to 2 point if the implementation is correct.
-- `calculate_readout_noise()`: up to 2 point if the implementation is correct.
-- `run_reduction()`: up to 5 point if the implementation is correct.
+- `plot_radial_profile()`: up to 2 points if the implementation is correct.
+- `calculate_gain()`: up to 2 points if the implementation is correct.
+- `calculate_readout_noise()`: up to 2 points if the implementation is correct.
+- `run_reduction()`: up to 5 points if the implementation is correct.
 
 ## Deadline
 
