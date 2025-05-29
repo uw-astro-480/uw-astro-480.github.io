@@ -42,11 +42,11 @@ The following is the official schedule for the ARCSAT observations. Requests for
 | Wed 5/28 |                  9                   |               13                |
 | Thu 5/29 |                  1                   |                4                |
 | Fri 5/30 |    <font color="darkred">2</font>    | <font color="darkred">1</font>  |
-| Sat 5/31 |                  7                   |                                 |
+| Sat 5/31 |                  7                   | <font color="darkred">9</font>  |
 | Sun 6/1  |                  6                   | <font color="darkred">3</font>  |
 | Mon 6/2  | <font color="darkred">10 & 12</font> | <font color="darkred">4</font>  |
 | Tue 6/3  |    <font color="darkred">6</font>    | <font color="darkred">5</font>  |
-| Wed 6/4  |    <font color="darkred">7</font>    | <font color="darkred">9</font>  |
+| Wed 6/4  |    <font color="darkred">7</font>    |                                 |
 | Thu 6/5  |    <font color="darkred">8</font>    | <font color="darkred">11</font> |
 
 The first half of the night will run from evening twilight until 0:00 AM PDT. The second half of the night will run from 0:00 AM PDT until morning twilight. Small changes in the handover time to accommodate specific targets can be made as long as they are communicated to the instructors and both teams agree.
