@@ -33,7 +33,7 @@ tar cjvf example-cryo-LFC.tar.bz2
 
 Many of the steps in this lecture follow the structure of the [CCD Data Reduction Guide](https://www.astropy.org/ccd-reduction-and-photometry-guide/v/dev/notebooks/00-00-Preface.html) which uses the same datasets.
 
-:::note
+:::{note}
 You can download this lecture as {nb-download}`ccd_reductions.ipynb` or {download}`ccd_reductions.md` and follow along. For that make sure that you change the values of the `LFC_DIR` and `ANDOR_DIR` variables to point to the directory where you have your data.
 :::
 

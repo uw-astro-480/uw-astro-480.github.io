@@ -12,11 +12,15 @@ mystnb:
 
 %matplotlib inline
 
+import warnings
 import numpy
 import os
 import seaborn
+import polars
 from astropy.io import fits
 from matplotlib import pyplot as plt
+
+warnings.filterwarnings('ignore')
 
 plt.ion()
 
@@ -24,13 +28,13 @@ TABLES_DIR = '../../data/tables/'
 CCD_DATA_DIR = '../../data/example-cryo-LFC/'
 ```
 
-:::note
-You can download this lecture as {nb-download}`data_visualisation.ipynb` or {download}`data_visualisation.md` and follow along.
-:::
-
 (data-visualisation)=
 
 # Plotting and data visualisation
+
+:::{note}
+You can download this lecture as {nb-download}`data_visualisation.ipynb` or {download}`data_visualisation.md` and follow along.
+:::
 
 Being able to efficiently organise and visualise data is a critical part of the data analysis process. In previous sections we have used plotting to display images and other types of data. Here we will look into the theory and technical details for effective data visualisation.
 
@@ -281,3 +285,193 @@ _ = plt.imshow(data, cmap='YlOrBr_r', origin='lower', norm=norm)
 It's important to differentiate between monochromatic data (e.g., a single CCD image) displayed using a colour map that uses different hues, and RGB images. The latter are created by combining three or more monochromatic images, each representing a different colour channel (red, green and blue).
 
 RGB images are not very common in astronomy, but they are sometimes useful to visually identify features in the data (e.g., blue vs red galaxies), and to create beautiful images of astronomical objects. Ideally, an RGB image would result in an image that the human eye would perceive as a "natural" representation of the object being observed, assuming that our eye was more sensitive. In practice there is a certain element of subjectivity and multiple algorithms exist to create RGB images from monochromatic data. Astropy has a useful page on [how to create RGB images](https://docs.astropy.org/en/stable/visualization/rgb.html) so we will not repeat that here.
+
+## Plotting tabular data
+
+Let's now switch to looking into some common plotting techniques for tabular data. We will use the dataset `all_exoplanets_2021.parquet` which contains a list of all the exoplanets discovered up to 2021, including information such as the planet's mass, host star, discovery method and facility, etc.
+
+```{code-cell} ipython3
+:tags: [remove-cell]
+
+os.chdir(TABLES_DIR)
+```
+
+```{code-cell} ipython3
+planets = polars.read_parquet('all_exoplanets_2021.parquet')
+
+print(planets.head(5))
+print('Columns:', planets.columns)
+```
+
+Let's start with a very simple scatter plot in which we relate the host start effective temperature to its mass.
+
+```{code-cell} ipython3
+seaborn.set_style('darkgrid')
+
+# Remove duplicates by keeping only the first occurrence of each host star.
+stars = planets.unique(subset='planet_host', keep='first')
+
+_ = seaborn.scatterplot(x=stars['stellar_mass'], y=stars['stellar_effective_temperature'])
+_ = plt.xlabel('Stellar mass ($M_\\odot$)')
+_ = plt.ylabel('Stellar effective temperature (K)')
+_ = plt.xlim(0, 4)
+_ = plt.ylim(2000, 12000)
+```
+
+It would be interesting to see how this distribution is affected by the stellar type. The column `spectral_type` contains the spectral type of the star, including its luminosity class. We will create a new column with only the stellar type (e.g., G, K, M) and use it to colour the points in the scatter plot.
+
+```{code-cell} ipython3
+# Create a new column with only the stellar class
+stars = stars.drop_nulls(subset=['spectral_type']).with_columns(spectral_class=polars.col.spectral_type.str.slice(0, 1))
+
+_ = seaborn.scatterplot(x=stars['stellar_mass'], y=stars['stellar_effective_temperature'], hue=stars['spectral_class'])
+_ = plt.xlabel('Stellar mass ($M_\\odot$)')
+_ = plt.ylabel('Stellar effective temperature (K)')
+_ = plt.xlim(0, 4)
+_ = plt.ylim(2000, 12000)
+```
+
+:::{important}
+We are using `seaborn` functions to plot the data. These functions simplify some of the details of producing nice-looking plots, but they are ultimately built on top of `matplotlib`. All these plots can be reproduced using `matplotlib` directly.
+:::
+
+We will now look at the histogram of number of planets per star. This dataset includes one planet per row, including planets that orbit the same start. We need to use a group-by operation to count the number of planets per star, and then plot the result as a histogram.
+
+```{code-cell} ipython3
+# Group by the host star and count the number of rows (planets) in each group
+planets_per_star = planets.group_by('planet_host').len('n')
+print(planets_per_star)
+
+# Plot the histogram of number of planets per star
+_ = seaborn.histplot(planets_per_star['n'], bins=10)
+_ = plt.xlabel('Number of planets per star')
+```
+
+Not unexpectedly, most stars have only one planet. Let's look at the number of exoplanets discovered every year. We expect to see an steady increase in the number of discoveries over the years, as the technology and methods used to discover exoplanets have improved.
+
+```{code-cell} ipython3
+# Plot the histogram of number of planets discovered per year
+_ = seaborn.histplot(planets['discovery_year'], binwidth=1)
+```
+
+Interestingly, we have huge peaks of discoveries in 2014 and 2016. These correspond to data releases of the [Kepler mission](https://kepler.nasa.gov/), which discovered thousands of exoplanets in a very short period of time using transit observations. Let's confirm this:
+
+```{code-cell} ipython3
+data_2014 = planets.filter(polars.col.discovery_year == 2014)
+print(data_2014.group_by('discovery_facility').len('n').sort('n', descending=True))
+```
+
+Finally, let's have a look at the discovery method and hot it has changed over the years. We can do this directly with the `histplot` function, which allows us to group by a categorical variable (`discover_year`) and colour-code by another (`discovery_method`).
+
+```{code-cell} ipython3
+_ = seaborn.histplot(planets.to_pandas(), x='discovery_year', hue='discovery_method', multiple='stack', binwidth=1)
+```
+
+:::{note}
+`seaborn` generally works well with `polars` but sometimes it's necessary to convert the dataframe to `pandas` using the `to_pandas()` method.
+:::
+
+As we can see the vast majority of early exoplanets were discovered using the radial velocity method, while in recent years the transit method has become the most popular. Even more recently, we are starting to see a significant number of discoveries using microlensing.
+
+## Plotting a galaxy colour-magnitude diagram
+
+We'll finish this section with a real science example: plotting a galaxy colour-magnitude diagram (gCMD). You are probably familiar with the Hertzsprung-Russell diagram, which plots stars by their luminosity and temperature (a stellar CMD is the same but using magnitude colours as proxies for luminosity and temperature). The [galaxy color-magnitude diagram](https://en.wikipedia.org/wiki/Galaxy_color%E2%80%93magnitude_diagram) plots the mass of a a galaxy (usually using the absolute magnitude in the i' or z' bands as a proxy for stellar mass) against a colour that differentiates between blue and red galaxies (e.g., the g'-i' colour). These diagrams started to be prouced in the early 2000s thanks to observations from the Sloan Digital Sky Survey (SDSS), which was the first survey to compile multi-band photometry for hundreds of thousands of galaxies. When a gCMD is plotted we see a clear bimodal distribution, we most galaxies belonging to one of two main populations: blue galaxies, which are actively forming stars, and red galaxies, which are mostly quiescent. Sometimes a third population of "green valley" galaxies is also identified, which are in the process of transitioning from blue to red.
+
+![Galaxy colour-magnitude diagram](./images/gcmd.png){w="60%" align=center}
+
+The gCMD was the first indication that galaxies are not always start forming or quiescent, but that they transition from one state to the other, and that the transition is fast enough that not many galaxies fall in the "green valley". This transition is thought to be driven by a combination of internal and external processes, such as gas accretion, exhaustion of molecular gas, and interactions with other galaxies.
+
+Let's create our own gCMD for the local Universe. We will use some data retrieved using CasJobs. For convenience, we will use the file `sdss_galaxies_flux.parquet` which contains the [Petrosian magnitudes](https://skyserver.sdss.org/dr7/en/help/docs/algorithm.asp?key=mag_petro) in the Sloan filters for all the SDSS galaxies that have an associated redshift measurement (the redshift is given as the `z` column).
+
+```{code-cell} ipython3
+galaxies = polars.read_parquet('sdss_galaxies_flux.parquet')
+print(galaxies.head(5))
+print('Columns:', galaxies.columns)
+```
+
+We will plot the absolute i-band magnitude vs the g'-i' colour. The absolute magnitude of a galaxy is often defined as
+
+```{math}
+M=m-\mu
+```
+
+where $\mu$ is the [distance modulus](https://en.wikipedia.org/wiki/Distance_modulus). For galaxies, the distance modulus can be computed from the redshift but we need to take into account the cosmological effects. To help us with that we will use the `astropy.cosmology` module, which provides a set of cosmological models and functions to compute distances and other cosmological quantities.
+
+```{code-cell} ipython3
+from astropy.cosmology import FlatLambdaCDM
+
+# Create our own cosmology model with some reasonable values.
+cosmo = FlatLambdaCDM(H0=70, Om0=0.3)
+
+# Compute the distance modulus for each galaxy
+d_mod = cosmo.distmod(galaxies['z'].to_list())
+
+# Add the distance modulus to the dataframe
+galaxies = galaxies.with_columns(d_mod=polars.Series(d_mod.value, dtype=polars.Float32))
+
+# Compute the absolute i-band magnitude
+galaxies = galaxies.with_columns(i_abs=polars.col.petromag_i - polars.col.d_mod)
+
+# Add a column with the g'-i' colour
+galaxies = galaxies.with_columns(g_i=polars.col.petromag_g - polars.col.petromag_i)
+```
+
+We could use all these data to plot the gCMD, but the result would not look very clear. The problem is that we have galaxies with very different redshifts, which means different stages in the galaxy evolution. We would also need to apply a [K correction](https://en.wikipedia.org/wiki/K_correction) to compare "apples to apples". Instead, let's focus on the local Universe and select only galaxies with a redshift below 0.05.
+
+```{code-cell} ipython3
+# Select only galaxies with a redshift below 0.05
+local = galaxies.filter(polars.col.z < 0.05)
+print(f'Number of galaxies: {len(local)}')
+```
+
+Time to do some plotting! We will start with a simple scatter plot of the absolute i-band magnitude vs the g'-i' colour.
+
+```{code-cell} ipython3
+seaborn.set_style('white')
+
+_ = seaborn.scatterplot(x=local['i_abs'], y=local['g_i'])
+```
+
+This doesn't look very promising. The problem is that we have a few outliers that are skewing the plot. Let's remove those outliers by selecting only galaxies with an absolute magnitude between -25 and -16, and a g'-i' colour between 0 and 2. You can play with these values to see how they affect the plot.
+
+```{code-cell} ipython3
+local = local.filter((polars.col.i_abs > -25) & (polars.col.i_abs < -16) & (polars.col.g_i > 0) & (polars.col.g_i < 2))
+
+_ = seaborn.scatterplot(x=local['i_abs'], y=local['g_i'])
+_ = plt.xlabel('Absolute i-band magnitude')
+_ = plt.ylabel('g\'-i\'')
+```
+
+That is significantly better, but the cloud of points is so large that it's difficult to see any details of the underlying distribution. Let's use a 2D histogram to plot the density of the points in the gCMD. We will use the `seaborn.histplot` function with the `cbar` parameter to add a colour bar that shows the density of the points. We will also use the `pthresh` parameter to remove points with a density below a certain threshold.
+
+```{code-cell} ipython3
+_ = seaborn.histplot(data=local, x='i_abs', y='g_i', bins=70, pthresh=.01, cmap='mako', cbar=True)
+_ = plt.xlabel('Absolute i-band magnitude')
+_ = plt.ylabel('g\'-i\'')
+_ = plt.xlim(-16, -25)
+```
+
+That is much better. We can clearly see the blue and red clouds. Note that we have reversed the x-axis so that increasing stellar mass (decreasing absolute magnitude) is on the right side of the plot. Alternatively we could use a KDE to plot the density of the points in the gCMD.
+
+```{code-cell} ipython3
+# Plot the cloud of points in the background
+_ = seaborn.scatterplot(x=local['i_abs'], y=local['g_i'], s=1, alpha=0.2, color='k')
+
+# Plot the KDE contours. The compute time will depend on the number of bins.
+_ = seaborn.kdeplot(data=local, x='i_abs', y='g_i', thresh=0.2, gridsize=100, levels=15, linewidths=1.5)
+
+_ = plt.xlabel('Absolute i-band magnitude')
+_ = plt.ylabel('g\'-i\'')
+_ = plt.xlim(-16, -25)
+```
+
+Finally, let's plot the same data using filled contours.
+
+```{code-cell} ipython3
+_ = seaborn.kdeplot(data=local, x='i_abs', y='g_i', thresh=0,
+                    gridsize=100, levels=150, fill=True, cmap='mako')
+
+_ = plt.xlabel('Absolute i-band magnitude')
+_ = plt.ylabel('g\'-i\'')
+_ = plt.xlim(-16, -24)
+```
