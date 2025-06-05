@@ -1,0 +1,1036 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Catalogue data and SQL" href="../catalogue_data/catalogue_data.html" /><link rel="prev" title="Basic CCD reductions" href="../ccd_reductions/ccd_reductions.html" />
+
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
+        <title>Photometry and CCD calibrations - ASTR 480</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=2bccd5c4" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #242933;
+  --color-code-foreground: #d8dee9;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #242933;
+  --color-code-foreground: #d8dee9;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">ASTR 480</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/UW_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../syllabus.html">Course description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../schedule.html">Schedule</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../lecture_notes.html">Lecture notes</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Lecture notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../intro_concepts/intro_concepts.html">Introductory concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ccds/ccds.html">CCDs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ccd_reductions/ccd_reductions.html">Basic CCD reductions</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Photometry and CCD calibrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../catalogue_data/catalogue_data.html">Catalogue data and SQL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_visualisation/data_visualisation.html">Plotting and data visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spectrographs/spectrographs.html">Spectrographs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../arcsat/arcsat.html">ARCSAT observations</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of ARCSAT observations</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../arcsat/proposals.html">ARCSAT proposals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../arcsat/observing.html">ARCSAT observing and schedule</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://www.apo.nmsu.edu/Telescopes/ARCSAT/" rel="noreferrer" target="_blank">ARCSAT documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../arcsat/paper.html">ARCSAT paper</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../assignments/assignments.html">Assignments</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Assignments</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../assignments/assignment_0/assignment_0.html">Assignment 0: testing the coding environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../assignments/assignment_1/assignment_1.html">Assignment 1: coordinate transformations and altitude plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../assignments/assignment_2/assignment_2.html">Assignment 2: CCD reductions and photometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../assignments/assignment_3/assignment_3.html">Assignment 3: tabular data and data visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../assignments/assignment_4/assignment_4.html">Assignment 4 (extra credit): spectroscopic data reduction</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../codedev/codedev.html">Code development and tools</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Code development and tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../codedev/setup.html">Setting up the development environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codedev/visualisation_tools.html">Visualisation tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codedev/plotting.html">Plotting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">Frequently Asked Questions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/uw-astro-480" rel="noreferrer" target="_blank">GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jupyter.rttl.uw.edu/2025-spring-astr-480-a" rel="noreferrer" target="_blank">JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://canvas.uw.edu/courses/1799617" rel="noreferrer" target="_blank">Canvas</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.apo.nmsu.edu/Telescopes/ARCSAT/" rel="noreferrer" target="_blank">ARCSAT</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/astr-480/astr-480-sp-25/blob/main/src/lecture_notes/photometry/photometry.md?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/astr-480/astr-480-sp-25/edit/main/src/lecture_notes/photometry/photometry.md" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section class="tex2jax_ignore mathjax_ignore" id="photometry-and-ccd-calibrations">
+<h1>Photometry and CCD calibrations<a class="headerlink" href="#photometry-and-ccd-calibrations" title="Link to this heading">¶</a></h1>
+<p>Once your data has been taken and <a class="reference internal" href="../ccd_reductions/ccd_reductions.html#basic-ccd-reductions"><span class="std std-ref">reduced</span></a> it is the time to perform analysis on it. The scope of that analysis will depend on the type of data and the science goals of your project. Here we will focus on two main topics: aperture photometry and astrometric registration.</p>
+<section id="aperture-photometry">
+<h2>Aperture photometry<a class="headerlink" href="#aperture-photometry" title="Link to this heading">¶</a></h2>
+<p>At its core aperture photometry is just summing up the pixels values around a give position or source. The term “aperture” refers to the geometric shape (usually circular but potentially a ellipse or a polygon) used to define the area of the image that will be summed. It is possible to do aperture photometry by hand, but there are subtleties such as the handling of background noise and subpixel regions that are not totally trivial. Because of that we will use a package, <a class="reference external" href="https://photutils.readthedocs.io/en/stable/" rel="noreferrer" target="_blank">photutils</a>, that implements many of the algorithms and methods used in aperture photometry. Note that <code class="docutils literal notranslate"><span class="pre">photutils</span></code> is not, by far, the only package available that can do this, and that its scope is larger than just aperture photometry.</p>
+<p>For the purposes of this tutorial we will use the image <code class="docutils literal notranslate"><span class="pre">ccd.037.0_proc.fits</span></code> that we created in the <a class="reference internal" href="../ccd_reductions/ccd_reductions.html#basic-ccd-reductions-science"><span class="std std-ref">basic CCD reductions</span></a> section.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ccd37_proc</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ccd.037.0_proc.fits&#39;</span><span class="p">)</span>
+<span class="n">ccd37_proc_data</span> <span class="o">=</span> <span class="n">ccd37_proc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot the flat image</span>
+<span class="n">norm</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">ccd37_proc_data</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">ZScaleInterval</span><span class="p">(),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">LinearStretch</span><span class="p">())</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ccd37_proc_data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/97be9644fbb53d4bd1282e9e5c969799c9fa4291c7f9c5e0af2f1e223ffc35f4.png" src="../../_images/97be9644fbb53d4bd1282e9e5c969799c9fa4291c7f9c5e0af2f1e223ffc35f4.png" />
+</div>
+</div>
+<section id="source-detection">
+<h3>Source detection<a class="headerlink" href="#source-detection" title="Link to this heading">¶</a></h3>
+<p>Often we know what sources we want to measure on an image, but its also common to want to measure all the available sources, or those that match some criteria. While detecting sources is something the human eye and brain are quite good at, it’s not trivial to implement a computer algorithm that can do this in a robust and efficient way. <a class="reference external" href="https://photutils.readthedocs.io/en/latest/user_guide/detection.html" rel="noreferrer" target="_blank">photutils.detection</a> provides to well tested algorithms for quickly (but somewhat loosely!) identifying sources in an image: <code class="docutils literal notranslate"><span class="pre">DAOStarFinder</span></code> and <code class="docutils literal notranslate"><span class="pre">IRAFStarFinder</span></code>. Both of these algorithms are based on the idea of convolving the image with a kernel that is sensitive to point sources. We will use <code class="docutils literal notranslate"><span class="pre">DAOStarFinder</span></code> here with a very basic configuration, but note that it’s important to understand the parameters of the algorithm and how they affect the results.</p>
+<p><code class="docutils literal notranslate"><span class="pre">DAOStarFinder</span></code> requires defining two parameters: the <code class="docutils literal notranslate"><span class="pre">fwhm</span></code> of the sources, and the noise <code class="docutils literal notranslate"><span class="pre">threshold</span></code> above which we consider a pixel to be a part of a region. The <code class="docutils literal notranslate"><span class="pre">fwhm</span></code> parameter is the full width at half maximum of the Gaussian kernel used to convolve the image and its somewhat less critical as long as it’s not larger than the real FWHM of the image. This value must be given in pixels. Since the pixel scale of the LFC camera is ~ 0.18 arcsec/pixel, if we assume an average seeing of 1 arcsec, the FWHM of the sources in the image is about 5 pixels.</p>
+<p>To determine the threshold we can use <code class="docutils literal notranslate"><span class="pre">sigma_clipped_stats</span></code> from <code class="docutils literal notranslate"><span class="pre">astropy</span></code> to get mean, median, and standard deviation of a blank region on the image. Here we are interested in the standard deviation, which is a measure of the background noise after the reduction process.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">astropy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">sigma_clipped_stats</span>
+
+<span class="c1"># Select a blank region of the image</span>
+<span class="n">data_blank</span> <span class="o">=</span> <span class="n">ccd37_proc_data</span><span class="p">[</span><span class="mi">1000</span><span class="p">:</span><span class="mi">1100</span><span class="p">,</span> <span class="mi">800</span><span class="p">:</span><span class="mi">1000</span><span class="p">]</span>
+
+<span class="c1"># Calculate the mean, median and standard deviation of the blank region</span>
+<span class="n">mean</span><span class="p">,</span> <span class="n">median</span><span class="p">,</span> <span class="n">std</span> <span class="o">=</span> <span class="n">sigma_clipped_stats</span><span class="p">(</span><span class="n">data_blank</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">3.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mean: </span><span class="si">{</span><span class="n">mean</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">, Median: </span><span class="si">{</span><span class="n">median</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">, Std: </span><span class="si">{</span><span class="n">std</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean: 701.62, Median: 701.60, Std: 21.01
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s use these values to run <code class="docutils literal notranslate"><span class="pre">DAOStarFinder</span></code>. We will set the threshold to 5 times the standard deviation, which is a good starting point to detect sources that are likely to be real. Note that we will subtract the median background from the image before running the source detection algorithm. This is important in cases where the background is significant.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">photutils.detection</span><span class="w"> </span><span class="kn">import</span> <span class="n">DAOStarFinder</span>
+
+<span class="c1"># Run DAOStarFinder</span>
+<span class="n">daofind</span> <span class="o">=</span> <span class="n">DAOStarFinder</span><span class="p">(</span><span class="n">fwhm</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">5</span><span class="o">*</span><span class="n">std</span><span class="p">)</span>
+<span class="n">sources</span> <span class="o">=</span> <span class="n">daofind</span><span class="p">(</span><span class="n">ccd37_proc_data</span> <span class="o">-</span> <span class="n">median</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sources</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> id     xcentroid          ycentroid      ...    mag          daofind_mag     
+--- ------------------ ------------------ ... ---------- ---------------------
+  1 1046.4662757478047 127.15932469675155 ...  -9.039377  -0.35294065377976247
+  2 1064.6947483979186  137.7079342017487 ...  -8.969828  -0.45556907220108445
+  3  600.8857315453544 145.68630510471456 ...  -8.995629 -0.022496767334760137
+  4 1642.3370942993654 163.93117663371234 ...  -8.430794  -0.04552220380881375
+  5  868.3771514810868 174.49491563449752 ...  -8.333284  -0.06600055034077834
+  6  838.6158118500055 176.65269250410023 ... -13.456107    -4.910789459795598
+  7  836.9293153651588 179.64565882593453 ... -12.663572    -3.439977894127325
+  8 1430.5876223617001 202.17421790373837 ... -10.048767    -0.905968648376848
+  9 1618.7969422309307 248.45605446505502 ...  -8.903525   -0.1815290282470728
+ 10   835.508758470006 250.27496785043215 ...  -6.778409  -0.16766077599984383
+...                ...                ... ...        ...                   ...
+944  327.2491765097027  3796.690679979017 ... -11.009333   -2.7644024659089843
+945 1529.3927338523797  3797.060708267659 ... -11.060337   -1.8309414893257432
+946 19.345519189970478 3805.0543615873294 ... -10.874674   -2.6306099578179802
+947 1683.1827682684443  3824.396860726291 ...  -9.039871   -0.3908960651023041
+948 1194.9212542555845  3843.052465644728 ...  -8.468796  -0.18446101767324175
+949  857.4775135542487  3855.223107897481 ...  -9.391502   -2.1453358358971455
+950 1573.3496680682128 3856.9545171992245 ...   -9.89462   -0.6802964020569993
+951 1501.3098990457474  3865.598736888432 ...   -8.16884   -1.4851733840438546
+952 1652.3098835744395  3908.615961625424 ...  -8.663841  -0.31088759147450096
+953 467.07299068653805   3916.84239232069 ...        nan   -0.3167212876378047
+Length = 953 rows
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result is an astropy <a class="reference external" href="https://docs.astropy.org/en/stable/table/index.html" rel="noreferrer" target="_blank">table</a> in which each row corresponds to a detected source. The columns of the table contain the x and y coordinates of the sources, as well as their fluxes and other properties. Note that the magnitudes and fluxes here are instrumental (based on ADU values) and not calibrated. The <code class="docutils literal notranslate"><span class="pre">xcentroid</span></code> and <code class="docutils literal notranslate"><span class="pre">ycentroid</span></code> columns are the positions of the sources in pixels.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The centroids returned by <code class="docutils literal notranslate"><span class="pre">DAOStarFinder</span></code> are determined using a algorithm that is efficient but not very precise. It is recommended that you recalculate these centroids using a more precise algorithm, as we will see in the next section.</p>
+</div>
+<p>Let’s plot the detected sources on top of the image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ccd37_proc_data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot the detected sources</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sources</span><span class="p">[</span><span class="s1">&#39;xcentroid&#39;</span><span class="p">],</span> <span class="n">sources</span><span class="p">[</span><span class="s1">&#39;ycentroid&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+
+<span class="c1"># Zoom on a region of the image for better visibility</span>
+
+<span class="n">_</span><span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1500</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/fe0ae987e9dce1bc7f68b2d5d611464795b1d5e05c9ce4de6cac70f1e725ce75.png" src="../../_images/fe0ae987e9dce1bc7f68b2d5d611464795b1d5e05c9ce4de6cac70f1e725ce75.png" />
+</div>
+</div>
+<p>Note that while most of the source that we have detected look like real stars (or sometimes galaxies), there are also many sources that we have not identified. These regions are either too faint (they can be recovered by reducing the threshold) or are not well fit by a Gaussian profile (like extended galaxies). You may also find that some of the sources have multiple detections. This usually happens when the FWHM is not properly defined but can also happen in very bright, saturated sources.</p>
+</section>
+<section id="centroiding">
+<h3>Centroiding<a class="headerlink" href="#centroiding" title="Link to this heading">¶</a></h3>
+<p>Next, let’s look at better ways to determine the centroid of our sources. The easiest, naive approach to this problem would be to just select the pixel with the maximum value in the region we are interested in. This has two problems: first, we may have spurious signal in some pixels (for example cosmic rays) that are not part of the source and that affect our centroiding; and second, this only allows us to determine the centroid to the integer pixel value level, which is not very precise. A better approach is to assume that the source of interest follows a given profile (usually a Gaussian or a Lorentzian for point source —stars, but the profile may be different for other types of object and depending on our optical system) and fit the profile function to the data. This is technically the most precise way to determine the centroid, but it is also the most computationally expensive.</p>
+<p>In the middle sit a number of algorithm that try to find a balance between speed and precision. The package <a class="reference external" href="https://photutils.readthedocs.io/en/latest/user_guide/centroids.html" rel="noreferrer" target="_blank">photutils.centroids</a> implements a number of these algorithms. Their use is similar so here we will use the <code class="docutils literal notranslate"><span class="pre">centroid_1dg</span></code> algorithm, which fits 1D Gaussians to the x and y marginal distributions of the source (you can think of this as “collapsing” the source along the x and y axes and then fitting a Gaussian to the resulting 1D distributions). This is a good compromise between speed and precision, and it is also very robust to noise.</p>
+<p>For this we will use one of the source we detected in the previous step at <span class="math notranslate nohighlight">\(x\sim999\)</span> and <span class="math notranslate nohighlight">\(y\sim1932\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">photutils.centroids</span><span class="w"> </span><span class="kn">import</span> <span class="n">centroid_1dg</span>
+
+<span class="c1"># Centroids of the source from DAOStarFinder</span>
+<span class="n">xd</span> <span class="o">=</span> <span class="mf">999.2980968694505</span>
+<span class="n">yd</span> <span class="o">=</span> <span class="mf">1932.5177532355156</span>
+
+<span class="c1"># Get a small region around the source</span>
+
+<span class="n">x0</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">xd</span><span class="p">)</span>
+<span class="n">y0</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">yd</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ccd37_proc_data</span><span class="p">[</span><span class="n">y0</span><span class="o">-</span><span class="mi">10</span><span class="p">:</span><span class="n">y0</span><span class="o">+</span><span class="mi">10</span><span class="p">,</span> <span class="n">x0</span><span class="o">-</span><span class="mi">10</span><span class="p">:</span><span class="n">x0</span><span class="o">+</span><span class="mi">10</span><span class="p">]</span>
+
+<span class="c1"># Calculate the centroid using the 1D Gaussian algorithm.</span>
+<span class="c1"># It&#39;s important to remove the median background!</span>
+<span class="n">xc</span><span class="p">,</span> <span class="n">yc</span> <span class="o">=</span> <span class="n">centroid_1dg</span><span class="p">(</span><span class="n">data</span> <span class="o">-</span> <span class="n">median</span><span class="p">)</span>
+
+<span class="c1"># This centroid is with respect to the region we selected, so we need to add the offset</span>
+<span class="n">xc</span> <span class="o">+=</span> <span class="p">(</span><span class="n">x0</span> <span class="o">-</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">yc</span> <span class="o">+=</span> <span class="p">(</span><span class="n">y0</span> <span class="o">-</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Centroid: </span><span class="si">{</span><span class="n">xc</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">yc</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Let&#39;s plot the two centroids estimates.</span>
+<span class="n">norm</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">ZScaleInterval</span><span class="p">(),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">LinearStretch</span><span class="p">())</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xd</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="n">yd</span> <span class="o">-</span> <span class="n">y0</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;DAOStarFinder&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xc</span> <span class="o">-</span> <span class="n">x0</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="n">yc</span> <span class="o">-</span> <span class="n">y0</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Centroid 1D Gaussian&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Centroid: 999.39, 1932.46
+</pre></div>
+</div>
+<img alt="../../_images/a8377a38d69dbb8a8ea1c6ec9744389af184fe1ab99d5534536dd36419bbbc99.png" src="../../_images/a8377a38d69dbb8a8ea1c6ec9744389af184fe1ab99d5534536dd36419bbbc99.png" />
+</div>
+</div>
+<p>As you can see the difference is often at the subpixel level, but that can be important depending on the analysis that you are trying to perform.</p>
+</section>
+<section id="simple-aperture-photometry">
+<h3>Simple aperture photometry<a class="headerlink" href="#simple-aperture-photometry" title="Link to this heading">¶</a></h3>
+<p>Now that we have the exact centroid of our source we can actually perform aperture photometry. We’ll start by defining a circular aperture with a radius of 10 pixels. <a class="reference external" href="https://photutils.readthedocs.io/en/latest/user_guide/aperture.html" rel="noreferrer" target="_blank">photurils.aperture</a> provides a number of aperture shapes, including circular, elliptical, and annular. We will use the <code class="docutils literal notranslate"><span class="pre">CircularAperture</span></code> class to define our aperture.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">photutils.aperture</span><span class="w"> </span><span class="kn">import</span> <span class="n">CircularAperture</span>
+
+<span class="c1"># Define the aperture</span>
+<span class="n">aperture</span> <span class="o">=</span> <span class="n">CircularAperture</span><span class="p">((</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">),</span> <span class="n">r</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Plot the aperture on top of the image</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ccd37_proc_data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">aperture</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Aperture&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span> <span class="mi">1100</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">1800</span><span class="p">,</span> <span class="mi">2100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1c9399e30a67169b72a4b32cfa5014f593a2d037b00ff7972f322d640090dab7.png" src="../../_images/1c9399e30a67169b72a4b32cfa5014f593a2d037b00ff7972f322d640090dab7.png" />
+</div>
+</div>
+<p>So far we have not extracted any data from the image, we have just defined an abstraction of a circular aperture. To actually extract the data we need to use the <code class="docutils literal notranslate"><span class="pre">aperture_photometry</span></code> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">photutils.aperture</span><span class="w"> </span><span class="kn">import</span> <span class="n">aperture_photometry</span>
+
+<span class="c1"># Perform aperture photometry</span>
+<span class="n">phot_table</span> <span class="o">=</span> <span class="n">aperture_photometry</span><span class="p">(</span><span class="n">ccd37_proc_data</span> <span class="o">-</span> <span class="n">median</span><span class="p">,</span> <span class="n">aperture</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">phot_table</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> id      xcenter           ycenter         aperture_sum  
+--- ----------------- ------------------ ----------------
+  1 999.3926809256053 1932.4563637249448 26593.7678990266
+</pre></div>
+</div>
+</div>
+</div>
+<p>The resulting table contains the x and y centroids that we provided (we defined an aperture for a single region but it would have been possible to define the same aperture for multiple regions) and the total sum of the pixels in the aperture. Note that we again subtracted the median background since that is signal that is not part of our source.</p>
+<p>Let’s consider the case in which we want to measure the flux on the same region using apertures with multiple radii. For that we need to define multiple apertures and pass them to <code class="docutils literal notranslate"><span class="pre">aperture_photometry</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the apertures between r=1 and r=50</span>
+<span class="n">radii</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">apertures</span> <span class="o">=</span> <span class="p">[</span><span class="n">CircularAperture</span><span class="p">((</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">),</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">radii</span><span class="p">]</span>
+
+<span class="c1"># Perform aperture photometry</span>
+<span class="n">phot_table</span> <span class="o">=</span> <span class="n">aperture_photometry</span><span class="p">(</span><span class="n">ccd37_proc_data</span> <span class="o">-</span> <span class="n">median</span><span class="p">,</span> <span class="n">apertures</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">phot_table</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">phot_table</span><span class="o">.</span><span class="n">colnames</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> id      xcenter           ycenter       ...  aperture_sum_48   aperture_sum_49 
+--- ----------------- ------------------ ... ------------------ ----------------
+  1 999.3926809256053 1932.4563637249448 ... 40156.700384848606 40747.1507399807
+[&#39;id&#39;, &#39;xcenter&#39;, &#39;ycenter&#39;, &#39;aperture_sum_0&#39;, &#39;aperture_sum_1&#39;, &#39;aperture_sum_2&#39;, &#39;aperture_sum_3&#39;, &#39;aperture_sum_4&#39;, &#39;aperture_sum_5&#39;, &#39;aperture_sum_6&#39;, &#39;aperture_sum_7&#39;, &#39;aperture_sum_8&#39;, &#39;aperture_sum_9&#39;, &#39;aperture_sum_10&#39;, &#39;aperture_sum_11&#39;, &#39;aperture_sum_12&#39;, &#39;aperture_sum_13&#39;, &#39;aperture_sum_14&#39;, &#39;aperture_sum_15&#39;, &#39;aperture_sum_16&#39;, &#39;aperture_sum_17&#39;, &#39;aperture_sum_18&#39;, &#39;aperture_sum_19&#39;, &#39;aperture_sum_20&#39;, &#39;aperture_sum_21&#39;, &#39;aperture_sum_22&#39;, &#39;aperture_sum_23&#39;, &#39;aperture_sum_24&#39;, &#39;aperture_sum_25&#39;, &#39;aperture_sum_26&#39;, &#39;aperture_sum_27&#39;, &#39;aperture_sum_28&#39;, &#39;aperture_sum_29&#39;, &#39;aperture_sum_30&#39;, &#39;aperture_sum_31&#39;, &#39;aperture_sum_32&#39;, &#39;aperture_sum_33&#39;, &#39;aperture_sum_34&#39;, &#39;aperture_sum_35&#39;, &#39;aperture_sum_36&#39;, &#39;aperture_sum_37&#39;, &#39;aperture_sum_38&#39;, &#39;aperture_sum_39&#39;, &#39;aperture_sum_40&#39;, &#39;aperture_sum_41&#39;, &#39;aperture_sum_42&#39;, &#39;aperture_sum_43&#39;, &#39;aperture_sum_44&#39;, &#39;aperture_sum_45&#39;, &#39;aperture_sum_46&#39;, &#39;aperture_sum_47&#39;, &#39;aperture_sum_48&#39;, &#39;aperture_sum_49&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>There <code class="docutils literal notranslate"><span class="pre">phot_table</span></code> table now contains a column for each one of the apertures we defined. We can plot the growth curve with a bit of table manipulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the region we are interested in from the table</span>
+<span class="n">region</span> <span class="o">=</span> <span class="n">phot_table</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Convert the values to a list</span>
+<span class="n">region_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">region</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="c1"># Exclude the first three values, which are the id, x, and y coordinates</span>
+<span class="n">fluxes</span> <span class="o">=</span> <span class="n">region_data</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+
+<span class="c1"># Plot the growth curve</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span> <span class="n">fluxes</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Aperture radius (pixels)&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux (ADU)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a67fc0fe1f11aa8bc347a523c399fae5e224e42a4befefbb1126f63ec40a9974.png" src="../../_images/a67fc0fe1f11aa8bc347a523c399fae5e224e42a4befefbb1126f63ec40a9974.png" />
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although we won’t discuss the details here, <code class="docutils literal notranslate"><span class="pre">photutils.aperture</span></code> also provides aperture classes that can be defined using sky coordinates (RA, Dec) instead of pixels, assuming that the image has the proper WCS information. Other than how the aperture is defined, the rest of the process is the same.</p>
+</div>
+</section>
+<section id="local-background-subtraction">
+<h3>Local background subtraction<a class="headerlink" href="#local-background-subtraction" title="Link to this heading">¶</a></h3>
+<p>In the previous growth curve we saw that the flux grows with the aperture but never really plateaus. This is because, although we are subtracting the median image background, the background around the source is likely different and we are not properly estimating it. A better approach is to measure the background around our source using an annular aperture with a radius that is large enough to make sure that it does not include any of the source signal but is not so large as to not being representative of the local background. The best radius can be determined by eye or, better, using a radial profile as we will see in the next section. For now we will use an annulus with an inner radius of 30 pixels and a width of 5 pixels, which according to the previous plots should work well enough.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">photutils.aperture</span><span class="w"> </span><span class="kn">import</span> <span class="n">CircularAnnulus</span>
+
+<span class="c1"># Define the annulus</span>
+<span class="n">annulus</span> <span class="o">=</span> <span class="n">CircularAnnulus</span><span class="p">((</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">),</span> <span class="n">r_in</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">r_out</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
+
+<span class="c1"># Plot the annulus</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ccd37_proc_data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">annulus</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Annulus&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span> <span class="mi">1100</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">1800</span><span class="p">,</span> <span class="mi">2100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/13e605552d86c2593b8e2dee7d025d6697940cb210db8a30450c3198a4f90217.png" src="../../_images/13e605552d86c2593b8e2dee7d025d6697940cb210db8a30450c3198a4f90217.png" />
+</div>
+</div>
+<p>Now let’s perform aperture photometry on the annulus and estimate the background. We could do this manually but instead we will use the <code class="docutils literal notranslate"><span class="pre">ApertureStats</span></code> class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">photutils.aperture</span><span class="w"> </span><span class="kn">import</span> <span class="n">ApertureStats</span>
+
+<span class="n">annulus_stats</span> <span class="o">=</span> <span class="n">ApertureStats</span><span class="p">(</span><span class="n">ccd37_proc_data</span><span class="p">,</span> <span class="n">annulus</span><span class="p">)</span>
+<span class="n">back</span> <span class="o">=</span> <span class="n">annulus_stats</span><span class="o">.</span><span class="n">median</span>
+<span class="n">std</span> <span class="o">=</span> <span class="n">annulus_stats</span><span class="o">.</span><span class="n">std</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Background per pixel: </span><span class="si">{</span><span class="n">back</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Background per pixel: 703.683
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can use define a region around our source and subtract this background. The best way to do this is to calculate the raw flux and then subtract the background multiplied by the area of the aperture.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">aperture</span> <span class="o">=</span> <span class="n">CircularAperture</span><span class="p">((</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">),</span> <span class="n">r</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="n">phot_table</span> <span class="o">=</span> <span class="n">aperture_photometry</span><span class="p">(</span><span class="n">ccd37_proc_data</span><span class="p">,</span> <span class="n">aperture</span><span class="p">)</span>
+<span class="n">flux</span> <span class="o">=</span> <span class="n">phot_table</span><span class="p">[</span><span class="s1">&#39;aperture_sum&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">aperture_area</span> <span class="o">=</span> <span class="n">aperture</span><span class="o">.</span><span class="n">area_overlap</span><span class="p">(</span><span class="n">ccd37_proc_data</span><span class="p">)</span>
+<span class="n">flux_no_back</span> <span class="o">=</span> <span class="n">flux</span> <span class="o">-</span> <span class="n">back</span> <span class="o">*</span> <span class="n">aperture_area</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Flux (raw): </span><span class="si">{</span><span class="n">flux</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Background: </span><span class="si">{</span><span class="n">back</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Area: </span><span class="si">{</span><span class="n">aperture_area</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Flux (without background): </span><span class="si">{</span><span class="n">flux_no_back</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Flux (raw): 2015303.201
+Background: 703.683
+Area: 2827.433
+Flux (without background): 25686.611
+</pre></div>
+</div>
+</div>
+</div>
+<p>The resulting flux, after subtracting the background, is much lower than the raw flux. The background in this image is very significant (this is not the bias or dark levels, we removed those, but the sky background) and it’s critical to subtract it properly.</p>
+<p>Let’s repeat our growth curve analysis but using the local background subtraction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">radii</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">apertures</span> <span class="o">=</span> <span class="p">[</span><span class="n">CircularAperture</span><span class="p">((</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">),</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">radii</span><span class="p">]</span>
+
+<span class="c1"># Calculate the raw flux for each aperture</span>
+<span class="n">phot_table</span> <span class="o">=</span> <span class="n">aperture_photometry</span><span class="p">(</span><span class="n">ccd37_proc_data</span><span class="p">,</span> <span class="n">apertures</span><span class="p">)</span>
+<span class="n">region</span> <span class="o">=</span> <span class="n">phot_table</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">region_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">region</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="n">fluxes</span> <span class="o">=</span> <span class="n">region_data</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+
+<span class="c1"># For each aperture estimate the area and subtract the background</span>
+<span class="n">fluxes_no_back</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">radii</span><span class="p">):</span>
+    <span class="n">aperture</span> <span class="o">=</span> <span class="n">apertures</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">aperture_area</span> <span class="o">=</span> <span class="n">aperture</span><span class="o">.</span><span class="n">area_overlap</span><span class="p">(</span><span class="n">ccd37_proc_data</span><span class="p">)</span>
+    <span class="n">flux_no_back</span> <span class="o">=</span> <span class="n">fluxes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">back</span> <span class="o">*</span> <span class="n">aperture_area</span>
+    <span class="n">fluxes_no_back</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flux_no_back</span><span class="p">)</span>
+
+<span class="c1"># Plot the growth curve</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span> <span class="n">fluxes_no_back</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Aperture radius (pixels)&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux (ADU)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d0eea94d9cb34cd86c0ad52412aafe7e04791fe400fd98b510f0b5c47d38e077.png" src="../../_images/d0eea94d9cb34cd86c0ad52412aafe7e04791fe400fd98b510f0b5c47d38e077.png" />
+</div>
+</div>
+<p>That’s significantly better! This also tells us that probably all the flux in our source is contained in a radius of about 15 pixels (of course we can define this more precisely by, for example, estimating when the cumulated flux increases by less than 1%).</p>
+</section>
+<section id="radial-profile">
+<h3>Radial profile<a class="headerlink" href="#radial-profile" title="Link to this heading">¶</a></h3>
+<p>A radial profile is a measurement or plot of the flux per unit of area as a function of the distance from the centre of the source. It’s directly related to the growth curve we saw before. <a class="reference external" href="https://photutils.readthedocs.io/en/latest/user_guide/profiles.html" rel="noreferrer" target="_blank">photurils.profiles</a> provides a way to calculate the radial profile of a source along with a Gaussian fit to the data. We’ll calculate the radial profile of the source we have been using so far.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">photutils.profiles</span><span class="w"> </span><span class="kn">import</span> <span class="n">RadialProfile</span>
+
+<span class="c1"># Define the radii</span>
+<span class="n">radii</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Create the radial profile</span>
+<span class="n">rp</span> <span class="o">=</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">ccd37_proc_data</span><span class="p">,</span> <span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">),</span> <span class="n">radii</span><span class="p">)</span>
+
+<span class="c1"># Print the radii and profile values</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rp</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rp</span><span class="o">.</span><span class="n">profile</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0.5  1.5  2.5  3.5  4.5  5.5  6.5  7.5  8.5  9.5 10.5 11.5 12.5 13.5
+ 14.5 15.5 16.5 17.5 18.5 19.5 20.5 21.5 22.5 23.5 24.5 25.5 26.5 27.5
+ 28.5 29.5]
+[1503.83326631 1336.31234998 1088.3386528   909.25794637  798.32153758
+  750.39371618  730.83450084  716.16057459  712.90419376  710.75780601
+  705.19316673  705.88338733  704.87253464  705.85895369  707.06109496
+  704.97973063  702.92028344  705.59217152  704.17725587  707.07358118
+  701.90119637  702.73019915  704.55124872  703.55941452  702.85002009
+  703.48279895  703.49606593  702.31256166  700.09586153  700.96099791]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that there is a difference between the radii that we provide (which are the “edge” radii) and the values in the <code class="docutils literal notranslate"><span class="pre">radius</span></code> attribute, which are the average radii of each annular region around the source. The <code class="docutils literal notranslate"><span class="pre">profile</span></code> is the average flux including all the pixels in the annular region for that radial distance. As we get to larger radii the values settle around 700, which is the background level we measured before. We have not removed the background from the profile, so let’s do that now and plot the resul.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rp</span> <span class="o">=</span> <span class="n">RadialProfile</span><span class="p">(</span><span class="n">ccd37_proc_data</span> <span class="o">-</span> <span class="n">back</span><span class="p">,</span> <span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">),</span> <span class="n">radii</span><span class="p">)</span>
+
+<span class="c1"># Plot the radial profile</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rp</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">rp</span><span class="o">.</span><span class="n">profile</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8e6c1eda6c3ee21906c63bea2a78cba7389c8e6bb689dc04a1520d983ccb93ac.png" src="../../_images/8e6c1eda6c3ee21906c63bea2a78cba7389c8e6bb689dc04a1520d983ccb93ac.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">RadialProfile</span></code> also provides a fit to the data using a Gaussian profile.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">rp</span><span class="o">.</span><span class="n">gaussian_fit</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: Gaussian1D
+Inputs: (&#39;x&#39;,)
+Outputs: (&#39;y&#39;,)
+Model set size: 1
+Parameters:
+        amplitude     mean       stddev      
+    ----------------- ---- ------------------
+    815.7346674295032  0.0 2.1048640030957904
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is simply a <a class="reference external" href="https://docs.astropy.org/en/stable/api/astropy.modeling.functional_models.Gaussian1D.html" rel="noreferrer" target="_blank">Gaussian1D</a> object representing a 1D Gaussian function</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+f(x) = A \cdot e^{-\frac{(x - x_0)^2}{2 \sigma^2}}
+\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(A\)</span> is the amplitude, <span class="math notranslate nohighlight">\(x_0\)</span> is the position of the peak, and <span class="math notranslate nohighlight">\(\sigma\)</span> is the standard deviation. Let’s evaluate that function and overplot it on top of the radial profile.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a grid of r values</span>
+<span class="n">rr</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Evaluate the Gaussian function</span>
+<span class="n">gaussian</span> <span class="o">=</span> <span class="n">rp</span><span class="o">.</span><span class="n">gaussian_fit</span><span class="p">(</span><span class="n">rr</span><span class="p">)</span>
+
+<span class="c1"># Plot the radial profile</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rp</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">rp</span><span class="o">.</span><span class="n">profile</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Radial profile&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rr</span><span class="p">,</span> <span class="n">gaussian</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gaussian fit&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Radius (pixels)&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux (ADU)&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/4bb000bd4cb78b24d9f3a251ba6144979595180d42581db925e6bdf6eac08914.png" src="../../_images/4bb000bd4cb78b24d9f3a251ba6144979595180d42581db925e6bdf6eac08914.png" />
+</div>
+</div>
+<p>As you can see our Gaussian fit is a very good approximation to the data except towards large radius where the wings of the PSF ar not totally Gaussian. You can try fitting other functions (for example a Moffat or Laurentzian profile) to see if they do better.</p>
+</section>
+</section>
+<section id="astrometric-registration">
+<h2>Astrometric registration<a class="headerlink" href="#astrometric-registration" title="Link to this heading">¶</a></h2>
+<p>Although telescope tracking is usually very good, it is not perfect over long periods of time. This can be compensated by the use of active guiding in which a different camera or system is used to measure the pointing of the telescope and adjust it every few seconds. Even in this case, multiple images of the same object may not be perfectly aligned, for example if the telescope has been moved between images or if we are using different filters. Often we will want to align different images of the same object, for example if we are going to combine them to increase the signal to noise ratio, or to be able to use the same centroids and apertures to perform photometry on all the images.</p>
+<p>There are different ways in which images can be aligned. On first order, the alignment is just an <a class="reference external" href="https://en.wikipedia.org/wiki/Affine_transformation" rel="noreferrer" target="_blank">affine transformation</a> between the pixels of both images (that is, a translation, rotation, and maybe scale change). In practice there may be higher order effects, especially if the images cover a large field of view where the distortion of the optics may be significant. Here we will discuss a different approach in which we first generate a <a class="reference external" href="https://fits.gsfc.nasa.gov/fits_wcs.html" rel="noreferrer" target="_blank">World Coordinate System</a> (WCS) transformation for each image and then use that information to “reproject” the images to a common grid. A WCS is a set of FITS header keywords and values that provides a transformation between pixel coordinates and sky coordinates (usually RA/Dec but sometimes others). The WCS standard is complex and additional keywords can be added to make the transformation more precise, but usally you’ll see the following keywords:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>WCSAXES =                    2 / no comment
+CTYPE1  = &#39;RA---TAN-SIP&#39; / TAN (gnomic) projection + SIP distortions
+CTYPE2  = &#39;DEC--TAN-SIP&#39; / TAN (gnomic) projection + SIP distortions
+EQUINOX =               2000.0 / Equatorial coordinates definition (yr)
+LONPOLE =                180.0 / no comment
+LATPOLE =                  0.0 / no comment
+CRVAL1  =         138.98112419 / RA  of reference point
+CRVAL2  =        52.8164738445 / DEC of reference point
+CRPIX1  =        746.863628387 / X reference pixel
+CRPIX2  =        2601.61639404 / Y reference pixel
+CUNIT1  = &#39;deg     &#39; / X pixel scale units
+CUNIT2  = &#39;deg     &#39; / Y pixel scale units
+CD1_1   =   -4.89565776626E-05 / Transformation matrix
+CD1_2   =   -4.59718481848E-07 / no comment
+CD2_1   =   -2.13323012117E-07 / no comment
+CD2_2   =     4.8924167814E-05 / no comment
+</pre></div>
+</div>
+<p><a class="reference external" href="https://docs.astropy.org/en/stable/wcs/index.html" rel="noreferrer" target="_blank">astropy.wcs</a> provides a series of tools to use and generate WCS information. We will see two approaches to generating WCS information for an image without it: using astrometry.net and creating it from known stars on the image.</p>
+<section id="using-astrometry-net">
+<h3>Using astrometry.net<a class="headerlink" href="#using-astrometry-net" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="http://astrometry.net/" rel="noreferrer" target="_blank">astrometry.net</a> is a widely used algorithm to perform “blind” astrometric registration of images. “Blind” here means that the algorithm doesn’t need to know anything about where the telescope was pointing when we took the image or the characteristics of the system (field of view, image scale). That said, astrometry.net often works better if some of that information is provided. The algorithm works by identifying groups of four stars (called quads), creating a normalised structure representing the quads, and comparing them with a large, precomputed database of such quad structures. When enough matches are found, the algorithm determines that the it knows where the image is pointing and generates a WCS transformation for it. astrometry.net also provides a web service where you can upload and “solve” your images. For that go to <a class="reference external" href="https://nova.astrometry.net" rel="noreferrer" target="_blank">https://nova.astrometry.net</a> and click on Upload. Now you can select an image and upload it.</p>
+<p><img alt="astrometry.net upload" src="../../_images/astrometrynet-upload.png" /></p>
+<p>After a few seconds you should see a progress page and, if the image can be astrometrycally solved, you will get a “Success” message. You can then click on “Go to results page”.</p>
+<p><img alt="astrometry.net log" src="../../_images/astrometrynet-log.png" /></p>
+<p>On the right side of the result page you can click on the <code class="docutils literal notranslate"><span class="pre">new-image.fits</span></code> to download a copy of your image with the WCS information added to the header, or <code class="docutils literal notranslate"><span class="pre">wcs.fits</span></code> which contains only a FITS header with the WCS information (no image data).</p>
+</section>
+<section id="manually-creating-a-wcs">
+<h3>Manually creating a WCS<a class="headerlink" href="#manually-creating-a-wcs" title="Link to this heading">¶</a></h3>
+<p>If you image has too few stars astrometry.net is likely to fail (in average astrometry.net needs at least 8-10 stars to solve the image). In this case you can try to create a WCS manually. This requires you to figure out the coordinates of at least some of the stars on your image (the more the better). You can do this in multiple ways, by querying a known catalogue like Gaia or SDSS around the known centre of your image, or using a tool like <a class="reference external" href="https://aladin.u-strasbg.fr/" rel="noreferrer" target="_blank">Aladin</a> to manually match the stars you are seeing to known stars. Once you have the coordinates of the stars and their associated pixel coordinates (it helps if you use a centroiding method like the one we saw earlier rathern than visually deciding what is the central pixel), we can use <a class="reference external" href="https://docs.astropy.org/en/stable/api/astropy.wcs.utils.fit_wcs_from_points.html#astropy.wcs.utils.fit_wcs_from_points" rel="noreferrer" target="_blank">astropy.wcs.utils.fit_wcs_from_points</a> to create the WCS transformation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s assume these are the x and y coordinates of the stars we found</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1331.3568115234375</span><span class="p">,</span>
+     <span class="mf">1996.116943359375</span><span class="p">,</span>
+     <span class="mf">2008.965087890625</span><span class="p">,</span>
+     <span class="mf">215.91859436035156</span><span class="p">,</span>
+     <span class="mf">162.48562622070312</span><span class="p">,</span>
+     <span class="mf">194.13113403320312</span><span class="p">,</span>
+     <span class="mf">623.3280029296875</span><span class="p">,</span>
+     <span class="mf">1002.7437133789062</span><span class="p">,</span>
+     <span class="mf">1383.0045166015625</span><span class="p">,</span>
+     <span class="mf">533.0752563476562</span><span class="p">]</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2535.110107421875</span><span class="p">,</span>
+     <span class="mf">1694.0184326171875</span><span class="p">,</span>
+     <span class="mf">3549.899658203125</span><span class="p">,</span>
+     <span class="mf">851.3917236328125</span><span class="p">,</span>
+     <span class="mf">3353.468994140625</span><span class="p">,</span>
+     <span class="mf">726.9962158203125</span><span class="p">,</span>
+     <span class="mf">3613.446533203125</span><span class="p">,</span>
+     <span class="mf">525.7298583984375</span><span class="p">,</span>
+     <span class="mf">2291.5869140625</span><span class="p">,</span>
+     <span class="mf">1997.260009765625</span><span class="p">]</span>
+
+<span class="c1"># And the associated RA and Dec coordinates</span>
+<span class="n">ra</span> <span class="o">=</span> <span class="p">[</span><span class="mf">138.94786322276144</span><span class="p">,</span>
+      <span class="mf">138.90368975221398</span><span class="p">,</span>
+      <span class="mf">138.96405273693716</span><span class="p">,</span>
+      <span class="mf">138.9513195308238</span><span class="p">,</span>
+      <span class="mf">138.9499430926342</span><span class="p">,</span>
+      <span class="mf">138.90056898449305</span><span class="p">,</span>
+      <span class="mf">138.88681671835002</span><span class="p">,</span>
+      <span class="mf">139.0222296563415</span><span class="p">,</span>
+      <span class="mf">138.96284185068438</span><span class="p">,</span>
+      <span class="mf">138.93741717327015</span><span class="p">]</span>
+
+<span class="n">dec</span> <span class="o">=</span> <span class="p">[</span><span class="mf">52.80312251879186</span><span class="p">,</span>
+       <span class="mf">52.84730345919048</span><span class="p">,</span>
+       <span class="mf">52.769005157018285</span><span class="p">,</span>
+       <span class="mf">52.89335543183549</span><span class="p">,</span>
+       <span class="mf">52.7833381349152</span><span class="p">,</span>
+       <span class="mf">52.83300372603977</span><span class="p">,</span>
+       <span class="mf">52.86023955756058</span><span class="p">,</span>
+       <span class="mf">52.78176122196098</span><span class="p">,</span>
+       <span class="mf">52.81655280388421</span><span class="p">,</span>
+       <span class="mf">52.87733744902463</span><span class="p">]</span>
+
+<span class="c1"># Create SkyCoord objects</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.coordinates</span><span class="w"> </span><span class="kn">import</span> <span class="n">SkyCoord</span>
+<span class="n">coords</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;deg&#39;</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;icrs&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create the WCS object. Note that the xy coordinates should use (1, 1) indexing</span>
+<span class="c1"># for the lower left corner of the image (FITS standard).</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.wcs.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">fit_wcs_from_points</span>
+
+<span class="n">wcs</span> <span class="o">=</span> <span class="n">fit_wcs_from_points</span><span class="p">((</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)),</span> <span class="n">coords</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;TAN&#39;</span><span class="p">)</span>
+
+<span class="c1"># Print the WCS information as a header</span>
+<span class="n">wcs</span><span class="o">.</span><span class="n">to_header</span><span class="p">()</span>
+
+<span class="c1"># Let&#39;s add this to the image header</span>
+<span class="n">ccd37_proc</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ccd.037.0_proc.fits&#39;</span><span class="p">)</span>
+<span class="n">ccd37_proc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">wcs</span><span class="o">.</span><span class="n">to_header</span><span class="p">())</span>
+<span class="n">ccd37_proc</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s1">&#39;ccd.037.0_proc_wcs.fits&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="image-reprojection">
+<h2>Image reprojection<a class="headerlink" href="#image-reprojection" title="Link to this heading">¶</a></h2>
+<p>Let’s imagine that we have to images of the same field on which the sources do not align. That is the case of images <code class="docutils literal notranslate"><span class="pre">ccd.037.0_wcs.fits</span></code> and <code class="docutils literal notranslate"><span class="pre">ccd.043.0_wcs.fits</span></code> which correspond to two different filters for the same area on the sky and for which we have already added the WCS information.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ccd_37</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ccd.037.0_wcs.fits&#39;</span><span class="p">)</span>
+<span class="n">ccd_43</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ccd.043.0_wcs.fits&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot the two images</span>
+<span class="n">norm_37</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">ccd_37</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">ZScaleInterval</span><span class="p">(),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">LinearStretch</span><span class="p">())</span>
+<span class="n">norm_43</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">ccd_43</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">ZScaleInterval</span><span class="p">(),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">LinearStretch</span><span class="p">())</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ccd_37</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm_37</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ccd_43</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm_43</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/97335187f1db31ea74d0391730285c327a0a7547ec4c2754226b43e53847164f.png" src="../../_images/97335187f1db31ea74d0391730285c327a0a7547ec4c2754226b43e53847164f.png" />
+</div>
+</div>
+<p>To project the images to a common grid we can use the <a class="reference external" href="https://reproject.readthedocs.io/en/stable/" rel="noreferrer" target="_blank">reproject</a> package. This package provides a number of algorithms to reproject images using WCS information. We will use the <code class="docutils literal notranslate"><span class="pre">reproject_interp</span></code> function which provides a good compromise between speed and accuracy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">astropy.wcs</span><span class="w"> </span><span class="kn">import</span> <span class="n">WCS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">reproject</span><span class="w"> </span><span class="kn">import</span> <span class="n">reproject_interp</span>
+
+<span class="c1"># Reproject the first image to the second one. We need to provide the complete</span>
+<span class="c1"># HDU of the first image and the header of the second one (with the WCS information).</span>
+<span class="c1"># The result is a new data array with the same shape.</span>
+<span class="n">reprojected</span><span class="p">,</span> <span class="n">footprint</span> <span class="o">=</span> <span class="n">reproject_interp</span><span class="p">(</span><span class="n">ccd_37</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ccd_43</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+
+<span class="c1"># Now we save the new image with the WCS information of the second image.</span>
+<span class="n">wcs_43</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">ccd_43</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+<span class="n">header</span> <span class="o">=</span> <span class="n">ccd_37</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">header</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">wcs_43</span><span class="o">.</span><span class="n">to_header</span><span class="p">())</span>
+<span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">reprojected</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s1">&#39;ccd.037.0_reprojected.fits&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 57403.000000 from DATE-OBS&#39;. [astropy.wcs.wcs]
+WARNING: Some non-standard WCS keywords were excluded: A_ORDER, A_0_2, A_1_1, A_2_0, B_ORDER, B_0_2, B_1_1, B_2_0, AP_ORDER, AP_0_0, AP_0_1, AP_0_2, AP_1_0, AP_1_1, AP_2_0, BP_ORDER, BP_0_0, BP_0_1, BP_0_2, BP_1_0, BP_1_1, BP_2_0 Use the ``relax`` kwarg to control this. [astropy.wcs.wcs]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s plot the two images side by side.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ccd_37_reproj</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ccd.037.0_reprojected.fits&#39;</span><span class="p">)</span>
+<span class="n">ccd_43</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ccd.043.0_wcs.fits&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot the two images</span>
+<span class="n">norm_37</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">ccd_37_reproj</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">ZScaleInterval</span><span class="p">(),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">LinearStretch</span><span class="p">())</span>
+<span class="n">norm_43</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">ccd_43</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">ZScaleInterval</span><span class="p">(),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">LinearStretch</span><span class="p">())</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ccd_37_reproj</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm_37</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ccd_43</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm_43</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/67714f81d04a9930bc29f7ec2b9051070c84abb23cb4db04ffbee5fdfe10bb7a.png" src="../../_images/67714f81d04a9930bc29f7ec2b9051070c84abb23cb4db04ffbee5fdfe10bb7a.png" />
+</div>
+</div>
+<p>Note that, since the footprint on the sky of the first image is not the same as the second one, the reprojected image now have an area for which there is no information. That area is filled with NaN values.</p>
+</section>
+<section id="further-reading">
+<h2>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://starlink.eao.hawaii.edu/devdocs/sc6.pdf" rel="noreferrer" target="_blank">The CCD Photometric Calibration Cookbook</a></p></li>
+<li><p><a class="reference external" href="https://www.astrosen.unam.mx/~favilac/IRAF/docs/photom.pdf" rel="noreferrer" target="_blank">Photomety using IRAF</a></p></li>
+<li><p><a class="reference external" href="https://coolwiki.ipac.caltech.edu/index.php/Aperture_Photometry_Overview" rel="noreferrer" target="_blank">Aperture photoemtry overview</a></p></li>
+</ul>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../catalogue_data/catalogue_data.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Catalogue data and SQL</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../ccd_reductions/ccd_reductions.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Basic CCD reductions</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025-, José Sánchez-Gallego
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/uw-astro-480/uw-astro-480.github.io/" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Photometry and CCD calibrations</a><ul>
+<li><a class="reference internal" href="#aperture-photometry">Aperture photometry</a><ul>
+<li><a class="reference internal" href="#source-detection">Source detection</a></li>
+<li><a class="reference internal" href="#centroiding">Centroiding</a></li>
+<li><a class="reference internal" href="#simple-aperture-photometry">Simple aperture photometry</a></li>
+<li><a class="reference internal" href="#local-background-subtraction">Local background subtraction</a></li>
+<li><a class="reference internal" href="#radial-profile">Radial profile</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#astrometric-registration">Astrometric registration</a><ul>
+<li><a class="reference internal" href="#using-astrometry-net">Using astrometry.net</a></li>
+<li><a class="reference internal" href="#manually-creating-a-wcs">Manually creating a WCS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-reprojection">Image reprojection</a></li>
+<li><a class="reference internal" href="#further-reading">Further reading</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=df1a032d"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

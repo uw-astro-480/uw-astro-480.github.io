@@ -1,0 +1,583 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Visualisation tools" href="visualisation_tools.html" /><link rel="prev" title="Code development and tools" href="codedev.html" />
+
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
+        <title>Setting up the development environment - ASTR 480</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles.css?v=2bccd5c4" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #242933;
+  --color-code-foreground: #d8dee9;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #242933;
+  --color-code-foreground: #d8dee9;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">ASTR 480</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/UW_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../syllabus.html">Course description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../schedule.html">Schedule</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lecture_notes/lecture_notes.html">Lecture notes</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Lecture notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lecture_notes/intro_concepts/intro_concepts.html">Introductory concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture_notes/ccds/ccds.html">CCDs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture_notes/ccd_reductions/ccd_reductions.html">Basic CCD reductions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture_notes/photometry/photometry.html">Photometry and CCD calibrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture_notes/catalogue_data/catalogue_data.html">Catalogue data and SQL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture_notes/data_visualisation/data_visualisation.html">Plotting and data visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../lecture_notes/spectrographs/spectrographs.html">Spectrographs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../arcsat/arcsat.html">ARCSAT observations</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of ARCSAT observations</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../arcsat/proposals.html">ARCSAT proposals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../arcsat/observing.html">ARCSAT observing and schedule</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://www.apo.nmsu.edu/Telescopes/ARCSAT/" rel="noreferrer" target="_blank">ARCSAT documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../arcsat/paper.html">ARCSAT paper</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../assignments/assignments.html">Assignments</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Assignments</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../assignments/assignment_0/assignment_0.html">Assignment 0: testing the coding environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../assignments/assignment_1/assignment_1.html">Assignment 1: coordinate transformations and altitude plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../assignments/assignment_2/assignment_2.html">Assignment 2: CCD reductions and photometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../assignments/assignment_3/assignment_3.html">Assignment 3: tabular data and data visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../assignments/assignment_4/assignment_4.html">Assignment 4 (extra credit): spectroscopic data reduction</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="codedev.html">Code development and tools</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Code development and tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Setting up the development environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation_tools.html">Visualisation tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plotting.html">Plotting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/uw-astro-480" rel="noreferrer" target="_blank">GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jupyter.rttl.uw.edu/2025-spring-astr-480-a" rel="noreferrer" target="_blank">JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://canvas.uw.edu/courses/1799617" rel="noreferrer" target="_blank">Canvas</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.apo.nmsu.edu/Telescopes/ARCSAT/" rel="noreferrer" target="_blank">ARCSAT</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/astr-480/astr-480-sp-25/blob/main/src/codedev/setup.md?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/astr-480/astr-480-sp-25/edit/main/src/codedev/setup.md" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section class="tex2jax_ignore mathjax_ignore" id="setting-up-the-development-environment">
+<h1>Setting up the development environment<a class="headerlink" href="#setting-up-the-development-environment" title="Link to this heading">¶</a></h1>
+<p>ASTR 480 is a practical class where most of the analysis will be done by writing Python code. Here we will see how to set up an environment for coding that is sufficient for the purposes of this course.</p>
+<p>The suggested environment uses the UW-IT <a class="reference external" href="https://jupyter.org/hub" rel="noreferrer" target="_blank">JupyterHub</a> service, which provides a virtual environment with a UNIX-like shell and a Jupyter notebook interface. To access it you just need a web browser regardless of the operating system of the device you are using. However, you will likely need to upload/download files from that environment, so a full operation system (i.e., not a tablet) is recommended.</p>
+<p>While the JupyterHub service is a good option for this course, you may also want to set up your own local environment. We provide some instructions below, but note that this is an unsupported installation method and we cannot guarantee support in case of issues.</p>
+<section id="accessing-your-uw-it-jupyterhub-account">
+<h2>Accessing your UW-IT JupyterHub account<a class="headerlink" href="#accessing-your-uw-it-jupyterhub-account" title="Link to this heading">¶</a></h2>
+<p>To access your JupyterHub account, go to <a class="reference external" href="https://jupyter.rttl.uw.edu/2025-spring-astr-480-a" rel="noreferrer" target="_blank">https://jupyter.rttl.uw.edu/2025-spring-astr-480-a</a> and log in with your UW NetID and password. After the virtual environment boots up (this may take up to a couple minutes) you should see your environment, which will look something like this:</p>
+<a class="reference internal image-reference" href="../_images/jupyterlab-initial.png"><img alt="JupyterHub interface" class="align-center" src="../_images/jupyterlab-initial.png" style="width: 100%;" />
+</a>
+<p>From here you can create a new notebook to quickly start coding (note that we won’t accept notebook submissions for the assignments but they are a good way to test your code, visualise data, etc.)</p>
+<a class="reference internal image-reference" href="../_images/jupyterlab-notebook-example.png"><img alt="JupyterHub notebook example" class="align-center" src="../_images/jupyterlab-notebook-example.png" style="width: 100%;" />
+</a>
+<p>Similarly, you can open a new UNIX terminal. Click on <code class="docutils literal notranslate"><span class="pre">Other</span> <span class="pre">—</span> <span class="pre">Terminal</span></code> in the launcher to open a new terminal. Under the JupyterLab interface you are running a Linux operating system (in particular Ubuntu 24.04) and you can do anything that you could do in a Linux terminal</p>
+<a class="reference internal image-reference" href="../_images/jupyterlab-terminal.png"><img alt="JupyterHub terminal" class="align-center" src="../_images/jupyterlab-terminal.png" style="width: 100%;" />
+</a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Due to UW-IT restrictions it is not possible to become root/sudo in the JupyterHub environment. This means that you cannot install new packages or software. However, the environment is already set up with all the packages you will need for this course. If you feel that a package is missing, please let us know and we will add it to the environment.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this course, when we refer to “terminal” it will always mean the UNIX terminal that you can open from the JupyterHub interface or on your local computer. If we mean the “Python terminal” (where you can code interactively) we will explicitly indicate so.</p>
+</div>
+<section id="text-editor">
+<h3>Text editor<a class="headerlink" href="#text-editor" title="Link to this heading">¶</a></h3>
+<p>The JupyterHub interface comes with a built-in text editor that you can use to edit files. The editor is quite simple and doesn’t offer autocompletion, but it should be sufficient for the purposes of this class. Alternatively, you can code things in your local computer (for example using <a class="reference external" href="https://code.visualstudio.com" rel="noreferrer" target="_blank">Visual Studio Code</a>) and then upload the files to the JupyterHub environment.</p>
+<p>Here we have created a new file called <code class="docutils literal notranslate"><span class="pre">untitled1.py</span></code> and added some Python code to it. Note that the code is highlighted</p>
+<a class="reference internal image-reference" href="../_images/jupyterlab-text-editor.png"><img alt="JupyterHub text editor" class="align-center" src="../_images/jupyterlab-text-editor.png" style="width: 100%;" />
+</a>
+<p>We can now go to a terminal and run the code</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>~/untitled1.py
+<span class="go">[[0 1 2]</span>
+<span class="go"> [3 4 5]</span>
+<span class="go"> [6 7 8]]</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">~</span></code> symbol is a shortcut for your home directory. You can use it to refer to files in your home directory without typing the full path. For example, <code class="docutils literal notranslate"><span class="pre">~/untitled1.py</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">/home/jovyan/untitled1.py</span></code>.</p>
+</div>
+</section>
+<section id="available-resources">
+<h3>Available resources<a class="headerlink" href="#available-resources" title="Link to this heading">¶</a></h3>
+<p>Your environment comes with most of the packages and software that you’ll need for your work in ASTR 480 (a few things like DS9 and other visual tools cannot be installed in this environment, we’ll discuss those later). In particular it comes with all the command-line tools you are likely to need, including <code class="docutils literal notranslate"><span class="pre">git</span></code>, <code class="docutils literal notranslate"><span class="pre">tar</span></code>, <code class="docutils literal notranslate"><span class="pre">ssh</span></code>, etc. It also comes with a base <a class="reference external" href="https://docs.conda.io/en/latest/" rel="noreferrer" target="_blank">Conda</a> installation with the main packages that you will need. New notebooks use that base Conda environment. For assignments we will use virtual environments with a dedicated <a class="reference external" href="https://docs.astral.sh/uv/" rel="noreferrer" target="_blank">uv</a> installation (which is also installed in your environment).</p>
+<p>The container in which the environment runs has 4GB of RAM and 2 CPU cores. You can check the available resources by running the command <code class="docutils literal notranslate"><span class="pre">htop</span></code> from a terminal.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>You will note that <code class="docutils literal notranslate"><span class="pre">htop</span></code> shows more CPU cores and memory than the ones available to your environment. This is because the JupyterHub server runs on a larger machine and resources for a class are shared, but you may not be able to use all the available resources.</p>
+</div>
+<p>You also have about 4.5 GB of free disk space in your home directory. You can check the available space with the command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>df<span class="w"> </span>-h<span class="w"> </span>~
+<span class="go">Filesystem      Size  Used Avail Use% Mounted on</span>
+<span class="go">/dev/sdv        4.9G  213M  4.7G   5% /home/jovyan</span>
+</pre></div>
+</div>
+<p>Note that while the user for everybody in the class is <code class="docutils literal notranslate"><span class="pre">jovyan</span></code> each student’s environment runs on a different, isolated container so your files will never be mixed with somebody else’s.</p>
+</section>
+<section id="restarting-the-environment">
+<h3>Restarting the environment<a class="headerlink" href="#restarting-the-environment" title="Link to this heading">¶</a></h3>
+<p>It is possible that we need to recreate the environment during the course. This may happen if we find that a tool that is not currently installed needs to be added. In that case a new <a class="reference external" href="https://github.com/uw-astro-480/jupyterhub-image" rel="noreferrer" target="_blank">Docker image</a> will be created and JupyterHub will pull it and recreate your environment. To force the restart you can go to <code class="docutils literal notranslate"><span class="pre">File</span> <span class="pre">—</span> <span class="pre">Hub</span> <span class="pre">Control</span> <span class="pre">Panel</span></code> and click on <code class="docutils literal notranslate"><span class="pre">Stop</span> <span class="pre">My</span> <span class="pre">Server</span></code>. After this you can click on <code class="docutils literal notranslate"><span class="pre">Start</span> <span class="pre">My</span> <span class="pre">Server</span></code> to recreate the environment with the new image.</p>
+<p>Your files will be preserved between restarts, however it is a good practice to back up your work before a restart. See the <a class="reference internal" href="#backing-up-your-work">section below</a> on how to do this.</p>
+</section>
+<section id="backing-up-your-work">
+<h3>Backing up your work<a class="headerlink" href="#backing-up-your-work" title="Link to this heading">¶</a></h3>
+<p>You can download any file to your local computer by right-clicking on it in the JupyterHub file browser and selecting <code class="docutils literal notranslate"><span class="pre">Download</span></code>. However, it is not possible to directly download an entire directory, but we can get around that by first compressing all the files in the directory.</p>
+<p>We recommend that you store all your work in a single directory for easy access and backup. For that, open a new terminal and create a new directory with the command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir -p ~/work</span>
+</pre></div>
+</div>
+<p>(you can call this <code class="docutils literal notranslate"><span class="pre">astr480</span></code> or whatever you want). You should see the directory appear in the JupyterHub file browser. Then you can create or upload files, notebooks, images, etc. in that directory.</p>
+<p>When you want to download the entire directory, you can compress it with the command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">rm -f ~/work.tar.gz                 # This will remove the previous backup!</span>
+<span class="go">tar -czvf ~/work.tar.gz ~/work</span>
+</pre></div>
+</div>
+<p>And a new file <code class="docutils literal notranslate"><span class="pre">work.tar.gz</span></code> will appear in the file browser. At that point you can download it by right-clicking on it and selecting <code class="docutils literal notranslate"><span class="pre">Download</span></code>.</p>
+</section>
+</section>
+<section id="setting-up-github">
+<h2>Setting up GitHub<a class="headerlink" href="#setting-up-github" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://github.com" rel="noreferrer" target="_blank">GitHub</a> is a web-based platform for version control and collaboration. It allows you to store your code in a remote repository and track changes over time. In this course, we will use GitHub (and <a class="reference external" href="https://classroom.github.com" rel="noreferrer" target="_blank">GitHub Classroom</a>) to provide template code and for you to submit your assignments. GitHub uses <a class="reference external" href="https://git-scm.com" rel="noreferrer" target="_blank">Git</a>, a version control system that allows you to track changes in your code and collaborate with others. Git is a command-line tool, but there are also graphical interfaces available (e.g., <a class="reference external" href="https://desktop.github.com/" rel="noreferrer" target="_blank">GitHub Desktop</a>). Throughout the course (and especially where it relates to the JupyterHub environment) we will assume that you are working using the command-line interface, but you’re welcome to use any tool you want.</p>
+<p>We will (very minimally) discuss how to use Git in the sample assignment. Those commands are the main ones that you will need to know for this course. If you want to learn more about Git, we recommend the <a class="reference external" href="https://learngitbranching.js.org" rel="noreferrer" target="_blank">Learn Git Branching</a> tutorial or the <a class="reference external" href="https://git-scm.com/book/en/v2" rel="noreferrer" target="_blank">Pro Git book</a>. And <a class="reference external" href="https://education.github.com/git-cheat-sheet-education.pdf" rel="noreferrer" target="_blank">here</a> is a good cheat sheet for Git/GitHub. We recommend that you at least familiarise yourself with the basic commands and ideas, but here are the main things you need to know:</p>
+<ul class="simple">
+<li><p>Git tracks changes made to a directory and its contents (including subdirectories). The contents tracked by Git are called a <em>repository</em> or <em>repo</em>. A repository can be local (on your computer) or remote (e.g., on GitHub).</p></li>
+<li><p>When a file changes, Git tracks those changes in the form of <em>commits</em>. A commit is a snapshot of the repository at a given time. Each commit has a unique identifier (a <code class="docutils literal notranslate"><span class="pre">hash</span></code>) and a message describing the changes made.</p></li>
+<li><p>You can create <em>branches</em> in your repository. A branch is a separate line of development that allows you to work on different features or fixes without affecting the main codebase (usually a branch called <code class="docutils literal notranslate"><span class="pre">main</span></code>). You can <em>merge</em> branches together when you’re ready to combine the changes.</p></li>
+<li><p>You can <em>clone</em> a remote repository to create a local copy on your computer. This allows you to work on the code locally and push changes back to the remote repository.</p></li>
+<li><p>After you’ve made changes in your local clone of a repository, you can <em>add</em>, <em>commit</em>, and <em>push</em> those changes to the remote repository. This allows you to share your changes with others and backs up your code in case your local copy changes or gets deleted.</p></li>
+</ul>
+<p>Our course has a <a class="reference external" href="https://github.com/orgs/uw-astro-480/repositories" rel="noreferrer" target="_blank">GitHub organisation</a>, where we can create repositories.</p>
+<p>To use GitHub you need to create an account and set up your <a class="reference external" href="https://www.ssh.com/academy/ssh-keys" rel="noreferrer" target="_blank">SSH keys</a> to be able to push changes to a remote repository. First, and if you don’t have one already, <a class="reference external" href="https://github.com/signup" rel="noreferrer" target="_blank">sign up</a> for a GitHub account.</p>
+<p>Once you have an account, you need to upload your public SSH key. An SSH key is a pair of cryptographic keys that can be used to authenticate your identity when connecting to a remote server. The public key is shared with the server, while the private key is kept secret on your local machine. This allows you to securely connect to the server without needing to enter a password each time. The JupyterHub environment image has already created a pair of SSH keys for you (these are YOUR keys, each student has a different set); you can see them in the <code class="docutils literal notranslate"><span class="pre">~/.ssh</span></code> directory.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ls<span class="w"> </span>-lh<span class="w"> </span>~/.ssh
+<span class="go">total 8.0K</span>
+<span class="go">-rw------- 1 jovyan users 2.6K Apr  1 19:38 id_rsa</span>
+<span class="go">-rw-rw-r-- 1 jovyan users  577 Apr  1 19:38 id_rsa.pub</span>
+</pre></div>
+</div>
+<p>The private key is <code class="docutils literal notranslate"><span class="pre">id_rsa</span></code> and the public key is <code class="docutils literal notranslate"><span class="pre">id_rsa.pub</span></code>. You can freely share the public key but you should never share your private key. You can get the contents of your public key by doing</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cat<span class="w"> </span>~/.ssh/id_rsa.pub
+<span class="go">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDVA2UNGLFDj+vhU4Wj2h+GgR6HlIzm6DVBc1xocP54RPt4euPwuTc1RWmdjRrXxGnDhUyAIApdbeeo5AyOv350DWHyfrE8mR2ucj66duiqT0ExDiLuAP/y+RCIpUz1Sph49ZRqVkZ5hHenWZwAND4uTl1P5A0oJvejtgYtHSwqCyQwd70DBOGhmRLCEz6lwuyA4g1z3vk3BHxtPky6mBTvPJjSu9XcTl1aL71x7upPCoWLpDcHgKtcLWzHh1ghp9czeFSnEDM7BJ6PDuBt4fn/x4esVQ7UqXTVhsP6vZH2OOn4PPn+pTsJ3H6ca/lSyI+vyjjgOwW0LT/HoVI2iCaH1dz0M7iN+izVnNP9cqB+l63ievmUGPMeHsj/oiJdTfSnaSwNMWtkf+pQVrKOeadW1ZOiREY1aOxmtTIessxPf+4VSsLsEIw3FkPisxS10klwOVcnyd80i9vMl+wImr94muiW8xksZHKkEBVHtUsa3mFfxgzaP8Z8fJNJK5gbM60= jovyan@jupyter-gallegoj</span>
+</pre></div>
+</div>
+<p>The key is the entire output, from <code class="docutils literal notranslate"><span class="pre">ssh-rsa</span></code> to the end, which includes your username and machine.</p>
+<p>Now let’s add your public key to GitHub so that you can authenticate yourself when pushing changes to your repositories. To do this, go to your GitHub account settings (on the GitHub main page go to the avatar image on the top right part of the screen and click on <code class="docutils literal notranslate"><span class="pre">Settings</span></code>) and click on <code class="docutils literal notranslate"><span class="pre">SSH</span> <span class="pre">and</span> <span class="pre">GPG</span> <span class="pre">keys</span></code> in the left sidebar. Then click on <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">SSH</span> <span class="pre">key</span></code> and paste the contents of your public key (copied from the terminal) into the <code class="docutils literal notranslate"><span class="pre">Key</span></code> field. You can give it a title (e.g., <code class="docutils literal notranslate"><span class="pre">ASTR480</span> <span class="pre">JupyterHub</span></code>) and click on <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">SSH</span> <span class="pre">key</span></code>. Depending on whether you set up 2-factor authentication you may need to enter a code sent to your phone or email. This is also a good time to update your <code class="docutils literal notranslate"><span class="pre">Public</span> <span class="pre">profile</span></code> information (especially the name) so that your commits have your real name, which is useful for grading.</p>
+<p>Now we can check that your JupyterHub environment can connect to GitHub. In the terminal, run the command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ssh<span class="w"> </span>-T<span class="w"> </span>git@github.com
+<span class="go">The authenticity of host &#39;github.com (140.82.116.4)&#39; can&#39;t be established.</span>
+<span class="go">ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.</span>
+<span class="go">This key is not known by any other names.</span>
+<span class="go">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span>
+<span class="go">Warning: Permanently added &#39;github.com&#39; (ED25519) to the list of known hosts.</span>
+<span class="go">Hi albireox! You&#39;ve successfully authenticated, but GitHub does not provide shell access.</span>
+</pre></div>
+</div>
+<p>Note that you’ll need to type <code class="docutils literal notranslate"><span class="pre">yes</span></code> to the question about the authenticity of the host (this will only be necessary once). If you see a message like the one above, it means that your SSH key is correctly set up and you can now push changes to your GitHub repositories. If you see an error message, check that you added the correct public key to your GitHub.</p>
+<p>Finally, you need to be added to the ASTR 480 GitHub organisation to have access to the assignments and other repositories. Fill out <a class="reference external" href="https://forms.gle/xSd323oBBCQVuivz5" rel="noreferrer" target="_blank">this form</a> with your name and GitHub username (<em>not</em> your email address or UW NetID).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p class="rubric" id="setting-up-a-local-environment">Setting up a local environment</p>
+<p>If you want to use your own computer for coding you can set up a local environment. For that you will either need a UNIX-like operating system (any Linux distribution or a macOS computer) or a Windows computer with <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install" rel="noreferrer" target="_blank">WSL</a> installed. The instructions below are for a UNIX-like operating system, but they should work on WSL as well. We assume a Debian/Ubuntu-like system, but the instructions should be similar for other distributions; you may need to change the commands used for the package manager.</p>
+<p class="rubric" id="installing-packages">Installing packages</p>
+<p>The following packages are likely required for the course.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sudo apt install build-essential git vim</span>
+</pre></div>
+</div>
+</div>
+<p>If you are using a macOS computer, you can install the packages using <a class="reference external" href="https://brew.sh/" rel="noreferrer" target="_blank">Homebrew</a>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">brew install git vim curl</span>
+</pre></div>
+</div>
+<section id="installing-python">
+<h3>Installing Python<a class="headerlink" href="#installing-python" title="Link to this heading">¶</a></h3>
+<p>You can use any Python 3.12 installation that you prefer. Both macOS and most Linux distros come with Python packages that are likely to work well for the purposes of this course. Another option may be installing <a class="reference external" href="https://www.anaconda.com/docs/getting-started/miniconda/main" rel="noreferrer" target="_blank">Miniconda</a>. For the assignments we will assume that you are using <a class="reference external" href="https://docs.astral.sh/uv/" rel="noreferrer" target="_blank">uv</a> for dependency management and virtual environments. The installation instructions are available <a class="reference external" href="https://docs.astral.sh/uv/getting-started/installation/" rel="noreferrer" target="_blank">here</a>. In general you can install <code class="docutils literal notranslate"><span class="pre">uv</span></code> with the command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">curl -LsSf https://astral.sh/uv/install.sh | sh</span>
+</pre></div>
+</div>
+<p>You can then create a general virtual environment for testing (each assignment will have its own virtual environment) with the commands:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">uv venv --python 3.12 ~/astr-480-env</span>
+</pre></div>
+</div>
+<p>which will download Python 3.12 if necessary. Then you can activate the environment with:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">source ~/astr-480-env/bin/activate</span>
+</pre></div>
+</div>
+<p>and deactivate it with <code class="docutils literal notranslate"><span class="pre">deactivate</span></code>. Once the environment is active you can install new Python libraries with <code class="docutils literal notranslate"><span class="pre">uv</span> <span class="pre">pip</span> <span class="pre">install</span></code>, for example</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">uv pip install numpy matplotlib astropy ipython</span>
+</pre></div>
+</div>
+<p>and run code, for example</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;import numpy; print(numpy.arange(9).reshape(3,3))&#39;</span>
+<span class="go">[[0 1 2]</span>
+<span class="go"> [3 4 5]</span>
+<span class="go"> [6 7 8]]</span>
+</pre></div>
+</div>
+</section>
+<section id="set-up-git-and-github">
+<h3>Set up Git and GitHub<a class="headerlink" href="#set-up-git-and-github" title="Link to this heading">¶</a></h3>
+<p>First, check that git is indeed installed by running the command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>--version
+<span class="go">git version 2.34.1</span>
+</pre></div>
+</div>
+<p>(your version may be different but make sure it’s at least git 2.x). If you don’t have an SSH key pair you’ll need to create one with</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir -p ~/.ssh</span>
+<span class="go">chmod 700 ~/.ssh</span>
+
+<span class="go">if [ ! -f ~/.ssh/id_rsa ]; then</span>
+<span class="go">    ssh-keygen -q -t rsa -N &#39;&#39; -f ~/.ssh/id_rsa &lt;&lt;&lt;y &gt;/dev/null 2&gt;&amp;1</span>
+<span class="go">    echo &quot;SSH key created.&quot;</span>
+<span class="go">fi</span>
+
+<span class="go">chmod 600 ~/.ssh/id_rsa</span>
+</pre></div>
+</div>
+<p>Then follow the instructions <a class="reference internal" href="#setting-up-github">above</a> to upload your public key to GitHub.</p>
+</section>
+<section id="sao-ds9">
+<h3>SAO DS9<a class="headerlink" href="#sao-ds9" title="Link to this heading">¶</a></h3>
+<p>We will use DS9 for FITS file visualisation. You can download it from the <a class="reference external" href="https://sites.google.com/cfa.harvard.edu/saoimageds9/download" rel="noreferrer" target="_blank">SAO website</a> for your operating system.</p>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Link to this heading">¶</a></h2>
+<p>If you are able to access your coding environment (or have set up a local one) you are ready to attempt the <a class="reference internal" href="../assignments/assignment_0/assignment_0.html"><span class="doc std std-doc">introductory assignment</span></a> to check that everything is working correctly.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="visualisation_tools.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Visualisation tools</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="codedev.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Code development and tools</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025-, José Sánchez-Gallego
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/uw-astro-480/uw-astro-480.github.io/" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Setting up the development environment</a><ul>
+<li><a class="reference internal" href="#accessing-your-uw-it-jupyterhub-account">Accessing your UW-IT JupyterHub account</a><ul>
+<li><a class="reference internal" href="#text-editor">Text editor</a></li>
+<li><a class="reference internal" href="#available-resources">Available resources</a></li>
+<li><a class="reference internal" href="#restarting-the-environment">Restarting the environment</a></li>
+<li><a class="reference internal" href="#backing-up-your-work">Backing up your work</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#setting-up-github">Setting up GitHub</a><ul>
+<li><a class="reference internal" href="#installing-python">Installing Python</a></li>
+<li><a class="reference internal" href="#set-up-git-and-github">Set up Git and GitHub</a></li>
+<li><a class="reference internal" href="#sao-ds9">SAO DS9</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=df1a032d"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>
