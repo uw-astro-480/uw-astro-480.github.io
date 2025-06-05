@@ -30,6 +30,8 @@ Next we want to determine the aperture to use. Since this is an observation of a
 
 For extra-extra grade you can fit a 1D Gaussian to the resulting vector and determine the aperture size as 3 times the standard deviation of the Gaussian. Otherwise, you can determine the aperture size by eye. <font color='darkred'>Save a plot with filename `aperture_size.png` that shows the 1D vector along the slit direction.</font> If you have fit a Gaussian, overplot the Gaussian fit. Otherwise, use two vertical lines to indicate the aperture size that you will use.
 
+![Standard star aperture size](./images/aperture_size.png){ w="80%" align="center" }
+
 Now extract the aperture from the science image. Use the entire wavelength range but only the pixels in the slit direction that you determined above. Collapse the slit direction by taking a mean (you can use something more sophisticated like a sigma-clipped median if you want). <font color='darkred'>Save the resulting 1D spectrum in a file called `b_std_aperture.fits`.</font> You can create this file using `PrimaryHDU` as usual; the data will just be a 1D array.
 
 ## Wavelength calibration
@@ -42,21 +44,35 @@ Let's measure and subtract that continuum. First, normalise the spectrum by divi
 
 The goal is to produce a continuum that fits the shape of the spectrum will enough but that doesn't include the emission line or the gaps between the CCDs. You'll need to play with the parameters to get a good fit (most likely you'll want a large-ish value for `median_filter` and `s`). Then plot the normalised arc spectrum and the continuum on top of it (use a different colour so that it's clear what the continuum is). <font color='darkred'>Save this plot as `arc_continuum.png`.</font> Play with the parameters until you get a fit for the continuum that you are happy with.
 
+![Arc spectrum and continuum](./images/arc_spectrum.png){ w="80%" align="center" }
+
 Now subtract the continuum from the normalised arc spectrum. This will leave you with a spectrum that has only the emission lines and has a fairly flat shape. <font color='darkred'>Plot this spectrum in a file called `arc_aperture_no_continuum.png`.</font>
 
 We want to find emission lines in that plot. For that you can use the function `spec_reduction.tools.find_peaks` which will find the indices of the peaks in the spectrum. Read the docstring to understand how to use it. The main parameter to play with is `threshold` which defines how many standard deviations above the mean a peak must be to be considered a peak.
 
 Plot the arc spectrum with the peak positions overplotted. Use a marker to indicate the peaks, ideally at a position above the peaks that makes them clearly visible. <font color='darkred'>Save this plot as `arc_peaks.png`.</font>.
 
-The next step is to match the peaks that you have found to known wavelengths in the arc spectrum. For that you can use the arc map that is provided in `CuArB600_430.pdf` or the list of wavelength positions in `CuAr_GMOS.dat`. Look at the arc spectrum and the identified peaks and try to match them to the know wavelengths. You'll need at least 10 lines well distributed across the wavelength range, but 15 or 20 is better. Create a list or dataframe with the array indices and the corresponding wavelengths. <font color='darkred'>Save this tables as `arc_matched_lines.csv`.</font>.
+![Identified peaks in the arc spectrum](./images/arc_spectrum_peaks.png){ w="80%" align="center" }
 
-Now let's find the wavelength solution. This is the transformation between the pixel indices and wavelengths, and it is the same for the science observation as long as the arc was taken soon before or after that exposure. Plot the pixel indices for your identified lines in the x axis against their wavelengths in the y axis. You should see see a mostly linear relationship, but it may not be perfect. Fit a polynomial to the data using `numpy.polyfit` or `scipy.optimize.curve_fit`. You can use a linear fit (degree 1), a quadratic fit (degree 2), or something higher depending on how well it fits the data, but do not overfit. <font color='darkred'>Plot the resulting fit on top of the data points, annotate the plot, and save it as `wavelength_solution.png`.</font>. Make sure you change the title of the plot to the fit you have found, in the form `y=a0 + a1*x + a2*x^2 + ...` where `a0`, `a1`, `a2`, etc. are the coefficients of the polynomial fit.
+The next step is to match the peaks that you have found to known wavelengths in the arc spectrum. For that you can use the arc map that is provided in `CuArB600_430.pdf` or the list of wavelength positions in `CuAr_GMOS.dat`. **Note that the spectrum from the CCD file decreases in wavelength as the pixel direction increases, so you'll want to reverse the x-axis!** Look at the arc spectrum and the identified peaks and try to match them to the know wavelengths. You'll need at least 10 lines well distributed across the wavelength range, but 15 or 20 is better. Create a list or dataframe with the array indices and the corresponding wavelengths. <font color='darkred'>Save this tables as `arc_matched_lines.csv`.</font>.
+
+:::{hint}
+Matching the peaks to the known wavelengths can be tricky. Make sure that you have reversed the x-axis direction of the arc spectrum before comparing it to the lines in the CuAr (Copper-Argon) arc map. You'll probably want to show the arc spectrum in an interactive plot or save it in a figure with a long horizontal axis so that you can see the peaks clearly.
+
+Start by identifying the tallest peaks and matching them to the known wavelengths. That will give you a good starting point. Then identify more lines using the tallest peaks as a reference. Sometimes the relative heights of the peaks may not match exactly what you see in your plot. When you have enough lines, plot your results. If one or more points look like outliers you may have made a mistake in the matching. Review your assignments and. if necessary, reject some of the lines.
+:::
+
+Now let's find the wavelength solution. This is the transformation between the pixel indices and wavelengths, and it is the same for the science observation as long as the arc was taken soon before or after that exposure. Plot the pixel indices for your identified lines in the x axis against their wavelengths in the y axis. You should see see a mostly linear relationship, but it may not be perfect. Fit a polynomial to the data using `numpy.polyfit` or `scipy.optimize.curve_fit`. You can use a linear fit (degree 1), a quadratic fit (degree 2), or something higher depending on how well it fits the data, but do not overfit. <font color='darkred'>Plot the resulting fit on top of the data points, annotate the plot, and save it as `wavelength_solution.png`.</font>. Make sure you change the title of the plot to the fit you have found, in the form `y=a0 + a1*x + a2*x^2 + ...` where `a0`, `a1`, `a2`, etc. are the coefficients of the polynomial fit. The following plot shows an example of using a linear fit. You'll want to identify a few more lines that this and make sure you cover the entire wavelength range of the arc spectrum.
+
+![Wavelength solution](./images/arc_wavelength_fit.png){ w="80%" align="center" }
 
 ## Wavelength calibration of the science observation
 
 Let's go back to the science observation. We will now apply the wavelength solution that we found above to the science observation. Start by reading the `b_std_aperture.fits` file that you created earlier. Now plot that spectrum but with the x axis in wavelength units (Angstroms or nanometres) instead of pixel indices. Use the wavelength solution fit that you have just found. <font color='darkred'>Save this plot as `b_std_wavelength.png`.</font>.
 
-This is the spectrum of a standard star. What is the spectral type of this star? Use references online (for example [this one](https://content.cld.iop.org/journals/0067-0049/230/2/16/revision1/apjsaa656df7_hr.jpg)) to compare your spectrum with generic spectra of different spectral types. <font color='darkred'>Print your best guess at the type of the star and how you reached that conclusion</font> (you do not need to figure out the luminosity class, just the spectral type). If you know the name of this star you can use that information to look up its spectral type and confirm your guess, but you should explain your train of thought.
+![Standard star spectrum](./images/std_spectrum.png){ w="80%" align="center" }
+
+This is the spectrum of the standard star BD+28 4211. You can see its calibrated spectrum [here](https://www.eso.org/sci/observing/tools/standards/spectra/bd28d4211.html). Does it look like the spectrum you got? In what ways yes or not? This star has an spectral type O which has a strong continuum in the blue. Why is that not our case? Why are calibration stars important in long-slit spectroscopy? <font color='darkred'>Print your answers to these questions in the code so that when the spec_reduction() function is executed the text is output.</font>
 
 ## Deadline
 
