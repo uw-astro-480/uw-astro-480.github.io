@@ -27,7 +27,7 @@ The following is a tentative schedule for the course. It may be subject to signi
 | May&nbsp;12   | [Aperture photometry and calibration](./lecture_notes/photometry/photometry.md)                            |                                          | Week 2       |
 | May&nbsp;14   | [Catalogue data, formats, best practices](./lecture_notes/catalogue_data/catalogue_data.md)                |                                          | Week 2       |
 | May&nbsp;16   | Lab                                                                                                        | Assignment 2: CCD reductions             |              |
-| May&nbsp;19   | [Databases and SQL](./lecture_notes/databases/databases.md)                                                |                                          |              |
+| May&nbsp;19   | [Databases and SQL](./lecture_notes/catalogue_data/catalogue_data.md)                                      |                                          |              |
 | May&nbsp;21   | [Plotting and data visualisation](./lecture_notes/data_visualisation/data_visualisation.md)                |                                          |              |
 | May&nbsp;23   | Lab                                                                                                        |                                          |              |
 | May&nbsp;26   | Memorial Day: no class                                                                                     |                                          | Week 3       |
