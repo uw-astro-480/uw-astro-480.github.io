@@ -1,0 +1,1488 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Photometry and CCD calibrations" href="../photometry/photometry.html" /><link rel="prev" title="CCDs" href="../ccds/ccds.html" />
+
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
+        <title>Basic CCD reductions - ASTR 480</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles.css?v=2bccd5c4" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #242933;
+  --color-code-foreground: #d8dee9;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #242933;
+  --color-code-foreground: #d8dee9;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">ASTR 480</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/UW_logo.png" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Resources</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../syllabus.html">Course description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../schedule.html">Schedule</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../lecture_notes.html">Lecture notes</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Lecture notes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../intro_concepts/intro_concepts.html">Introductory concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ccds/ccds.html">CCDs</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Basic CCD reductions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../photometry/photometry.html">Photometry and CCD calibrations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../catalogue_data/catalogue_data.html">Catalogue data and SQL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data_visualisation/data_visualisation.html">Plotting and data visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../spectrographs/spectrographs.html">Spectrographs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../arcsat/arcsat.html">ARCSAT observations</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of ARCSAT observations</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../arcsat/proposals.html">ARCSAT proposals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../arcsat/observing.html">ARCSAT observing and schedule</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://www.apo.nmsu.edu/Telescopes/ARCSAT/" rel="noreferrer" target="_blank">ARCSAT documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../arcsat/paper.html">ARCSAT paper</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../assignments/assignments.html">Assignments</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Assignments</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../assignments/assignment_0/assignment_0.html">Assignment 0: testing the coding environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../assignments/assignment_1/assignment_1.html">Assignment 1: coordinate transformations and altitude plotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../assignments/assignment_2/assignment_2.html">Assignment 2: CCD reductions and photometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../assignments/assignment_3/assignment_3.html">Assignment 3: tabular data and data visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../assignments/assignment_4/assignment_4.html">Assignment 4 (extra credit): spectroscopic data reduction</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../codedev/codedev.html">Code development and tools</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Code development and tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../codedev/setup.html">Setting up the development environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codedev/visualisation_tools.html">Visualisation tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../codedev/plotting.html">Plotting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">Frequently Asked Questions</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/uw-astro-480" rel="noreferrer" target="_blank">GitHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://jupyter.rttl.uw.edu/2025-spring-astr-480-a" rel="noreferrer" target="_blank">JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://canvas.uw.edu/courses/1799617" rel="noreferrer" target="_blank">Canvas</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://www.apo.nmsu.edu/Telescopes/ARCSAT/" rel="noreferrer" target="_blank">ARCSAT</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/astr-480/astr-480-sp-25/blob/main/src/lecture_notes/ccd_reductions/ccd_reductions.md?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/astr-480/astr-480-sp-25/edit/main/src/lecture_notes/ccd_reductions/ccd_reductions.md" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section class="tex2jax_ignore mathjax_ignore" id="basic-ccd-reductions">
+<span id="id1"></span><h1>Basic CCD reductions<a class="headerlink" href="#basic-ccd-reductions" title="Link to this heading">¶</a></h1>
+<p>“Reduction” is the term used to describe the general process of taking raw data from a CCD camera and performing a series of operations to produce a final image in which we have removed as many of the systematic trends and defects that affect the original image. Very generally, the steps in the reduction process are:</p>
+<ul class="simple">
+<li><p>Bias subtraction</p></li>
+<li><p>Dark correction</p></li>
+<li><p>Flat field correction</p></li>
+<li><p>Cosmic ray removal</p></li>
+<li><p>Bad pixel masking</p></li>
+</ul>
+<p>Often there are other steps such as astrometric and photometric calibration that are part of the reduction process, but we will discuss those at a later time.</p>
+<section id="datasets">
+<h2>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">¶</a></h2>
+<p>For this lecture we will use a <a class="reference external" href="https://doi.org/10.5281/zenodo.3254683" rel="noreferrer" target="_blank">set of images</a> taken using the Palomar Large Format Camera (LFC) on the Hale 200-inch telescope. Technical details about the camera can be found <a class="reference external" href="https://sites.astro.caltech.edu/palomar/observer/200inchResources/lfcspecs.html" rel="noreferrer" target="_blank">here</a>. The dataset include several bias, flat, dark, and science images from one of the 6 detectors in the LFC mosaic, and can be downloaded from <a class="reference external" href="https://zenodo.org/record/3254683/files/example-cryo-LFC.tar.bz2?download=1" rel="noreferrer" target="_blank">here</a>.</p>
+<p>We will also use another <a class="reference external" href="https://zenodo.org/records/3245296" rel="noreferrer" target="_blank">set of images</a> from an Andor Aspen CG16M camera. You can download them <a class="reference external" href="https://zenodo.org/record/3245296/files/example-thermo-electric.tar.bz2?download=1" rel="noreferrer" target="_blank">here</a>. After you download the datasets and copy them to the location where you want to use them, you can decompress them by doing</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>cjvf<span class="w"> </span>example-cryo-LFC.tar.bz2
+</pre></div>
+</div>
+<p>Many of the steps in this lecture follow the structure of the <a class="reference external" href="https://www.astropy.org/ccd-reduction-and-photometry-guide/v/dev/notebooks/00-00-Preface.html" rel="noreferrer" target="_blank">CCD Data Reduction Guide</a> which uses the same datasets.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can download this lecture as <a class="reference download internal" download="" href="../../_downloads/762467502210fdff469ec30d01df6105/ccd_reductions.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">ccd_reductions.ipynb</span></code></a> or <a class="reference download internal" download="" href="../../_downloads/fdbb475d0cec3cbc781ca4d38d407263/ccd_reductions.md"><code class="xref download docutils literal notranslate"><span class="pre">ccd_reductions.md</span></code></a> and follow along. For that make sure that you change the values of the <code class="docutils literal notranslate"><span class="pre">LFC_DIR</span></code> and <code class="docutils literal notranslate"><span class="pre">ANDOR_DIR</span></code> variables to point to the directory where you have your data.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">astropy.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">seaborn</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s1">&#39;deep&#39;</span><span class="p">,</span> <span class="n">color_codes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+
+<span class="c1"># Change these paths to point to the location of your data</span>
+<span class="n">LFC_DIR</span> <span class="o">=</span> <span class="s1">&#39;../../data/example-cryo-LFC/&#39;</span>
+<span class="n">ANDOR_DIR</span> <span class="o">=</span> <span class="s1">&#39;../../data/ccd_reductions_data/&#39;</span>
+
+<span class="c1"># This moves the current working directory to the location of the LFC data</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">LFC_DIR</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bias-and-overscan">
+<h2>Bias and overscan<a class="headerlink" href="#bias-and-overscan" title="Link to this heading">¶</a></h2>
+<p>Analog-to-digital converters (ADC) require the signal that they work with to have a positive charge. To avoid cases in which this could be a problem, a small <em>bias</em> voltage is added to the output signal before it reaches the ADC. Ideally this bias level would be constant, but in practice the level varies by small amounts from pixel to pixel and during the night as the outside temperature changes.</p>
+<p>Our first step in the reduction process is to remove the contribution from the bias level by measuring its median level and subtracting it from any other image we have taken that night (<em>all</em> images are affected by the bias level, not only science frames). To achieve this there are typically two alternatives: the use of a series of zero-exposure images (bias frames) or using a special part of the image called the <em>overscan</em> region.</p>
+<section id="bias-frames">
+<h3>Bias frames<a class="headerlink" href="#bias-frames" title="Link to this heading">¶</a></h3>
+<p>Bias frames are images that are taken with zero exposure time and the shutter closed. Most cameras have a special mode to take these image. With no exposure time there is no signal (photons) reaching the surface of the CCD, so the only things that we are reading as we generate the digital image is the bias level and the readout noise (and a small amount of dark current that, if the camera is properly cooled, is usually negligible). From a bias frame the average value across the image (mean, median, mode) is an estimate of the bias level while the standard deviation gives us the readout noise.</p>
+<p>In the LFC dataset the bias frames are images 1 to 6. Let’s open one of them:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bias</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ccd.001.0.fits&#39;</span><span class="p">)</span>
+<span class="n">bias</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Filename: ccd.001.0.fits
+No.    Name      Ver    Type      Cards   Dimensions   Format
+  0  PRIMARY       1 PrimaryHDU      43   (2080, 4128)   int16 (rescales to uint16)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The image contains a single extension or HDU, with an image frame that is 2080, 4128 pixels and a header with 43 keywords. Let’s quickly look at the header:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bias</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SIMPLE  =                    T  / STANDARD FITS                                 
+BITPIX  =                   16  / BITS/PIXEL                                    
+NAXIS   =                    2  / NUMBER OF AXES                                
+NAXIS1  =                 2080  / NUMBER OF COLUMNS                             
+NAXIS2  =                 4128  / NUMBER OF ROWS                                
+BSCALE  =        1.0000000E+00  / PHYSICAL = BSCALE * DATA + BZERO              
+BZERO   =               32768.                                                  
+DATE    = &#39;2016-01-15&#39;          / UT Date of file creation (DD/MM/YY)           
+ORIGIN  = &#39;California Institute of Technology&#39;  / Palomar Observatory           
+LATITUDE=              33.4000  / Latitude (degrees N)                          
+LONGITUD=            -116.9000  / Longitude (degrees E)                         
+TELESCOP= &#39;Hale 5m Telescope&#39;   / Telescope used for observation                
+FRATIO  =               7.5000  / Focal ratio of telescope                      
+INSTRUME= &#39;LFC     &#39;            / Instrument used for observation               
+DETECTOR= &#39;SITe SI002 x 6&#39;      / Detector used for observation                 
+FRAME   =                    1  / Frame number of observation                   
+CCDPICNO=                    1  / Frame number of observation                   
+OBJECT  = &#39;bias    &#39;            / Name of object                                
+IMAGETYP= &#39;BIAS    &#39;            / Type of observation                           
+EXPTIME =                0.000  / Integration time (seconds)                    
+DARKTIME=                0.120  / Dark current time (seconds)                   
+DATE-OBS= &#39;2016-01-15&#39;          / UT Date of observation (DD/MM/YY)             
+UT      = &#39; 23:53:30.00&#39;        / Universal time (UTC) at exposure start        
+JD      =                 2457403.495486  / Julian date at exposure start       
+RA      = &#39; 23:44:32.40&#39;        / Right Ascension                               
+DEC     = &#39; 33:22:10.80&#39;        / Declination                                   
+EQUINOX =             2000.000  / Equinox of RA and DEC                         
+EPOCH   =             2000.000  / Equinox of RA and DEC                         
+HA      = &#39; 00:00:04.00&#39;        / Hour angle at start                           
+ST      = &#39; 23:45:23.10&#39;        / Sidereal time at start                        
+AIRMASS =                1.000  / Airmass at start                              
+FILTER  = &#39;i&#39;      &#39;            / Filter description                            
+GAIN    =                1.100  / Nominal gain (e-/ADU)                         
+SECPIX1 =                0.182  / Arcseconds per pixel in fast dir              
+SECPIX2 =                0.182  / Arcseconds per pixel in slow dir              
+CCDBIN1 =                    1  / On-chip column binning (fast dir)             
+CCDBIN2 =                    1  / On-chip row binning (slow dir)                
+ROTANGLE=                 0.00  / Rotation angle (deg)                          
+DATASEC = &#39;[1:2048,1:4128]&#39;     / Image area of frame                           
+CCDSEC  = &#39;[1:2048,1:4128]&#39;     / Image area relative to full chip              
+BIASSEC = &#39;[2049:2080,1:4127]&#39;  / Overscan area of frame                        
+LOGINFO = &#39; Status=0x00000000&#39;                                                  
+CHIPID  =                    0                                                  
+</pre></div>
+</div>
+</div>
+</div>
+<p>The header tells us useful stuff about the instrument, when this image was taken, etc. The last few keywords are useful for data reduction. <code class="docutils literal notranslate"><span class="pre">CCDSEC</span></code> and <code class="docutils literal notranslate"><span class="pre">DATASEC</span></code> tells use the region of the image that contains valid data, while <code class="docutils literal notranslate"><span class="pre">BIASSEC</span></code> tells us where the overscan region is located. These keywords are a legacy from a reduction software called <a class="reference external" href="https://iraf-community.github.io/" rel="noreferrer" target="_blank">IRAF</a>, which is still used by many astronomers.</p>
+<div class="warning docutils">
+<p>The pixel values in <code class="docutils literal notranslate"><span class="pre">DATASEC</span></code> and others are 1-indexed, while in Python we use 0-indexed arrays.</p>
+</div>
+<p>Let’s now look at one of the images. We will use some tools in <a class="reference external" href="https://docs.astropy.org/en/stable/visualization/normalization.html" rel="noreferrer" target="_blank">astropy.visualization</a> to normalise the image for display:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">astropy.visualization</span><span class="w"> </span><span class="kn">import</span> <span class="n">ImageNormalize</span><span class="p">,</span> <span class="n">LinearStretch</span><span class="p">,</span> <span class="n">ZScaleInterval</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">bias</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+<span class="n">norm</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">ZScaleInterval</span><span class="p">(),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">LinearStretch</span><span class="p">())</span>
+
+<span class="n">image</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5640f7edc383f9d5554656ecee42b81d7700823f3bdc920ad29e8c2a68d1189a.png" src="../../_images/5640f7edc383f9d5554656ecee42b81d7700823f3bdc920ad29e8c2a68d1189a.png" />
+</div>
+</div>
+<p>Note that before I started doing anything to the image I converted the data to a <code class="docutils literal notranslate"><span class="pre">float32</span></code> array by doing <code class="docutils literal notranslate"><span class="pre">.astype('f4')</span></code> (I could have also done <code class="docutils literal notranslate"><span class="pre">.astype(numpy.float32)</span></code>). Normally raw CCD frames are encoded as unsigned-integer 16-bit, which is enough to containe the values 0-65,535 that 16-bit ADC generate, but that data format can cause problems —mainly due to overflow— once we start doing operations on them.</p>
+<p>We can see several things in the image. First, it is quite flat, as we would expect, but there is a significant gradient on the left side. This is probably due to electronic noise if the readout hardware is on that part of the chip. Let’s have a look at how significant this gradient is. Let’s collapse the image along the y-axis (the first axis in the <code class="docutils literal notranslate"><span class="pre">numpy</span></code> array, remember that <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays are 0-indexed and arranged such that the first axis is rows and the second axis is columns) and plot the result:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span>
+
+<span class="c1"># Collapse the image along the y-axis</span>
+<span class="n">bias_profile</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Plot the result and focus on the left side of the images. The _ = are a trick to</span>
+<span class="c1"># avoid printing the result of the plot command.</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bias_profile</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/630379c142a5bfa312bf0b22830167c6d95561d7068a5b9f8c0bf919fe889f72.png" src="../../_images/630379c142a5bfa312bf0b22830167c6d95561d7068a5b9f8c0bf919fe889f72.png" />
+</div>
+</div>
+<p>Most of the image has a fairly constant bias level of about 1140 but the left side gradient reaches over 1350 counts. We’ll want to avoid this region by trimming or ignoring the first 300-400 pixels of the image (unless we can proof that this gradient is very constant over time and we can correct for it).</p>
+<p>Let’s now quickly look at the average levels (bias) and the standard deviation (readout noise) of the image. We will use the median which is more robust against outliers than the mean. For these images in which all values are integers the mode is also a good choice.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">readout_noise</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bias: </span><span class="si">{</span><span class="n">bias</span><span class="si">}</span><span class="s1"> counts&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Readout noise: </span><span class="si">{</span><span class="n">readout_noise</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> counts&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Bias: 1137.0 counts
+Readout noise: 43.30 counts
+</pre></div>
+</div>
+</div>
+</div>
+<p>This approximately matches what we saw in the profile plot. However we are averaging over the entire image, which includes the overscan region and also the gradient. In general it is always a good idea to use smaller regions that we have confirmed are not affected by any systematic effects. Let’s repeat the calculation but by taking a smaller region around <span class="math notranslate nohighlight">\((2000, 1000)\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the region of interest. Note that the first axis is y and the second axis is x.</span>
+<span class="n">region</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1000</span><span class="p">:</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">2000</span><span class="p">:</span><span class="mi">2500</span><span class="p">]</span>
+
+<span class="n">bias</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">region</span><span class="p">)</span>
+<span class="n">readout_noise</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">region</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Bias: </span><span class="si">{</span><span class="n">bias</span><span class="si">}</span><span class="s1"> counts&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Readout noise: </span><span class="si">{</span><span class="n">readout_noise</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> counts&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Bias: 1138.0 counts
+Readout noise: 3.82 counts
+</pre></div>
+</div>
+</div>
+</div>
+<p>The bias level has not changed much but the readout noise has decreased dramatically! This is not unexpected since we are not averaging over a very flat region that should only be affected by the readout noise. Note that both the bias level and readout noise here are measured in counts or ADU. We will see later how to convert these values to electrons.</p>
+</section>
+<section id="ccd-corrections-are-noisy">
+<h3>CCD corrections are noisy<a class="headerlink" href="#ccd-corrections-are-noisy" title="Link to this heading">¶</a></h3>
+<p>An important concept to remember is that <strong>it is not possible to remove noise from an image</strong>. Here “noise” refers to the random fluctuations in the pixel values due to statistical noise (for example the Poisson or “shot” noise inherent to the arrival of photons). Sometimes noise is also used to refer to systematic effects that are we see in the image, such as the bias level or the flat field. The latter are the trends that we can measure and correct for, but the noise that they introduce (e.g., the readout noise) cannot be removed. In fact, applying a correction to an image will always add noise to the image unless the correction is perfect, which is hardly ever the case.</p>
+<p>The best way to avoid compounding our noise problem is by using corrections that introduce as little noise as possible. One way to achieve this is to take multiple images for each type of correction and combine them. Error propagation theory tells us that when we average multiple images with the same noise level the resulting image has a noise level that is reduced by a factor of <span class="math notranslate nohighlight">\(\sqrt{N}\)</span>, where <span class="math notranslate nohighlight">\(N\)</span> is the number of images. Let’s prove that.</p>
+<p>We start by creating an image with a known mean level and noise. We’ll draw the values from a Gaussian distribution with mean 500 and standard deviation 10. This can be done easily using <code class="docutils literal notranslate"><span class="pre">scipy</span></code> and <code class="docutils literal notranslate"><span class="pre">numpy</span></code> but we’ll use the function <a class="reference external" href="https://photutils.readthedocs.io/en/stable/api/photutils.datasets.make_noise_image.html" rel="noreferrer" target="_blank">make_noise_image</a> from <code class="docutils literal notranslate"><span class="pre">photutils</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">photutils.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_noise_image</span>
+
+<span class="c1"># Create a noise image with a mean of 500 and standard deviation of 10</span>
+<span class="n">noise_image</span> <span class="o">=</span> <span class="n">make_noise_image</span><span class="p">((</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">mean</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">stddev</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">noise_image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mean: </span><span class="si">{</span><span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">noise_image</span><span class="p">)</span><span class="si">:</span><span class="s1">.5f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Standard deviation: </span><span class="si">{</span><span class="n">numpy</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">noise_image</span><span class="p">)</span><span class="si">:</span><span class="s1">.5f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1000, 1000)
+Mean: 500.01001
+Standard deviation: 10.00482
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we’ll create multiple of these image and average them. To do that we create a list which we then convert into a 3D array. We can then use <code class="docutils literal notranslate"><span class="pre">numpy.mean</span></code> to calculate the mean along the first axis. This will result in a 2D image with the same shape as the original images in which each pixels is the average of the values in that pixel across all images.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a list of noise images</span>
+<span class="n">noise_images</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_noise_image</span><span class="p">((</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">mean</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">stddev</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Number of images: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">noise_images</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Convert the list into a 3D array</span>
+<span class="n">noise_images_3d</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">noise_images</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Shape of the 3D array: </span><span class="si">{</span><span class="n">noise_images_3d</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Calculate the mean along the first axis</span>
+<span class="n">mean_image</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">noise_images_3d</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Shape of the mean image: </span><span class="si">{</span><span class="n">mean_image</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Calculate the mean and standard deviation of the resulting image</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mean_image</span><span class="p">)</span>
+<span class="n">stddev</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">mean_image</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;mean: </span><span class="si">{</span><span class="n">mean</span><span class="si">:</span><span class="s1">.5f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Standard deviation: </span><span class="si">{</span><span class="n">stddev</span><span class="si">:</span><span class="s1">.5f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of images: 5
+Shape of the 3D array: (5, 1000, 1000)
+Shape of the mean image: (1000, 1000)
+mean: 500.00027
+Standard deviation: 4.47711
+</pre></div>
+</div>
+</div>
+</div>
+<p>As expected the mean has not changed but the standard deviation has decreased. From an original standard deviation of 10 for each image we would expect the resulting image to have a standard deviation of <span class="math notranslate nohighlight">\(10/\sqrt{5} = 4.472\)</span> which is very close to what we see.</p>
+<div class="warning docutils">
+<p>This example does not work as well if you use the median instead of the mean. The <span class="math notranslate nohighlight">\(\sqrt{N}\)</span> factor only applies to the mean, which the standard deviation of the mean decreasing as <span class="math notranslate nohighlight">\(N\)</span> increases but more slowly then with the mean.</p>
+</div>
+</section>
+<section id="combining-multiple-images">
+<h3>Combining multiple images<a class="headerlink" href="#combining-multiple-images" title="Link to this heading">¶</a></h3>
+<p>Let’s now combine several real bias frames and look at the resulting image. The process is similar to what we saw above but now we’ll open all images 1-6 from our dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bias_images</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span>
+    <span class="n">bias_data</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ccd.00</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.0.fits&#39;</span><span class="p">)</span>
+    <span class="n">bias_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bias_data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">))</span>
+
+<span class="c1"># Convert the list into a 3D array</span>
+<span class="n">bias_images_3d</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bias_images</span><span class="p">)</span>
+<span class="n">bias_mean_2d</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">bias_images_3d</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Calculate the median and standard deviation on a small region</span>
+<span class="n">region</span> <span class="o">=</span> <span class="n">bias_mean_2d</span><span class="p">[</span><span class="mi">1000</span><span class="p">:</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">2000</span><span class="p">:</span><span class="mi">2500</span><span class="p">]</span>
+<span class="n">bias_median</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">region</span><span class="p">)</span>
+<span class="n">bias_std</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">region</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Median: </span><span class="si">{</span><span class="n">bias_median</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Standard deviation: </span><span class="si">{</span><span class="n">bias_std</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Median: 1125.00
+Standard deviation: 2.03
+</pre></div>
+</div>
+</div>
+</div>
+<p>The bias level has decreased a bit, which we can explain as some outliers (mostly cosmic rays as we’ll see later) getting averaged out. The standard deviation has also decreased, as we expected from the previous section. Instead od the expected <span class="math notranslate nohighlight">\(3.82/\sqrt{6}\sim 1.56\)</span> we see a higher value of <span class="math notranslate nohighlight">\(\sim 2\)</span>. This tells us that the distribution of the bias noise is not perfectly Gaussian, which is not unexpected. This example shows that there is a limit to how much we can reduce the noise by averaging real images. During observations we’ll want to take as many bias (and other calibration frames) as possible but taking into account that there is a trade-off between the time we spend taking these images and the time we spend taking science images.</p>
+<p>There is however another trick that we can employ when combining images. So far we have treated all images equally, and there is not reason not to do so. But at the pixel level we will often found that the value for that pixel in one image is significantly different from the others. This can be caused by cosmic rays or electronic misbehaviours. We would like to be able to identify those outliers and ignore them when calculating the combined image. The solution is what we call <em>sigma-clipping</em>.</p>
+<p>With sigma-clipping the idea is that for each pixel we take all the values that contribute to the combined pixel and calculate the median (or mean or mode) and the standard deviation. Then we determine how many times the standard deviation each value is with respect to the median. If a values is away from the median by more than a certain number of standard deviations we consider it an outlier and reject it. We then repeat the process iteratively until there are no more outliers (or we reach a minimum number of points that we want to keep). The resulting image will be the median of the original images but with a strong robustness against outliers.</p>
+<p>It’s easy to implement a sigma-clipping algorithm in Python (and you should try it!) but for convenience we can use <code class="docutils literal notranslate"><span class="pre">astropy</span></code>’s implementation in <a class="reference external" href="https://docs.astropy.org/en/stable/api/astropy.stats.sigma_clip.html" rel="noreferrer" target="_blank">astropy.stats.sigma_clip</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">astropy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">sigma_clip</span>
+
+<span class="c1"># Call sigma_clip with a threshold of 2.5 sigmas and using the median as the central function.</span>
+<span class="c1"># The result is a list of masked arrays in which pixels that are outliers are masked.</span>
+<span class="c1"># Note that we need to use the axis=0 argument to tell sigma_clip that we want</span>
+<span class="c1"># to apply it along the first axis.</span>
+<span class="n">bias_images_masked</span> <span class="o">=</span> <span class="n">sigma_clip</span><span class="p">(</span><span class="n">bias_images</span><span class="p">,</span> <span class="n">cenfunc</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of elements: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">bias_images_masked</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Type of the first element: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">bias_images_masked</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of pixels masked in the first image: </span><span class="si">{</span><span class="n">bias_images_masked</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of elements: 6
+Type of the first element: &lt;class &#39;numpy.ma.MaskedArray&#39;&gt;
+Number of pixels masked in the first image: 443965
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can try the previous code with different values of <code class="docutils literal notranslate"><span class="pre">sigma</span></code> and see how the number of masked pixels changes. Now let’s create the combined image using the masked arrays.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate the mean along the first axis. We use the ma module</span>
+<span class="c1"># to handle masked arrays correctly.</span>
+<span class="n">bias_sc_mean_2d</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">bias_images_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of the combined image: </span><span class="si">{</span><span class="n">bias_sc_mean_2d</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Type of the combined image: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">bias_sc_mean_2d</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Calculate the mean and standard deviation on a small region.</span>
+<span class="n">region</span> <span class="o">=</span> <span class="n">bias_sc_mean_2d</span><span class="p">[</span><span class="mi">1000</span><span class="p">:</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">2000</span><span class="p">:</span><span class="mi">2500</span><span class="p">]</span>
+<span class="n">bias_mean</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">region</span><span class="p">)</span>
+<span class="n">bias_std</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">region</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mean: </span><span class="si">{</span><span class="n">bias_mean</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Standard deviation: </span><span class="si">{</span><span class="n">bias_std</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of the combined image: (4128, 2080)
+Type of the combined image: &lt;class &#39;numpy.ma.MaskedArray&#39;&gt;
+Mean: 1124.85
+Standard deviation: 2.20
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see a slight increase in our estimation of the readout noise. This is not unexpected since now many mean pixel values are being calculated from fewer images. This process may need to be repeated with several values of the sigma-clip threshold until a good compromise is found between robustness against outliers and not discarding too many images.</p>
+<div class="note docutils">
+<p>Although we have used it with a set of 2D images here, the <code class="docutils literal notranslate"><span class="pre">sigma_clip</span></code> function can be used with any n-dimensional array.</p>
+</div>
+</section>
+<section id="overscan-region">
+<h3>Overscan region<a class="headerlink" href="#overscan-region" title="Link to this heading">¶</a></h3>
+<p>The overscan region is an area of the CCD image in many professional cameras. It is generated by reading “fake” pixels that are not part of the real image (i.e., they do not correspond to any physical pixels on the CCD). This is done by telling the readout electronics to continue reading a number of pixels after each row in the serial register. Since these pixels are not really part of the image, what we read is just the contribution of the bias level and the readout noise generated by the readout electronics.</p>
+<p>Overscan regions are useful because of two reasons:</p>
+<ul class="simple">
+<li><p>They are a very good estimate of the bias level at each row that is unaffected by differences between pixels.</p></li>
+<li><p>It is taken with each image (regardless of the type of exposure and exposure time) so it can be used to track the changes in the bias level during the night.</p></li>
+</ul>
+<p>There are also a few caveats to the use of the overscan region:</p>
+<ul class="simple">
+<li><p>The overscan region is only a few pixels wide per row, so our statistics of the bias level will be poorer. In general it is not a good idea to use the overscan region to estimate the readout noise.</p></li>
+<li><p>If the bias level changes across the row the overscan region may not be able to track it.</p></li>
+</ul>
+<p>With these pros and cons in mind, let’s look at the overscan region of one of our images. The <code class="docutils literal notranslate"><span class="pre">BIASSEC</span></code> keyword in the header tells us that the overscan region in the LFC images is located at the end of each row (the last <span class="math notranslate nohighlight">\(\sim 30\)</span> columns of each row). However if we zoom on that region on a bias frame we won’t see anything special. That’s expected since the bias and overscan should have the same levels. Instead, let’s use a flat image which we’ll describe later. For now we just need to know that this is an image created with a uniform illumination of the CCD and relatively high signal levels. Images 14-19 in the LFC dataset are flat images.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">astropy.visualization</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZScaleInterval</span>
+
+<span class="n">flat</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ccd.014.0.fits&#39;</span><span class="p">)</span>
+<span class="n">flat_data</span> <span class="o">=</span> <span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot around the overscan region.</span>
+<span class="n">overscan_zoom</span> <span class="o">=</span> <span class="n">flat_data</span><span class="p">[:,</span> <span class="mi">2000</span><span class="p">:]</span>
+
+<span class="n">norm</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">overscan_zoom</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">ZScaleInterval</span><span class="p">(),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">LinearStretch</span><span class="p">())</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">overscan_zoom</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4128</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/f1dd059bbd091e57a3d5d3a92175e101a1b88983a3e72f874b375fe3af89cb68.png" src="../../_images/f1dd059bbd091e57a3d5d3a92175e101a1b88983a3e72f874b375fe3af89cb68.png" />
+</div>
+</div>
+<div class="note docutils">
+<p>In reality it seems that this camera has two overscan regions, one at the end of each row and one at the end of each column. Since the header recommends using the overscan region at the end of each row, we will use that one.</p>
+</div>
+<p>Let’s take vertical and horizontal profiles of the overscan region to see how flat it is.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select the overscan region. Remove some pixels from the edges to avoid weird effects.</span>
+<span class="n">overscan</span> <span class="o">=</span> <span class="n">flat_data</span><span class="p">[</span><span class="mi">20</span><span class="p">:</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">2048</span><span class="p">:]</span>
+
+<span class="c1"># Collapse the image along the x-axis and plot the result</span>
+<span class="n">overscan_profile_x</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">overscan</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">overscan_profile_x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c3bc843c5d0a423b48fe47b58482c0416db4b4737b98cec2c1c9dcf71098504a.png" src="../../_images/c3bc843c5d0a423b48fe47b58482c0416db4b4737b98cec2c1c9dcf71098504a.png" />
+</div>
+</div>
+<p>We see that the overscan is reasonably flat but there are some fluctuations as we move along the y-axis. They are, however, smooth variations which may lead us to believe that they are real. Let’s check the other direction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">overscan_profile_y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">overscan</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">overscan_profile_y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ae9c9bca408d68237028528981b437865d452e02755ab7cf2898ccd961535ba6.png" src="../../_images/ae9c9bca408d68237028528981b437865d452e02755ab7cf2898ccd961535ba6.png" />
+</div>
+</div>
+<p>It seems the overscan does not really start at index 2048 as we expected, and that for the first few pixels in each row it decreases until it reaches a more constant value. This is a normal behaviour, caused by residual charge from previous pixels in the row. Let’s ignore the first 5 pixels in each overscan row.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">overscan</span> <span class="o">=</span> <span class="n">flat_data</span><span class="p">[</span><span class="mi">20</span><span class="p">:</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">2053</span><span class="p">:]</span>
+<span class="n">overscan_profile_y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">overscan</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">overscan_profile_y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/166ce585639dadbd7b3bf4cdd8d439119b2578871459072044966bdbd569a877.png" src="../../_images/166ce585639dadbd7b3bf4cdd8d439119b2578871459072044966bdbd569a877.png" />
+</div>
+</div>
+<p>This looks better but note the sawtooth pattern, which is caused by the small number of pixels that contribute to the value in each column. Overall, if we wanted to use the overscan region from this image we probably would want to use the regions between 2058 and 2068 pixels approximately.</p>
+</section>
+<section id="removing-the-bias-level">
+<h3>Removing the bias level<a class="headerlink" href="#removing-the-bias-level" title="Link to this heading">¶</a></h3>
+<p>Now that we have had a good look at the bias images and overscan, we can proceed to remove the contribution of the bias level from our images. We will use <code class="docutils literal notranslate"><span class="pre">ccd.014.0.fits</span></code> as an example. First, let’s create a median or “master” bias image from the 6 bias frames using sigma-clipping, and save it to disk</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bias_images</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span>
+    <span class="n">bias_data</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ccd.00</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.0.fits&#39;</span><span class="p">)</span>
+    <span class="n">bias_images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bias_data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">))</span>
+
+<span class="n">bias_images_masked</span> <span class="o">=</span> <span class="n">sigma_clip</span><span class="p">(</span><span class="n">bias_images</span><span class="p">,</span> <span class="n">cenfunc</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">bias_mean_2d</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">bias_images_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Create a new HDU list with the bias image. Note that we need</span>
+<span class="c1"># to use the data attribute of the masked array to get the actual data.</span>
+<span class="n">bias_hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">bias_mean_2d</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="n">hdul</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">([</span><span class="n">bias_hdu</span><span class="p">])</span>
+
+<span class="c1"># Save the bias image to disk</span>
+<span class="n">hdul</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s1">&#39;bias.fits&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Although we haven’t done it here, it’s a good idea to include a header with information about your median bias. Often you can take one of the original bias headers and add new information to it.</p>
+<p>Now let’s subtract this bias image from the flat. But before we’ll trim the image a bit. This is usually a good idea since electronic defects are usually found near the edges of the image. That is also the region that is usually farther from the optical axis and where aberrations are more pronounced.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the flat data</span>
+<span class="n">flat</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ccd.014.0.fits&#39;</span><span class="p">)</span>
+
+<span class="c1"># Trim the image, removing 100 pixels from each side. You can play</span>
+<span class="c1"># with this value and choose one that makes visual sense for your images.</span>
+<span class="n">flat_trim</span> <span class="o">=</span> <span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+
+<span class="c1"># We also need to trim the bias image.</span>
+<span class="n">bias_trim</span> <span class="o">=</span> <span class="n">bias_mean_2d</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">]</span>
+
+<span class="c1"># Now we simply subtract the bias image from the flat image</span>
+<span class="n">flat_trim_no_bias</span> <span class="o">=</span> <span class="n">flat_trim</span> <span class="o">-</span> <span class="n">bias_trim</span><span class="o">.</span><span class="n">data</span>
+
+<span class="c1"># Let&#39;s compare the median value before and after the bias subtraction</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Median before: </span><span class="si">{</span><span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">flat_trim</span><span class="p">[</span><span class="mi">2000</span><span class="p">:</span><span class="mi">2100</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">:</span><span class="mi">1100</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Median after: </span><span class="si">{</span><span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">flat_trim_no_bias</span><span class="p">[</span><span class="mi">2000</span><span class="p">:</span><span class="mi">2100</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">:</span><span class="mi">1100</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Median before: 21910.0
+Median after: 20785.833333333332
+</pre></div>
+</div>
+</div>
+</div>
+<p>The level is about 1100 counts lower after removing the bias, which is what we expected. Now we can save the flat image to disk. We will use the original header and add a comment keyword.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a new HDU list with the flat image.</span>
+<span class="n">flat_hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">flat_trim_no_bias</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+
+<span class="c1"># Add a comment to the header</span>
+<span class="n">flat_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;COMMENT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Flat-field image with bias subtracted&#39;</span>
+
+<span class="c1"># And say what bias image we used</span>
+<span class="n">flat_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;BIASFILE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;bias.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;Bias image used to subtract bias level&#39;</span><span class="p">)</span>
+
+<span class="c1"># Save the flat image to disk. Note that if we want a FITS file with</span>
+<span class="c1"># only one extension we can just save the PrimaryHDU object directly.</span>
+<span class="n">flat_hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s1">&#39;ccd.014.0_bias.fits&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Let&#39;s check the header</span>
+<span class="n">flat_hdu</span><span class="o">.</span><span class="n">header</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SIMPLE  =                    T / conforms to FITS standard                      
+BITPIX  =                  -64 / array data type                                
+NAXIS   =                    2 / number of array dimensions                     
+NAXIS1  =                 1880                                                  
+NAXIS2  =                 3928                                                  
+DATE    = &#39;2016-01-16&#39;          / UT Date of file creation (DD/MM/YY)           
+ORIGIN  = &#39;California Institute of Technology&#39;  / Palomar Observatory           
+LATITUDE=              33.4000  / Latitude (degrees N)                          
+LONGITUD=            -116.9000  / Longitude (degrees E)                         
+TELESCOP= &#39;Hale 5m Telescope&#39;   / Telescope used for observation                
+FRATIO  =               7.5000  / Focal ratio of telescope                      
+INSTRUME= &#39;LFC     &#39;            / Instrument used for observation               
+DETECTOR= &#39;SITe SI002 x 6&#39;      / Detector used for observation                 
+FRAME   =                   14  / Frame number of observation                   
+CCDPICNO=                   14  / Frame number of observation                   
+OBJECT  = &#39;flat_g  &#39;            / Name of object                                
+IMAGETYP= &#39;FLATFIELD&#39;           / Type of observation                           
+EXPTIME =               70.001  / Integration time (seconds)                    
+DARKTIME=               70.673  / Dark current time (seconds)                   
+DATE-OBS= &#39;2016-01-16&#39;          / UT Date of observation (DD/MM/YY)             
+UT      = &#39; 04:17:28.00&#39;        / Universal time (UTC) at exposure start        
+JD      =                 2457403.678796  / Julian date at exposure start       
+RA      = &#39; 04:08:58.50&#39;        / Right Ascension                               
+DEC     = &#39; 33:25:12.69&#39;        / Declination                                   
+EQUINOX =             2000.000  / Equinox of RA and DEC                         
+EPOCH   =             2000.000  / Equinox of RA and DEC                         
+HA      = &#39; 00:00:04.00&#39;        / Hour angle at start                           
+ST      = &#39; 04:10:04.46&#39;        / Sidereal time at start                        
+AIRMASS =                1.000  / Airmass at start                              
+FILTER  = &#39;g&#39;      &#39;            / Filter description                            
+GAIN    =                1.100  / Nominal gain (e-/ADU)                         
+SECPIX1 =                0.182  / Arcseconds per pixel in fast dir              
+SECPIX2 =                0.182  / Arcseconds per pixel in slow dir              
+CCDBIN1 =                    1  / On-chip column binning (fast dir)             
+CCDBIN2 =                    1  / On-chip row binning (slow dir)                
+ROTANGLE=                 0.00  / Rotation angle (deg)                          
+DATASEC = &#39;[1:2048,1:4128]&#39;     / Image area of frame                           
+CCDSEC  = &#39;[1:2048,1:4128]&#39;     / Image area relative to full chip              
+BIASSEC = &#39;[2049:2080,1:4127]&#39;  / Overscan area of frame                        
+LOGINFO = &#39; Status=0x00000000&#39;                                                  
+CHIPID  =                    0                                                  
+BIASFILE= &#39;bias.fits&#39;          / Bias image used to subtract bias level         
+COMMENT Flat-field image with bias subtracted                                   
+</pre></div>
+</div>
+</div>
+</div>
+<p>What if we had decided to use the overscan region instead of the bias frames? We simply need to generate an average overscan level per row and then subtract it from that row in the image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the overscan region. Note that we use the flat image</span>
+<span class="c1"># before trimming because the trimming may have removed the</span>
+<span class="c1"># overscan region. We use only the range 2058-2068 that we</span>
+<span class="c1"># decided that looked good from our visual analysis.</span>
+<span class="n">flat_data</span> <span class="o">=</span> <span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+<span class="n">overscan</span> <span class="o">=</span> <span class="n">flat_data</span><span class="p">[:,</span> <span class="mi">2058</span><span class="p">:</span><span class="mi">2069</span><span class="p">]</span>
+
+<span class="c1"># Now calculate the median along the x axis.</span>
+<span class="n">overscan_median</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">overscan</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Median overscan shape: </span><span class="si">{</span><span class="n">overscan_median</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Subtract the overscan from the flat image row by row. We need</span>
+<span class="c1"># to transpose the overscan array to match the shape of the flat image.</span>
+<span class="n">flat_no_bias_overscan</span> <span class="o">=</span> <span class="n">flat_data</span> <span class="o">-</span> <span class="n">overscan_median</span><span class="p">[:,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+<span class="c1"># Let&#39;s trim the final image.</span>
+<span class="n">flat_no_bias_overscan_trim</span> <span class="o">=</span> <span class="n">flat_no_bias_overscan</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">]</span>
+
+<span class="c1"># And get the same statistics as before. Note that we compensate for the</span>
+<span class="c1"># fact that we have trimmed the overscan-subtracted image.</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Median before: </span><span class="si">{</span><span class="n">numpy</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">flat_data</span><span class="p">[</span><span class="mi">2100</span><span class="p">:</span><span class="mi">2200</span><span class="p">,</span><span class="w"> </span><span class="mi">1100</span><span class="p">:</span><span class="mi">1200</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Median after: </span><span class="si">{</span><span class="n">numpy</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">flat_no_bias_overscan_trim</span><span class="p">[</span><span class="mi">2000</span><span class="p">:</span><span class="mi">2100</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">:</span><span class="mi">1100</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># And save the image to disk</span>
+<span class="n">flat_hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">flat_no_bias_overscan_trim</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+<span class="n">flat_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;COMMENT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Flat-field image with overscan subtracted&#39;</span>
+<span class="n">flat_hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s1">&#39;ccd.014.0_overscan.fits&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Median overscan shape: (4128,)
+Median before: 21910.0
+Median after: 20769.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>In general you should subtract an average bias image OR subtract the overscan, but not both (you would end up with a mostly negative image). There are cases in which one may want to use both, for example if the bias level changes significantly during the night but there is also an important spatial dependence in the bias level. In this case a solution is to subtract the overscan for each image but then apply a correction from a normalised bias image, similar to what we will do later for the flat-field correction.</p>
+</div>
+</section>
+</section>
+<section id="measuring-the-gain-and-readout-noise">
+<h2>Measuring the gain and readout noise<a class="headerlink" href="#measuring-the-gain-and-readout-noise" title="Link to this heading">¶</a></h2>
+<p>As we saw in the previous lecture we can determine the gain and readout noise of a CCD camera by taking a series of images with uniform illumination and different exposure times (and thus different signal levels) and plotting the average signal level against the standard deviation for each pair of images. Alternatively we can use just a couple images with varying signal levels, in which case</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\sigma_\Delta^2=2\left(\dfrac{S}{G}+\frac{\sigma_{\rm RN}^22}{G^2}\right)
+\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(\sigma_\Delta\)</span> is the standard deviation of the difference between the two images, <span class="math notranslate nohighlight">\(S\)</span> is the signal level in ADU from one of the images, <span class="math notranslate nohighlight">\(G\)</span> is the gain in electrons per ADU, and <span class="math notranslate nohighlight">\(\sigma_{\rm RN}\)</span> is the readout noise in ADUs. Remember that we want to use two images to remove the contribution of the fixed pattern noise.</p>
+<p>For a quick calculation we can make things even simpler. If we take two images with high signal (but well below saturation) then we can ignore the readout noise and the equation becomes</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+G = 2\dfrac{S}{\sigma_\Delta^2}
+\]</div>
+</div>
+<p>and if we take two images with very low signal we can ignore the signal and write</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\sigma_{\rm RN} = \sqrt{\dfrac{\sigma_\Delta^2G^2}{2}}
+\]</div>
+</div>
+<p>We actually have the perfect images for this quick calculation. Our flats are good, uniform images with a high signal level, and our biases are, by definition, images without any signal in them. Let’s then start by calculating the gain. We will use two flat images for this, <code class="docutils literal notranslate"><span class="pre">ccd.014.0.fits</span></code> and <code class="docutils literal notranslate"><span class="pre">ccd.015.0.fits</span></code>. For this, you should check that the signal levels between both images are very similar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flat1</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s1">&#39;ccd.014.0.fits&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+<span class="n">flat2</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s1">&#39;ccd.015.0.fits&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+
+<span class="c1"># Since the images don&#39;t have a totally uniform level, we will</span>
+<span class="c1"># use a range of pixels that we have visually decided looks flat.</span>
+<span class="c1"># We want these regions to be reasonably large to get good statistics.</span>
+<span class="n">flat1_trim</span> <span class="o">=</span> <span class="n">flat1</span><span class="p">[</span><span class="mi">1600</span><span class="p">:</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1300</span><span class="p">:</span><span class="mi">1700</span><span class="p">]</span>
+<span class="n">flat2_trim</span> <span class="o">=</span> <span class="n">flat2</span><span class="p">[</span><span class="mi">1600</span><span class="p">:</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1300</span><span class="p">:</span><span class="mi">1700</span><span class="p">]</span>
+
+<span class="c1"># Calculate the variance of the difference between the two images</span>
+<span class="n">flat_diff</span> <span class="o">=</span> <span class="n">flat1_trim</span> <span class="o">-</span> <span class="n">flat2_trim</span>
+<span class="n">flat_diff_var</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">flat_diff</span><span class="p">)</span>
+
+<span class="c1"># Get the signal as the average of the two images</span>
+<span class="n">mean_signal</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">flat1_trim</span> <span class="o">+</span> <span class="n">flat2_trim</span><span class="p">)</span>
+
+<span class="c1"># Calculate the gain</span>
+<span class="n">gain</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">mean_signal</span> <span class="o">/</span> <span class="n">flat_diff_var</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Gain: </span><span class="si">{</span><span class="n">gain</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> e-/ADU&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gain: 2.37 e-/ADU
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you check the keyword <code class="docutils literal notranslate"><span class="pre">GAIN</span></code> in the header of the images you’ll see it says 1.1, which would make us think that we got this wrong. But if you go to the LFC website and check the <a class="reference external" href="https://sites.astro.caltech.edu/palomar/observer/200inchResources/lfcspecs.html#ccd" rel="noreferrer" target="_blank">specifications of the camera</a> you can see that the gain actually varies from 1.8 to 2.1. The LFC camera has multiple detectors and our image corresponds to the first one of them, which has a reported gain of 2.0 (always be a bit sceptic about the information that you read in the headers!). It seems we are in the ballpark but this is not a completely accurate measurement, which is not surprising.</p>
+<p>Let’s now calculate the readout noise from two bias images.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bias1</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s1">&#39;ccd.001.0.fits&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+<span class="n">bias2</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s1">&#39;ccd.002.0.fits&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+
+<span class="c1"># Here we can use a very large region since the bias level is very flat.</span>
+<span class="c1"># So we just trim the images to remove the contribution from the edge pixels.</span>
+<span class="n">bias1_trim</span> <span class="o">=</span> <span class="n">bias1</span><span class="p">[</span><span class="mi">1000</span><span class="p">:</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">:</span><span class="o">-</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">bias2_trim</span> <span class="o">=</span> <span class="n">bias2</span><span class="p">[</span><span class="mi">1000</span><span class="p">:</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">:</span><span class="o">-</span><span class="mi">1000</span><span class="p">]</span>
+
+<span class="c1"># Calculate the variance of the difference between the two images</span>
+<span class="n">bias_diff</span> <span class="o">=</span> <span class="n">bias1_trim</span> <span class="o">-</span> <span class="n">bias2_trim</span>
+<span class="n">bias_diff_var</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">bias_diff</span><span class="p">)</span>
+
+<span class="c1"># Calculate the readout noise</span>
+<span class="n">readout_noise_adu</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">bias_diff_var</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">readout_noise_e</span> <span class="o">=</span> <span class="n">readout_noise_adu</span> <span class="o">*</span> <span class="n">gain</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Readout noise (ADU): </span><span class="si">{</span><span class="n">readout_noise_adu</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> ADU&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Readout noise (e-): </span><span class="si">{</span><span class="n">readout_noise_e</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> e-&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Readout noise (ADU): 5.47 ADU
+Readout noise (e-): 12.98 e-
+</pre></div>
+</div>
+</div>
+</div>
+<p>Looking at the CCD specifications we would expect a readout noise of about 11 e-, but we seem to be overestimating it by a bit. Part of this is due to the fact that cosmic rays and other defects may be affecting our estimations, which we could improve on by using more images. But the main contributor seems to be the gain. If we use our measured readout noise in ADU (5.47) and multiply it by the gain provided in the LFC website (2.0) we get a readout noise of 10.94 e- which is very close to the expected value. This shows that it’s usually easier to get a good, quick estimate of the readout noise than the gain, for which a proper PTC is needed.</p>
+</section>
+<section id="darks">
+<h2>Darks<a class="headerlink" href="#darks" title="Link to this heading">¶</a></h2>
+<p>Dark current noise is generated by the thermal excitation of electrons in the silicon lattice of the CCD. The noise depends strongly on the temperature of the CCD and less strongly on the exposure time. Dark current is often dependent on the position on the CCD as not all parts of the chip register the same temperature. Most professional CCD cameras are cooled to very low temperatures (typically -100 to -150 degrees Celsius) to reduce the dark current to almost negligible levels. That said, it is important to characterise the dark current contribution to our noise budget and, if necessary, correct for it.</p>
+<p>This is done by the use of a special type of images called <em>dark frames</em>. Dark frames are images taken with the shutter closed and a certain exposure time. Note that this is different from bias frames, which are taken with zero exposure time and a closed shutter. Dark frames should not register any signal from sky sources, so they will only measure the bias level, readout noise, and dark current. Ideally we’ll want to take dark frames with the same exposure time as our science images, but this is costly in terms of observing time. For long science exposure times we often take dark frames with a short exposure time (5-10 minutes) and determine the dark current level per second. Tht image can then be scaled to the exposure time of our science images and subtracted. As with bias frames, we should take several dark frames for each exposure time and combine to reduce their noise level.</p>
+<p>Our dataset includes a series of frames with different exposure times. Let’s start by looking at them very broadly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="n">files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;./darks/ccd.*.0.fits&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+    <span class="n">dark</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">dark_data</span> <span class="o">=</span> <span class="n">dark</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)[</span><span class="mi">1000</span><span class="p">:</span><span class="mi">1100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">:</span><span class="mi">1100</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">dark</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;IMAGETYP&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">dark</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;EXPTIME&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">numpy</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dark_data</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">  - </span><span class="si">{</span><span class="n">numpy</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">dark_data</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;./darks/ccd.002.0.fits&#39;, &#39;./darks/ccd.013.0.fits&#39;, &#39;./darks/ccd.014.0.fits&#39;, &#39;./darks/ccd.015.0.fits&#39;, &#39;./darks/ccd.017.0.fits&#39;, &#39;./darks/ccd.018.0.fits&#39;, &#39;./darks/ccd.019.0.fits&#39;, &#39;./darks/ccd.023.0.fits&#39;, &#39;./darks/ccd.024.0.fits&#39;, &#39;./darks/ccd.025.0.fits&#39;]
+./darks/ccd.002.0.fits - BIAS - 0.0 - 1176.00  - 4.15
+./darks/ccd.013.0.fits - DARK - 300.0 - 1198.00  - 4.98
+./darks/ccd.014.0.fits - DARK - 300.0 - 1198.00  - 5.84
+./darks/ccd.015.0.fits - DARK - 300.0 - 1198.00  - 5.22
+./darks/ccd.017.0.fits - DARK - 70.0 - 1186.00  - 4.40
+./darks/ccd.018.0.fits - DARK - 70.0 - 1186.00  - 4.37
+./darks/ccd.019.0.fits - DARK - 70.0 - 1184.00  - 4.38
+./darks/ccd.023.0.fits - DARK - 7.0 - 1171.00  - 4.12
+./darks/ccd.024.0.fits - DARK - 7.0 - 1169.00  - 4.05
+./darks/ccd.025.0.fits - DARK - 7.0 - 1169.00  - 4.12
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first image is actually a bias which we can use as a reference. Note that the bias level is a bit higher than the other biases we have seen so far. It may have been taken on a different day or with a different readout mode. For the darks we see that the average level increases a bit with exposure time. For 7 seconds the level is actually lower than the bias (which can be just statistical noise or some especially hot pixels on the bias). As we move to longer exposure times we start to see some increase in the level, with 300s flats being about 20 counts higher than the bias. While this may not seem like much, it could be important if we are trying to measure very faint sources in low S/N conditions.</p>
+<p>We will begin by correcting all dark frames using the master bias image that we created before and saving them to disk.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bias</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s1">&#39;bias.fits&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+    <span class="n">dark</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="c1"># Ignore the bias image.</span>
+    <span class="k">if</span> <span class="n">dark</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;IMAGETYP&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;BIAS&#39;</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+    <span class="n">dark_data</span> <span class="o">=</span> <span class="n">dark</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+    <span class="n">dark_data_no_bias</span> <span class="o">=</span> <span class="n">dark_data</span> <span class="o">-</span> <span class="n">bias</span>
+
+    <span class="c1"># Create a new HDU list with the dark image.</span>
+    <span class="n">dark_hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dark_data_no_bias</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">dark</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+
+    <span class="c1"># Add a comment to the header</span>
+    <span class="n">dark_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;COMMENT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Dark image with bias subtracted&#39;</span>
+    <span class="n">dark_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;BIASFILE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;bias.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;Bias image used to subtract bias level&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Create a new filename for the dark image.</span>
+    <span class="n">dark_no_bias_filename</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;_bias.fits&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Save the dark image to disk</span>
+    <span class="n">dark_hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">dark_no_bias_filename</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s combine the dark frames. There are different ways to do this. We could combine each set of dark frames for an exposure time and create median darks for each of those exposures times. Instead we’ll use the three darks with the longest exposure time and normalise them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dark_bias_files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;./darks/ccd.013.0_bias.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;./darks/ccd.014.0_bias.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;./darks/ccd.015.0_bias.fits&#39;</span><span class="p">]</span>
+<span class="n">dark_bias_data</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">dark_bias_files</span><span class="p">:</span>
+    <span class="n">dark</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">dark_data</span> <span class="o">=</span> <span class="n">dark</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+    <span class="n">exptime</span> <span class="o">=</span> <span class="n">dark</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;EXPTIME&#39;</span><span class="p">]</span>
+    <span class="n">dark_bias_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dark_data</span> <span class="o">/</span> <span class="n">exptime</span><span class="p">)</span>
+
+  <span class="c1"># Sigma-clip the dark frames</span>
+<span class="n">dark_sc</span> <span class="o">=</span> <span class="n">sigma_clip</span><span class="p">(</span><span class="n">dark_bias_data</span><span class="p">,</span> <span class="n">cenfunc</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># And now combine them.</span>
+<span class="n">dark_combined</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dark_sc</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Save the combined dark frame to disk. We&#39;ll use the header from the last</span>
+<span class="c1"># dark frame. We set the EXPTIME to 1 second.</span>
+<span class="n">dark_hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dark_combined</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">dark</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+<span class="n">dark_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;EXPTIME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">dark_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;COMMENT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Combined dark image with bias subtracted&#39;</span>
+<span class="n">dark_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;BIASFILE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;bias.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;Bias image used to subtract bias level&#39;</span><span class="p">)</span>
+
+<span class="c1"># Save the dark image to disk</span>
+<span class="n">dark_hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s1">&#39;dark.fits&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="flats">
+<h2>Flats<a class="headerlink" href="#flats" title="Link to this heading">¶</a></h2>
+<p>Flat-fielding is a process that is closely related to the fixed pattern noise that we saw in the previous lecture. Pixels in a detector don’t all respond the same way to incident light. That is, the quantum efficiency of each pixel, which ideally would be 100% in the visible range, is not the same for all pixels. Usually the differences are small, in the few percent range, but that is enough for fixed pattern noise to quickly become the dominant source of noise when images have significant signal levels.</p>
+<p>Fortunately, fixed pattern noise (FPN) is highly systematic (the same pixel will have the same response every time) and we can correct for it. Note that while quantum efficiency is the dominant cause of FPN in an otherwise perfect detector, factors such as dust, scratches, and other defects can also contribute to FPN. The contribution of those factors can sometimes change from night to night which requires measuring the FPN before each observation.</p>
+<p>FPN is usually measured using a series of <em>flat-field images</em> or <em>flats</em>. Flats are images with significant, <em>uniform</em> illumination of the CCD which allow us to determine the relative response of each pixel. There are three main types of flats:</p>
+<ul class="simple">
+<li><p>Dome flats: these are taken with a uniform illumination of the dome of the telescope. Usually a flat-field screen is placed somewhere and illuminated with a halogen lamp. The telescope is then pointed to that screen and, since the screen is not at infinity, the resulting image is likely to produce a good, uniform flat-field image.</p></li>
+<li><p>Twilight flats: these are taken at twilight, when the sky is still bright but the Sun is below the horizon. During twilight the sky provides a very uniform illumination. Twilight flats may be difficult to take as the background of the sky changes rapidly and provides different illumination at different wavelengths, which requires quickly adjusting exposure times. The resulting S/N levels are usually lower than with dome flats. To avoid stars affecting the twilight flats the telescope can be left stationary, without tracking. When multiple images are combined the stars will fall on different pixels on the CCD and they can be sigma-clipped out. Alternatively one can introduce small offsets on the position of the telescope between images.</p></li>
+<li><p>Sky flats: these are taken during the night or even generated from a series of science images. By combining a large number of science frames from different fields we can remove the contribution of stars (or write an algorithm that ignore them when generating a modelled flat) and create a flat-field image. This image provides, in principle, the closest approximation to the actual sky illumination and to what the science images see, but is usually affected by very low S/N.</p></li>
+</ul>
+<p>For most observations we use a combination of dome and twilight flats. In the evening (or morning) we point the telescope towards the West horizon (East in the morning) at an altitude of about 40 degrees, which provides the most uniform illumination across the FoV of the telescope. We then take exposures on each filter with the goal of getting about 50% the saturation level (25-30,000 counts for most cameras). This is often not possible for all filters during twilight flats, and some trade-offs need to be decided between the number of filters to observe and how much signal we can get on each one. We start with the narrow-band filters while the solar illumination is still high and then move to the broad-band filters from blue to red. Between exposures, you can move the telescope in a diagonal (30 arcsec in RA, 30 arcsec in Dec) to avoid stars falling on the same pixels.</p>
+<p>After the twilight flats, we will usually take a set of dome flats, following the procedure specified by the observatory. This usually entails pointing the telescope to a specific position on the dome, turning on the lamp used for flats, and taking exposures in all filters while making sure we get as high a signal as possible without going over 60% of the saturation level.</p>
+<p>Either the twilight flats or the dome flats can be used (after correcting them from bias and potentially dark current) to create a master flat image, which is then normalised by the median value of the image to create a normalised flat. If we have both twilight and dome flats, we can try to combine them to create a better flat-field image. The idea is to use the twilight flats to correct for the low-order illumination effects and the dome flats, with higher S/N, to account for the higher-order, pixel-to-pixel variations. For that we combine and normalise the twilight flats and use them to correct the dome flats. We then combine and normalise the dome flats and fit a low-order, two-dimensional polynomial to the resulting image. This model contains information about the the non-uniformities in the dome flat-field screen. Finally we divide the normalised dome flat by the model to remove the screen contributions.</p>
+<section id="combining-and-normalising-flats">
+<h3>Combining and normalising flats<a class="headerlink" href="#combining-and-normalising-flats" title="Link to this heading">¶</a></h3>
+<p>Our dataset only includes dome flats, so we will only use those, but later we will see how we could create a low-order modelled flat.</p>
+<p>Images 14 to 19 in our dataset are dome flats. Let’s start by looking at their exposure times, average levels, and filters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">20</span><span class="p">):</span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;ccd.0</span><span class="si">{</span><span class="n">ii</span><span class="si">}</span><span class="s1">.0.fits&#39;</span>
+    <span class="n">flat</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+    <span class="n">flat_data</span> <span class="o">=</span> <span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)[</span><span class="mi">500</span><span class="p">:</span><span class="o">-</span><span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">:</span><span class="o">-</span><span class="mi">500</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;IMAGETYP&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;EXPTIME&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> - &#39;</span>
+          <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;FILTER&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">numpy</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">flat_data</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ccd.014.0.fits - FLATFIELD - 70.001 - g&#39; - 21559.00
+ccd.015.0.fits - FLATFIELD - 70.011 - g&#39; - 21556.00
+ccd.016.0.fits - FLATFIELD - 70.001 - g&#39; - 21544.00
+ccd.017.0.fits - FLATFIELD - 7.0 - i&#39; - 22233.00
+ccd.018.0.fits - FLATFIELD - 7.0 - i&#39; - 22243.00
+ccd.019.0.fits - FLATFIELD - 7.0 - i&#39; - 22257.00
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have flats for two different filters, <code class="docutils literal notranslate"><span class="pre">g'</span></code> and <code class="docutils literal notranslate"><span class="pre">'</span></code>, taken with different exposure times. The signal levels for all the images look reasonable. Let’s look at one of the <code class="docutils literal notranslate"><span class="pre">g'</span></code> flats.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flat</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ccd.014.0.fits&#39;</span><span class="p">)</span>
+<span class="n">flat_data</span> <span class="o">=</span> <span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)[</span><span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">]</span>
+
+<span class="c1"># Plot the flat image</span>
+<span class="n">norm</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">flat_data</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">ZScaleInterval</span><span class="p">(),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">LinearStretch</span><span class="p">())</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">flat_data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/5a9de5c5ada1ee25298f4b39fc66e04a28fa4371385b96bd496b4a06f2e64584.png" src="../../_images/5a9de5c5ada1ee25298f4b39fc66e04a28fa4371385b96bd496b4a06f2e64584.png" />
+</div>
+</div>
+<p>Unlike for bias and dark frames there is a lot of structure here. First, we notice some stars on the image. We will need to be careful to make sure that those stars disappear after we combine the flats. Most importantly, we see a non-uniform field with two main features: the lower and upper parts of the image have higher signal levels and there is a gradient towards the centre; and there is a cross-like “shadow” and square features on the edges of the image which are part of the CCD electronics. We also see a series of darker spots, which are places where the CCD substrate was not properly thinned.</p>
+<p>Let’s combine the images for the <code class="docutils literal notranslate"><span class="pre">g'</span></code> filter (we’ll leave the <code class="docutils literal notranslate"><span class="pre">i'</span></code> ones as an exercise).</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Although we will not use it in this course, the <a class="reference external" href="https://ccdproc.readthedocs.io/en/latest/" rel="noreferrer" target="_blank">ccdproc</a> package (based on the classic IRAF <code class="docutils literal notranslate"><span class="pre">ccdproc</span></code>) automatically allows to handle and combine flats from multiple filters, provided that the headers are set up correctly.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the list of flats for the g&#39; filter and subtract the bias level.</span>
+<span class="c1"># We&#39;ll consider that the dark current is negligible for the flats.</span>
+<span class="n">flats_g</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">20</span><span class="p">):</span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;ccd.0</span><span class="si">{</span><span class="n">ii</span><span class="si">}</span><span class="s1">.0.fits&#39;</span>
+    <span class="n">flat</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;FILTER&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;g&#39;&quot;</span><span class="p">:</span>
+        <span class="n">flats_g</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="n">bias_mean_2d</span><span class="p">)</span>
+
+
+<span class="c1"># Mask using sigma-clipping</span>
+<span class="n">flats_g_masked</span> <span class="o">=</span> <span class="n">sigma_clip</span><span class="p">(</span><span class="n">flats_g</span><span class="p">,</span> <span class="n">cenfunc</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Combine the flats</span>
+<span class="n">flat_g_combined</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">flats_g_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="n">flat_g_combined_trim</span> <span class="o">=</span> <span class="n">flat_g_combined</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">]</span>
+
+<span class="c1"># Plot the combined flat</span>
+<span class="n">norm</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">flat_g_combined_trim</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">ZScaleInterval</span><span class="p">(),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">LinearStretch</span><span class="p">())</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">flat_g_combined_trim</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/07efcebd6f8dfdf1124f0a1315591eebff64b7314ca938baa50438a7c9372776.png" src="../../_images/07efcebd6f8dfdf1124f0a1315591eebff64b7314ca938baa50438a7c9372776.png" />
+</div>
+</div>
+<p>Now we need to normalise the flat by its median or mode level (you can try both, although it often comes down to personal preference). For this we will avoid using the edges of the image which are more affected by noise and include the overscan regions. Later, for the science images, we will trim the images to the same size.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">mode</span>
+
+<span class="c1"># Calculate the median of the flat image.</span>
+<span class="c1"># We want to calculate the mode so need to use scipy.stats for</span>
+<span class="c1"># which we first need to flatten the image. You can replace this</span>
+<span class="c1"># with how we usually calculate the median. We also trim 100 pixels on each side.</span>
+<span class="p">(</span><span class="n">flat_mode</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">mode</span><span class="p">(</span><span class="n">flat_g_combined</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">nan_policy</span><span class="o">=</span><span class="s1">&#39;omit&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mode: </span><span class="si">{</span><span class="n">flat_mode</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Normalise the flat image</span>
+<span class="n">flat_g_norm</span> <span class="o">=</span> <span class="n">flat_g_combined</span> <span class="o">/</span> <span class="n">flat_mode</span>
+
+<span class="c1"># Mask out pixels with zero value since those will fail when we divide</span>
+<span class="c1"># by the flat later. We replace them with 1s that will not affect the result.</span>
+<span class="n">flat_g_norm</span><span class="p">[</span><span class="n">flat_g_combined</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># Save the normalised flat image to disk</span>
+<span class="n">flat_g_hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">flat_g_norm</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+<span class="n">flat_g_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;COMMENT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Normalised flat-field image&#39;</span>
+<span class="n">flat_g_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;BIASFILE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;bias.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;Bias image used to subtract bias level&#39;</span><span class="p">)</span>
+<span class="n">flat_g_hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s1">&#39;flat_g.fits&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mode: 20354
+</pre></div>
+</div>
+</div>
+</div>
+<p>We do not plot the normalised flat since it will look identical to the non-normalised one except for a scale factor.</p>
+</section>
+<section id="modelling-flat-images">
+<h3>Modelling flat images<a class="headerlink" href="#modelling-flat-images" title="Link to this heading">¶</a></h3>
+<p>Finally, let’s imagine that this was a twilight flat and we want to fit a low-order polynomial to it to get the low-frequency structure. We can use <code class="docutils literal notranslate"><span class="pre">astopy.modeling</span></code> to do this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">astropy.modeling</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">fitting</span>
+
+<span class="c1"># Remove the edges which may affect the fitting.</span>
+<span class="n">flat_g_norm_trim</span> <span class="o">=</span> <span class="n">flat_g_norm</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">]</span>
+
+<span class="c1"># Create a grid of x and y coordinates from the image shape.</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">flat_g_norm_trim</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">:</span><span class="n">flat_g_norm_trim</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+
+<span class="c1"># Initialise a polynomial model of degree 3 and the fitter (essentially a least-squares).</span>
+<span class="n">p_init</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Polynomial2D</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">fit_p</span> <span class="o">=</span> <span class="n">fitting</span><span class="o">.</span><span class="n">LMLSQFitter</span><span class="p">()</span>
+
+<span class="c1"># Fit the model to the flat image.</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">fit_p</span><span class="p">(</span><span class="n">p_init</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">flat_g_norm_trim</span><span class="p">)</span>
+
+<span class="c1"># Create a new image from the original grid but using the model.</span>
+<span class="n">flat_g_model</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Plot the model</span>
+<span class="n">norm</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">flat_g_model</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">ZScaleInterval</span><span class="p">(),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">LinearStretch</span><span class="p">())</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">flat_g_model</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c25ec7540c7facd31419e202eb716dbb0bcb60ceb5ec1db37e40cc67bd7cfdb4.png" src="../../_images/c25ec7540c7facd31419e202eb716dbb0bcb60ceb5ec1db37e40cc67bd7cfdb4.png" />
+</div>
+</div>
+<p>We can see that we are missing a lot of the high-frequency structure, but we have correctly captured the main shape of the illumination patter, including the direction of the gradients.</p>
+</section>
+</section>
+<section id="science-images">
+<span id="basic-ccd-reductions-science"></span><h2>Science images<a class="headerlink" href="#science-images" title="Link to this heading">¶</a></h2>
+<p>Now that we have processed and combined all our calibration images, we can proceed to apply those corrections to our science images. The process is relatively straightforward and consists of the following steps:</p>
+<ul class="simple">
+<li><p>Subtract the bias level from the science image.</p></li>
+<li><p>Subtract the dark current from the science image.</p></li>
+<li><p>Divide the science image by the normalized flat-field image. This corrects the pixel-to-pixel variations in the CCD response.</p></li>
+<li><p>Trim the image to remove the edges and overscan regions.</p></li>
+</ul>
+<p>In our dataset, image 37 is a science image taken with the <code class="docutils literal notranslate"><span class="pre">g'</span></code> filter. Let’s start by looking at it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">science</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;ccd.037.0.fits&#39;</span><span class="p">)</span>
+<span class="n">science_data</span> <span class="o">=</span> <span class="n">science</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot the science image. Scale by a trimmed region to avoid the edges but plot the full image.</span>
+<span class="n">norm_orig</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">science_data</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">],</span> <span class="n">interval</span><span class="o">=</span><span class="n">ZScaleInterval</span><span class="p">(),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">LinearStretch</span><span class="p">())</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">science_data</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm_orig</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/91630fd2e6a3d750590dde263e26faf9664ac53a6b95be27e177db829e5aa1ea.png" src="../../_images/91630fd2e6a3d750590dde263e26faf9664ac53a6b95be27e177db829e5aa1ea.png" />
+</div>
+</div>
+<p>The image shows an open cluster along with some other field stars and galaxies. Note that we can see some of the features that we pointed out earlier when talking about the flat. Let’s go ahead and correct it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Subtract the bias level</span>
+<span class="n">bias_data</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s1">&#39;bias.fits&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+<span class="n">science_data_proc</span> <span class="o">=</span> <span class="n">science_data</span> <span class="o">-</span> <span class="n">bias_data</span>
+
+<span class="c1"># Get the exposure time from the header</span>
+<span class="n">exptime</span> <span class="o">=</span> <span class="n">science</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;EXPTIME&#39;</span><span class="p">]</span>
+
+<span class="c1"># Subtract the dark current, scaled to the exposure time</span>
+<span class="n">dark_data</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s1">&#39;dark.fits&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+<span class="n">dark_data_scaled</span> <span class="o">=</span> <span class="n">dark_data</span> <span class="o">*</span> <span class="n">exptime</span>
+<span class="n">science_data_proc</span> <span class="o">-=</span> <span class="n">dark_data_scaled</span>
+
+<span class="c1"># Divide by the normalised flat-field image</span>
+<span class="n">flat_data</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s1">&#39;flat_g.fits&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span>
+<span class="n">science_data_proc</span> <span class="o">/=</span> <span class="n">flat_data</span>
+
+<span class="c1"># Trim the image to remove the edges and overscan regions</span>
+<span class="n">science_data_proc</span> <span class="o">=</span> <span class="n">science_data_proc</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">]</span>
+
+<span class="c1"># Plot the final image along the original one to compare.</span>
+<span class="n">norm</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">science_data_proc</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">ZScaleInterval</span><span class="p">(),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">LinearStretch</span><span class="p">())</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">science_data</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">],</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm_orig</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">science_data_proc</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+
+<span class="c1"># Save the final image to disk</span>
+<span class="n">science_hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">science_data_proc</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">science</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+<span class="n">science_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;COMMENT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Final science image&#39;</span>
+<span class="n">science_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;BIASFILE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;bias.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;Bias image used to subtract bias level&#39;</span><span class="p">)</span>
+<span class="n">science_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;DARKFILE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;dark.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;Dark image used to subtract dark current&#39;</span><span class="p">)</span>
+<span class="n">science_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;FLATFILE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;flat_g.fits&#39;</span><span class="p">,</span> <span class="s1">&#39;Flat-field image used to correct flat-fielding&#39;</span><span class="p">)</span>
+<span class="n">science_hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s1">&#39;ccd.037.0_proc.fits&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/22700635486d20534dd4af1807837a4406272a5c988b0349d0c7b31a43fdc606.png" src="../../_images/22700635486d20534dd4af1807837a4406272a5c988b0349d0c7b31a43fdc606.png" />
+</div>
+</div>
+<p>Note how the image has improved. The flat features have disppeared and the image looks much “flatter”. The gradient on the lower left corner, which is caused mainly by thermal noise has also disappeared thanks to removing the dark contribution.</p>
+<p>We can do one more check to see how much the image has improved. Let’s make a profile of both the raw and processed images along the y-axis. We’ll use sigma-clipping to try to remove some of the contributions from the stars and other sources.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Trim the original image so that it has the same size as the processed one.</span>
+<span class="n">science_data_trim</span> <span class="o">=</span> <span class="n">science_data</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="o">-</span><span class="mi">100</span><span class="p">]</span>
+
+<span class="c1"># Calculate the median along the y-axis. Reject pixels using sigma-clipping.</span>
+<span class="n">science_data_trim_masked</span> <span class="o">=</span> <span class="n">sigma_clip</span><span class="p">(</span><span class="n">science_data_trim</span><span class="p">,</span> <span class="n">cenfunc</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">science_data_trim_profile</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">science_data_trim_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Do the same for the processed image</span>
+<span class="n">science_data_proc_masked</span> <span class="o">=</span> <span class="n">sigma_clip</span><span class="p">(</span><span class="n">science_data_proc</span><span class="p">,</span> <span class="n">cenfunc</span><span class="o">=</span><span class="s1">&#39;median&#39;</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">science_data_proc_profile</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">science_data_proc_masked</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Plot the profiles</span>
+<span class="n">l1</span><span class="p">,</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">science_data_trim_profile</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>  <span class="c1"># New y-axis because the raw and process images have different base levels</span>
+<span class="n">l2</span><span class="p">,</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">science_data_proc_profile</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;Raw image&#39;</span><span class="p">,</span> <span class="s1">&#39;Processed image&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/9aa32f52f2deff3ce79bfece665b3f1d0c9821fc5a0d18810ace8ac90d4cccad.png" src="../../_images/9aa32f52f2deff3ce79bfece665b3f1d0c9821fc5a0d18810ace8ac90d4cccad.png" />
+</div>
+</div>
+<p>The processed image has a flatter profile, which is expected as we have removed many of the sources of non-uniformity, such as the flat-field. The peak between 2500 and 3000 pixels corresponds to the open cluster, which occupies many pixels on the image and has not been fully removed by the sigma-clipping.</p>
+</section>
+<section id="cosmic-ray-removal">
+<h2>Cosmic ray removal<a class="headerlink" href="#cosmic-ray-removal" title="Link to this heading">¶</a></h2>
+<p>So far we have been able to remove most of the cosmic rays affecting our images by sigma-clipping. We can do the same for science images if we are taking multiple of them for each target, with approximately the same exposure time. But even if that is possible we may want to avoid sigma-clipping science images because we risk removing good science data, which would reduce or final S/N. Instead we can use special algorithms to mask out cosmic rays.</p>
+<p>The most widely used algorithm for cosmic ray removal is the <a class="reference external" href="https://iopscience.iop.org/article/10.1086/323894/pdf" rel="noreferrer" target="_blank">van Dokkum (2001)</a> method, which looks at the variation of Laplacian edge detection. Cosmic rays have edges that are “shaper” than the type of Gaussian profile that we expect from stars and other sources. This algorithm is very robust for all kinds of cosmic rays, regardles of their shape and intensity.</p>
+<p>A good implementation of this algorithm is <a class="reference external" href="https://astroscrappy.readthedocs.io/en/latest/index.html" rel="noreferrer" target="_blank">astroscrappy</a>. We’ll use it to generate a mask for the cosmic rays in our final science image.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">astroscrappy</span><span class="w"> </span><span class="kn">import</span> <span class="n">detect_cosmics</span>
+
+<span class="c1"># Generate the cosmic ray mask and a cleaned image</span>
+<span class="n">mask</span><span class="p">,</span> <span class="n">cleaned</span> <span class="o">=</span> <span class="n">detect_cosmics</span><span class="p">(</span><span class="n">science_data_proc</span><span class="p">)</span>
+
+<span class="c1"># Plot the mask and the cleaned image</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cleaned</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;YlOrBr_r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1497e4084b58d2068d242519d29b83aa0aec7e63f6cddf3098c89355e95481e9.png" src="../../_images/1497e4084b58d2068d242519d29b83aa0aec7e63f6cddf3098c89355e95481e9.png" />
+</div>
+</div>
+<p>On the left we can see the mask of cosmic rays, with locations on the image that are flagged as cosmics in white (value <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code>). On the right we see a cleaned image that is constructed by trying to replace the masked cosmics rays with an average of the surrounding pixels. Note that not all the cosmic rays and defects are removed. In particular the vertical columns are wider than the size the cleaning algorithm is able to handle (they are likely to be electronic defects or scratches). We are also detecting some features that have sharp edges but are not cosmic rays, such as the bad columns that we just mentioned and the centres of some of the stars, which are saturated and thus have a very sharp profile.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../photometry/photometry.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Photometry and CCD calibrations</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../ccds/ccds.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">CCDs</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025-, José Sánchez-Gallego
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              <a class="muted-link " href="https://github.com/uw-astro-480/uw-astro-480.github.io/" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+            </a>
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Basic CCD reductions</a><ul>
+<li><a class="reference internal" href="#datasets">Datasets</a></li>
+<li><a class="reference internal" href="#bias-and-overscan">Bias and overscan</a><ul>
+<li><a class="reference internal" href="#bias-frames">Bias frames</a></li>
+<li><a class="reference internal" href="#ccd-corrections-are-noisy">CCD corrections are noisy</a></li>
+<li><a class="reference internal" href="#combining-multiple-images">Combining multiple images</a></li>
+<li><a class="reference internal" href="#overscan-region">Overscan region</a></li>
+<li><a class="reference internal" href="#removing-the-bias-level">Removing the bias level</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#measuring-the-gain-and-readout-noise">Measuring the gain and readout noise</a></li>
+<li><a class="reference internal" href="#darks">Darks</a></li>
+<li><a class="reference internal" href="#flats">Flats</a><ul>
+<li><a class="reference internal" href="#combining-and-normalising-flats">Combining and normalising flats</a></li>
+<li><a class="reference internal" href="#modelling-flat-images">Modelling flat images</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#science-images">Science images</a></li>
+<li><a class="reference internal" href="#cosmic-ray-removal">Cosmic ray removal</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=df1a032d"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>
