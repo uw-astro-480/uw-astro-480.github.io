@@ -76,7 +76,7 @@ This is the spectrum of the standard star BD+28 4211. You can see its calibrated
 
 ## Deadline
 
-The assignment is due on Wednesday, June 10th at 11:59 PM. Late submissions by up to 24 hours will be penalized by 20% of the total points.
+The assignment is due on Tuesday, June 10th at 11:59 PM. Late submissions by up to 24 hours will be penalized by 20% of the total points.
 
 ## Hints and resources
 
